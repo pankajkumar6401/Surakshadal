@@ -1,0 +1,17 @@
+page-home {
+    .toolbar-background{
+        background-color: #488aff;
+    }
+    .toolbar-title{
+        color: #fff;
+    }
+    .scroll-content{
+        overflow: hidden;
+    }
+    .item.item-block .item-inner{
+        border-bottom: inherit;
+    }
+    .item p{
+        color: #fff;
+    }
+}

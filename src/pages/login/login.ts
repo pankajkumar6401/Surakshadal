@@ -36,7 +36,7 @@ export class LoginPage {
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
     public http: Http,
-    public storage: Storage
+    public storage: Storage,
   ) {
     this.loginForm = this.formBuilder.group({
       email:['', Validators.compose([Validators.required, EmailValidator.isValid])],

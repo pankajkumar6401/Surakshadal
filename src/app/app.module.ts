@@ -1,3 +1,4 @@
+import { I18nPageModule } from './../pages/i18n/i18n.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -14,7 +15,7 @@ import { HttpModule, Http } from '@angular/http';
 import { LaravelProvider } from '../providers/laravel/laravel';
 
 export function createTranslateLoader(http: Http) {
-  return new TranslateStaticLoader(http,'assests/i18n','.json');
+  return new TranslateStaticLoader(http,'assets/i18n','.json');
 }
 
 @NgModule({
@@ -30,7 +31,8 @@ export function createTranslateLoader(http: Http) {
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),
       deps: [Http]
-    })
+    }),
+    I18nPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -42,7 +44,7 @@ export function createTranslateLoader(http: Http) {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Network,
     LaravelProvider,
-    Globalization
+    Globalization,
   ]
 })
 export class AppModule {}

@@ -1,3 +1,4 @@
+import { I18nPageModule } from './../pages/i18n/i18n.module';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
@@ -6,12 +7,17 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { IonicStorageModule } from '@ionic/storage';
 import { MyApp } from './app.component';
 import { Network } from '@ionic-native/network';
-import { HttpModule } from '@angular/http';
+import { HttpModule, Http  } from '@angular/http';
 import { LaravelProvider } from '../providers/laravel/laravel';
+
 import { PersonaldetailPage } from '../pages/personaldetail/personaldetail';
 import { FamilydetailPage } from '../pages/familydetail/familydetail';
 import { AddressdetailPage } from '../pages/addressdetail/addressdetail';
 import { ProfileimagePage } from '../pages/profileimage/profileimage';
+
+import { Globalization } from '@ionic-native/globalization';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/translate.service';
 
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
@@ -20,6 +26,11 @@ import { Camera } from '@ionic-native/camera';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { Calendar } from '@ionic-native/calendar';
+
+export function createTranslateLoader(http: Http) {
+  return new TranslateStaticLoader(http,'assets/i18n','.json');
+}
+
 @NgModule({
   declarations: [
     MyApp,
@@ -27,8 +38,6 @@ import { Calendar } from '@ionic-native/calendar';
     AddressdetailPage,
     FamilydetailPage,
     ProfileimagePage
-
-
   ],
   imports: [
     BrowserModule,
@@ -36,7 +45,15 @@ import { Calendar } from '@ionic-native/calendar';
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
-  bootstrap: [IonicApp],
+  bootstrap: [
+    IonicApp,
+    TranslateModule.forRoot({
+      provide: TranslateLoader,
+      useFactory: (createTranslateLoader),
+      deps: [Http]
+    }),
+    I18nPageModule
+  ],
   entryComponents: [
     MyApp,
     PersonaldetailPage,
@@ -56,7 +73,8 @@ import { Calendar } from '@ionic-native/calendar';
     FileChooser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     Network,
-    LaravelProvider
+    LaravelProvider,
+    Globalization,
   ]
 })
 export class AppModule {}

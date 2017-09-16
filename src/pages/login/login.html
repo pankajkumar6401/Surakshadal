@@ -27,11 +27,11 @@
         <p>Please enter a valid email.</p>
       </ion-item> -->
       <ion-item [class.invalid]="!loginForm.controls.mobile.valid && (mobileChanged || submitAttempt)">
-        <ion-label floating>Mobile Number</ion-label>
+        <ion-label floating>{{'Username' | translate }}</ion-label>
       <ion-input #mobile type="text" formControlName="mobile" (change)="elementChanged(mobile)" autocapitalize="off"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!loginForm.controls.mobile.valid  && (mobileChanged || submitAttempt)">
-      <p>Please enter a valid Mobile number.</p>
+      <p>{{'Please enter a valid Mobile number.' | translate}}</p>
     </ion-item>
       <ion-item [class.invalid]="!loginForm.controls.password.valid && (passwordChanged || submitAttempt)">
         <ion-label floating>Password</ion-label>

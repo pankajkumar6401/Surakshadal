@@ -43,10 +43,7 @@ export function createTranslateLoader(http: Http) {
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    IonicStorageModule.forRoot()
-  ],
-  bootstrap: [
-    IonicApp,
+    IonicStorageModule.forRoot(),
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),
@@ -54,6 +51,7 @@ export function createTranslateLoader(http: Http) {
     }),
     I18nPageModule
   ],
+  bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     PersonaldetailPage,

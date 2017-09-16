@@ -3,7 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { LoginPage } from './login';
 import { TranslateModule } from 'ng2-translate/ng2-translate';
 
-@NgModule({
+@NgModule({ 
   declarations: [
     LoginPage,
   ],

@@ -30,7 +30,9 @@ export class LaravelProvider {
   getRegistrationApi() {
     return this.getUrl() + 'api/user/register';
   }
-
+  getRequestApi(){
+    return this.getUrl() + 'api/request/data';
+  }
   setToken(val){
     this.token = val;
   }

@@ -10,10 +10,8 @@ import { Network } from '@ionic-native/network';
 import { HttpModule, Http  } from '@angular/http';
 import { LaravelProvider } from '../providers/laravel/laravel';
 
-import { PersonaldetailPage } from '../pages/personaldetail/personaldetail';
-import { FamilydetailPage } from '../pages/familydetail/familydetail';
-import { AddressdetailPage } from '../pages/addressdetail/addressdetail';
-import { ProfileimagePage } from '../pages/profileimage/profileimage';
+import { LoginPage} from '../pages/login/login';
+
 
 import { Globalization } from '@ionic-native/globalization';
 import { TranslateModule } from 'ng2-translate/ng2-translate';
@@ -27,17 +25,14 @@ import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ion
 import { FileChooser } from '@ionic-native/file-chooser';
 import { Calendar } from '@ionic-native/calendar';
 
+
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http,'assets/i18n','.json');
 }
 
 @NgModule({
   declarations: [
-    MyApp,
-    PersonaldetailPage,
-    AddressdetailPage,
-    FamilydetailPage,
-    ProfileimagePage
+    MyApp   
   ],
   imports: [
     BrowserModule,
@@ -53,12 +48,7 @@ export function createTranslateLoader(http: Http) {
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
-    PersonaldetailPage,
-    AddressdetailPage,
-    FamilydetailPage,
-    ProfileimagePage
-    
+    MyApp    
   ],
   providers: [
     StatusBar,

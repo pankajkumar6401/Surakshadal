@@ -6,12 +6,15 @@ page-home {
         color: #fff;
     }
     .scroll-content{
-        overflow: hidden;
+        overflow-x: auto;
     }
     .item.item-block .item-inner{
         border-bottom: inherit;
     }
     .item p{
         color: #fff;
+    }
+    ion-label{
+        white-space: inherit
     }
 }

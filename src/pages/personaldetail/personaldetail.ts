@@ -26,6 +26,8 @@ import { Calendar } from '@ionic-native/calendar';
 })
 export class PersonaldetailPage {
   public registerForm;
+  request={};
+  requests:any;
   nameChanged: boolean = false;
   fatherNameChanged: boolean = false;
   mobileChanged: boolean = false;
@@ -66,59 +68,28 @@ export class PersonaldetailPage {
     let field = input.ngControl.name;
     this[field + "Changed"] = true;
   }
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad PersonaldetailPage');
-  }
-  goToDate(){
-  this.calendar.createCalendar('MyCalendar').then(
-    (msg) => { console.log(msg); },
-    (err) => { console.log(err); }
-  );
-}
-  register(){
-    this.submitAttempt = true;
-    if (this.registerForm.valid){
-      let credential = {
-          username :this.registerForm.controls.email.value,
-          password : this.registerForm.controls.password.value,
-        };
-        this.loading = this.loadingCtrl.create({
-          content: 'Please wait...'
+  ionViewDidLoad() {         
+    this.loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+  });
+  this.loading.present();
+  this.http.get(this.laravel.getRequestApi()).subscribe(res => {
+    this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
+      .then(
+          data => {
+            this.requests=res.json()
+            console.log(JSON.stringify(this.requests))
+            this.loading.dismiss();
+
+          },
+          error => {
+            this.loading.dismiss();
+            this.toast.create({
+              message: 'Something went wrong. Please contact your app developer',
+              duration: 3000
+            }).present();
         });
-        this.loading.present();
-        this.http.post(this.laravel.getRegistrationApi(),{
-          grant_type: 'password',
-          client_id: 2,
-          client_secret:this.client_secret,
-          username:credential.username,
-          password:credential.password,
-          scope:'*'
-        }).subscribe(res => {
-          this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
-            .then(
-                data => {
-                  this.laravel.setToken(res.json().token_type+' '+res.json().access_token);
-                  this.loading.dismiss();
-                  this.navCtrl.setRoot('HomePage');
-                },
-                error => {
-                  this.loading.dismiss();
-                  this.toast.create({
-                    message: 'Something went wrong. Please contact your app developer',
-                    duration: 3000
-                  }).present();
-                }
-          );
-        },
-        error => {
-          console.log(error.json().message);
-          this.loading.dismiss();
-          let errorMsg = 'Something went wrong. Please contact your app developer';
-          this.toast.create({
-            message: (error.json().hasOwnProperty('message')) ? error.json().message:errorMsg ,
-            duration:3000
-          }).present();
-        });
+
+      })
     }
-  }
 }

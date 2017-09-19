@@ -23,7 +23,6 @@ import { IonicPage, NavController, NavParams, ToastController, LoadingController
 export class RegisterPage {
  
   registerForm:any;
-
   passwordChanged:boolean = false;
   confirmPasswordChanged:boolean = false;
   nameChanged: boolean = false;

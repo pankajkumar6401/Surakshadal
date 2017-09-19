@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController, ViewController } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular'
+import { Camera, CameraOptions } from '@ionic-native/camera';
 
 /**
  * Generated class for the ProfileimagePage page.
@@ -15,10 +16,12 @@ import { ActionSheetController } from 'ionic-angular'
   templateUrl: 'profileimage.html',
 })
 export class ProfileimagePage {
-
-  constructor(public navCtrl: NavController, public navParams: NavParams, public actionSheetCtrl: ActionSheetController) {
+  image:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController, ) {
   }
-
+  dismiss(data) {
+    this.viewCtrl.dismiss(data);
+  }
   ionViewDidLoad() {
     console.log('ionViewDidLoad ProfileimagePage');
   }
@@ -50,6 +53,23 @@ export class ProfileimagePage {
     });
  
     actionSheet.present();
+  }
+  onCamera(){
+    const options: CameraOptions = {
+   quality: 75,
+   destinationType: this.camera.DestinationType.DATA_URL,
+   encodingType: this.camera.EncodingType.JPEG,
+   mediaType: this.camera.MediaType.PICTURE
+ }
+
+ this.camera.getPicture(options).then((imageData) => {
+  // imageData is either a base64 encoded string or a file URI
+  // If it's base64:
+  let base64Image = 'data:image/jpeg;base64,' + imageData;
+  this.image=base64Image;
+ }, (err) => {
+  // Handle error
+ });
   }
  
 }

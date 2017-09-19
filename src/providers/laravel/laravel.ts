@@ -33,6 +33,19 @@ export class LaravelProvider {
   getRequestApi(){
     return this.getUrl() + 'api/request/data';
   }
+  getPersonalaDetailApi(){
+    return this.getUrl() + 'api/home';
+  }
+  getAddRequestApi(){
+    return this.getUrl() + 'api/add';
+  }
+  getProflieImagePath(imagefile){
+
+    return this.getUrl() + 'storage/images/profile/' + imagefile;
+  }
+  getRequestImagePath(imagefile){    
+        return this.getUrl() + 'storage/images/request_images/' + imagefile;
+      }
   setToken(val){
     this.token = val;
   }

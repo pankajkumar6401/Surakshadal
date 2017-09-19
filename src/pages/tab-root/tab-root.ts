@@ -15,14 +15,15 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class TabRootPage {
   tab1 = 'HomePage';
-  tab2 = 'AddnewsPage';
+  tab2 = 'AddrequestPage';
   tab3 = 'ProfilePage'; 
+  tab4 ='';
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad TabRootPage');
-  }
+  // ionViewDidLoad() {
+  //   console.log('ionViewDidLoad TabRootPage');
+  // }
 
 }

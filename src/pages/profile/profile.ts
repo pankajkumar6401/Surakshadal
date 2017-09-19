@@ -8,10 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController,ModalController, ViewController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
-import { PersonaldetailPage } from '../personaldetail/personaldetail';
-import { FamilydetailPage } from '../familydetail/familydetail';
-import { AddressdetailPage } from '../addressdetail/addressdetail';
-import { ProfileimagePage } from '../profileimage/profileimage';
+
 /**
  * Generated class for the ProfilePage page.
  *
@@ -56,20 +53,20 @@ export class ProfilePage {
     });
   }
   openProfileImage() {
-    let profileimage = this.modalCtrl.create(ProfileimagePage);
+    let profileimage = this.modalCtrl.create('ProfileimagePage');
     profileimage.present();
   }
   openPersonal() {
-    let personalModal = this.modalCtrl.create(PersonaldetailPage);
+    let personalModal = this.modalCtrl.create('PersonaldetailPage');
     personalModal.present();
   }
   
   openAddress() {
-    let addressModal = this.modalCtrl.create(AddressdetailPage);
+    let addressModal = this.modalCtrl.create('AddressdetailPage');
     addressModal.present();
   }
   openFamily() {
-    let familyModal = this.modalCtrl.create(FamilydetailPage);
+    let familyModal = this.modalCtrl.create('FamilydetailPage');
     familyModal.present();
   }
   ionViewDidLoad() {

@@ -58,7 +58,7 @@ export class LoginPage {
   login(){
     this.submitAttempt = true;
     if (this.loginForm.valid){
-      console.log('Hello');
+      // console.log('Hello');
       let credential = {
         username :this.loginForm.controls.mobile.value,
           password : this.loginForm.controls.password.value,

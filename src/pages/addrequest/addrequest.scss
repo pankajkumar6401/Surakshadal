@@ -1,0 +1,30 @@
+page-addrequest {
+    .toolbar-background{
+        background-color: #488aff;
+    }
+    .toolbar-title{
+        color: #fff;
+    }
+   .addrequestimage span{
+       padding: 4px;
+   }
+   .item.item-block .item-inner{
+    border-bottom: inherit;
+    padding-right: 0;
+   }
+    .item p{
+        // color: #fff;
+    }
+    .scroll-content{
+        overflow: hidden;
+    }
+    .addrequestimage ion-item{
+        padding-left: 0;
+    }
+    .addrequestimage ion-label{
+        margin: 0 ;
+    }
+    // .addrequestimage .item.item-textarea{
+    //     padding-left: 0;
+    // }
+}

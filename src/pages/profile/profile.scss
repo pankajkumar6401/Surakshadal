@@ -33,6 +33,12 @@ page-profile {
         width: auto;
         border-radius: 50%;
     }
+    .item.item-block .item-inner{
+        border-bottom: inherit;
+    }
+    .item p{
+        color: #fff;
+    }
 
    
 }

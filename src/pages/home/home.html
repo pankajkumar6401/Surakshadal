@@ -7,52 +7,55 @@
 <ion-header style="background-color:#488aff;">
   <ion-navbar>
       <ion-item style="background-color:#488aff;">
-          <!-- <p item-start ion-button color="primary" (click)="goToLoginPage()" >
+          <p item-start ion-button color="primary" (click)="goToLoginPage()" >
              Sign Out
-          </p>  -->
-    <ion-title text-center>
-     Home
-    </ion-title>
+          </p> 
+          <ion-title text-center>
+            Home
+          </ion-title>
       </ion-item>
   </ion-navbar>
 </ion-header>
 
 <ion-content>
 
-  <ion-card >
+  <ion-card  *ngFor="let request of requests">
       
       <ion-item>
         <ion-avatar item-start>
-          <img src="assets/images/profile.png">
+          <img *ngIf="request.profile_image" [src]="laravel.getProflieImagePath(request.profile_image)">
+          <img *ngIf="!request.profile_image" src="assets/images/profile.png">
         </ion-avatar>
-        <h2>}</h2>   
+        <h2>{{request.user_name}}</h2>   
         <ion-note item-end>
-            11h ago
+           {{request.request_time}}
         </ion-note>
       </ion-item>   
      
     
       <ion-card-content>
-        <p>Wait a minute. Wait a minute, Doc. Uhhh... Are you telling me that you built a time machine... out of a DeLorean?! Whoa. This is heavy.</p>
+        <p>{{request['3']}}</p>
+        <img *ngIf="request.profile_image" [src]="laravel.getRequestImagePath(request.request_image)">
+        <!-- <img *ngIf="!request.profile_image" src="assets/images/profile.png"> -->
       </ion-card-content>
       <ion-grid>
         <ion-row>
           <ion-col>
             <button ion-button icon-left clear small>
               <ion-icon name="thumbs-up"></ion-icon><br>
-              <div>12</div>
+              <div>{{request.like_count}}</div>
             </button>
           </ion-col>
           <ion-col>
             <button ion-button icon-left clear small>
               <ion-icon name="thumbs-down"></ion-icon><br>
-              <div>12</div>
+              <div>{{request.unlike_count}}</div>
             </button>
             </ion-col>
           <ion-col>
             <button ion-button icon-left clear small>
               <ion-icon name="text"></ion-icon><br>
-              <div>4 Comments</div>
+              <div (click)="openComments()">{{request.comments.length}} Comments</div>
             </button>
           </ion-col>        
         </ion-row>

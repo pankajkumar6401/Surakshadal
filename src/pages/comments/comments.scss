@@ -1,0 +1,39 @@
+page-comments {
+    .toolbar-background{
+        background-color: #488aff;
+    }
+    .toolbar-title{
+        color: #fff;
+    }
+    ion-header .item-md{
+        background-color: #488aff;
+    }
+    ion-header .item-md.item-block .item-inner{
+        border-bottom: 0;
+    }
+    .my-comment{
+        position: absolute;
+        bottom: 10px;
+        right: 0;
+        border-bottom: 0 !important;
+    }
+    .comment-box ion-avatar,  .my-comment ion-avatar{
+        min-width: 30px !important;
+        min-height:30px !important;
+        float: left;
+        margin-right: 10px;
+    }
+    .comment-box ion-avatar img, .my-comment ion-avatar img{
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 50%;
+    }
+    .comment-box p{
+        white-space: normal
+    }
+    .my-comment button{
+        background: #488aff;
+        padding: 20px 15px;
+        color: #fff;
+    }
+}

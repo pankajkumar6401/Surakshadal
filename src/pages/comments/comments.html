@@ -1,0 +1,41 @@
+<!--
+  Generated template for the CommentsPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+      <ion-item>
+          <button item-start ion-button color="default" (click)="dismiss()" >
+             Cancel
+          </button>      
+         <ion-title>Comments</ion-title>
+        </ion-item>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content >
+    <ion-list class="comment-box">
+      <ion-item>
+        <ion-avatar>
+            <img src="assets/images/profile.png">
+        </ion-avatar>
+        <h3>My Neighbor Totoro</h3>
+        <p>The age limit for the show is 4 to 13 years old. The age limit for the show is 4 to 13 years old.</p>        
+      </ion-item>
+    </ion-list>
+    <ion-list >
+      <ion-item class="my-comment">
+        <ion-avatar item-start>
+        <img src="assets/images/profile.png">
+        </ion-avatar>
+        <ion-input type="text" placeholder="write a comment"></ion-input>    
+        <button ion-button clear item-end><ion-icon name="send"></ion-icon></button>            
+      </ion-item>
+   </ion-list>
+    
+</ion-content>

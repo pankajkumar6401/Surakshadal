@@ -1,9 +1,8 @@
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController } from 'ionic-angular';
-import { Http,Headers  } from '@angular/http';
+import { Http} from '@angular/http';
 import { Storage } from '@ionic/storage';
-// import { CommentsPage } from '../comments/comments';
 
 @IonicPage()
 @Component({
@@ -11,22 +10,11 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'home.html'
 })
 export class HomePage {
-   requests:any;
-    mobileChanged: boolean = false;
-    passwordChanged: boolean = false;
-    submitAttempt: boolean = false;
-    database: any;
-    client_secret:string = '8FG7veWcZ140lgCJGFfUhqXGm3LjDqu71SbQWEUy';
-    client_id = 2;
+    requests:any;
     loading:any;
-    visiblePass:boolean = false;
-   request={     
-    //  userId:1,
-    //  id: 1,
-    //  title: 'Neha',
-    //  body:'Hello!!'
-   }   
-  constructor(
+    request={ };
+    request_id:any;  
+    constructor(
        public navCtrl: NavController, 
        public navParams:NavParams, 
        public http: Http,
@@ -34,9 +22,12 @@ export class HomePage {
        public loadingCtrl: LoadingController,
        public toast: ToastController,
        public modalCtrl: ModalController,
-       public storage: Storage) {  
-   
+       public storage: Storage) {
          }
+         addComments(request_id) {          
+          let modal = this.modalCtrl.create('CommentsPage', {requestId:request_id});
+          modal.present();
+        }
         ionViewDidLoad() {         
           this.loading = this.loadingCtrl.create({
           content: 'Please wait...'
@@ -47,7 +38,7 @@ export class HomePage {
             .then(
                 data => {
                   this.requests=res.json()
-                  console.log(JSON.stringify(this.requests))
+                  // console.log(JSON.stringify(this.requests))
                   this.loading.dismiss();
 
                 },
@@ -66,9 +57,6 @@ export class HomePage {
           this.navCtrl.setRoot('LoginPage')
           window.location.reload(true)
         }
-        openComments() {
-          let comments = this.modalCtrl.create('CommentsPage');
-          comments.present();
-        }
+        
     
      }

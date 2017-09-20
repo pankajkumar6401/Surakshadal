@@ -78,6 +78,7 @@ export class AddrequestPage {
       }).map(res => res.json())
       .subscribe(res => {
         //success
+        this.navCtrl.setRoot('HomePage');
         if(res.success){
           this.navCtrl.setRoot('HomePage');
         }else{
@@ -96,7 +97,6 @@ export class AddrequestPage {
         }).present();
       });
     }
-
 
   }
   presentActionSheet() {

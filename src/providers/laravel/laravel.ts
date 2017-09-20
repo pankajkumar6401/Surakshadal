@@ -39,6 +39,9 @@ export class LaravelProvider {
   getAddRequestApi(){
     return this.getUrl() + 'api/add';
   }
+  getAddCommentApi(){
+    return this.getUrl() + 'api/post/comment';
+  }
   getProflieImagePath(imagefile){
 
     return this.getUrl() + 'storage/images/profile/' + imagefile;

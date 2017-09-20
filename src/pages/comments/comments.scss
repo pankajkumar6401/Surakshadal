@@ -12,8 +12,8 @@ page-comments {
         border-bottom: 0;
     }
     .my-comment{
-        position: absolute;
-        bottom: 10px;
+        position: fixed;
+        bottom: 0;
         right: 0;
         border-bottom: 0 !important;
     }
@@ -35,5 +35,8 @@ page-comments {
         background: #488aff;
         padding: 20px 15px;
         color: #fff;
+    }
+    ion-label{
+        margin:0 !important;
     }
 }

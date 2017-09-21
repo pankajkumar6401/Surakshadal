@@ -11,7 +11,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 })
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
-  rootPage:any = 'LoginPage';
+  rootPage:any;
   loading:any;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
@@ -26,7 +26,9 @@ export class MyApp {
         content: 'Authenticating please wait...'
       });
       this.loading.present();
+
       this.storage.get('surakshadal_userTokenInfo').then((val) => {
+        // alert(val)
         if(val){
           console.log(val);
           this.loading.dismiss();

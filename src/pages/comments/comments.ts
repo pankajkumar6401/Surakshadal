@@ -21,7 +21,6 @@ export class CommentsPage {
   database:any;
   submitAttempt: boolean = false;
   comments:any;
-  comment={};
   request_id:any;
   loading:any;
   constructor(
@@ -38,6 +37,7 @@ export class CommentsPage {
         message: ['',Validators.required]
       });
       this.request_id= navParams.get('requestId');
+      this.comments= navParams.get('comments');
       console.log('request_id', navParams.get('requestId')); 
   }
 
@@ -63,7 +63,9 @@ export class CommentsPage {
       }).map(res => res.json())
       .subscribe(res => {
         //success
-        this.navCtrl.setRoot('HomePage');
+        // this.navCtrl.setRoot('HomePage'); it's not required here 
+        /// now we have to dismiss loading if we got any response from back-end 
+        this.loading.dismiss(); 
         if(res.success){
           this.navCtrl.setRoot('HomePage');
         }else{
@@ -85,32 +87,10 @@ export class CommentsPage {
 
   }
   ionViewDidLoad() {
-  //   this.loading = this.loadingCtrl.create({
-  //     content: 'Please wait...'
-  // });
-  // this.loading.present();
-  // this.http.get(this.laravel.getRequestApi()).subscribe(res => {
-  //   this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
-  //     .then(
-  //         data => {
-  //           this.comments=res.json()
-  //           // console.log(JSON.stringify(this.comments))
-  //           this.loading.dismiss();
-
-  //         },
-  //         error => {
-  //           this.loading.dismiss();
-  //           this.toast.create({
-  //             message: 'Something went wrong. Please contact your app developer',
-  //             duration: 3000
-  //           }).present();
-  //       });
-
-  //     })
  }
 
-  dismiss(data) {
-    this.viewCtrl.dismiss(data);
+  dismiss() {
+    this.viewCtrl.dismiss();
   }
 
 }

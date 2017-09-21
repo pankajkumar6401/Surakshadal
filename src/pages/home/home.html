@@ -7,9 +7,9 @@
 <ion-header style="background-color:#488aff;">
   <ion-navbar>
       <ion-item style="background-color:#488aff;">
-          <p item-start ion-button color="primary" (click)="goToLoginPage()" >
+          <!-- <p item-start ion-button color="primary" (click)="goToLoginPage()" >
              Sign Out
-          </p> 
+          </p>  -->
           <ion-title text-center>
             Home
           </ion-title>
@@ -28,7 +28,7 @@
         </ion-avatar>
         <h2>{{request.user_name}}</h2>   
         <ion-note item-end>
-           {{request.request_time}}
+           {{request.request_time }}
         </ion-note>
       </ion-item>   
      
@@ -55,7 +55,7 @@
           <ion-col>
             <button ion-button icon-left clear small>
               <ion-icon name="text"></ion-icon><br>
-              <div (click)="addComments(request['1'])">{{request.comments.length}} Comments</div>
+              <div (click)="addComments(request['1'],request.comments)">{{request.comments.length}} Comments</div>
             </button>
           </ion-col>        
         </ion-row>

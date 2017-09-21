@@ -7,11 +7,14 @@ page-profile {
     }
     .scroll-content{
         overflow: hidden;
+        padding: 16px 0 !important;
     } 
     .item-md, .item-ios{
         background: transparent;
     }
-    
+    .item ion-icon{
+        margin-left: 8px !important;
+    }
     .list-ios > .item-block:first-child{
         border-top: 0;
     }

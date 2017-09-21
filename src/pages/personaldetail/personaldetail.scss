@@ -1,14 +1,31 @@
 page-personaldetail {
     .toolbar-background{
         background-color: #488aff;
+        
     }
     .toolbar-title{
         color: #fff;
     }
     ion-header .item-md{
         background-color: #488aff;
+        color: #fff;
     }
     ion-header .item-md.item-block .item-inner{
         border-bottom: 0;
+    }
+    .calender ion-label{
+        border-bottom: 1px solid #ccc !important;
+        margin-right: 0;
+        margin-top: 25px;
+    }
+    .calender button{
+        background: #fff;
+        color: #999;
+        box-shadow: none;
+        padding: 0;
+        font-size: initial !important;
+        font-weight: 400;
+        text-transform: capitalize;
+        padding: 0 !important;
     }
 }

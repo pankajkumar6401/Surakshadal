@@ -10,6 +10,7 @@ import { Network } from '@ionic-native/network';
 import { HttpModule, Http  } from '@angular/http';
 import { LaravelProvider } from '../providers/laravel/laravel';
 
+
 import { LoginPage} from '../pages/login/login';
 
 
@@ -32,7 +33,7 @@ export function createTranslateLoader(http: Http) {
 
 @NgModule({
   declarations: [
-    MyApp   
+    MyApp  
   ],
   imports: [
     BrowserModule,

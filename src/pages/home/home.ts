@@ -1,6 +1,6 @@
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController , ViewController} from 'ionic-angular';
 import { Http} from '@angular/http';
 import { Storage } from '@ionic/storage';
 
@@ -22,11 +22,13 @@ export class HomePage {
        public loadingCtrl: LoadingController,
        public toast: ToastController,
        public modalCtrl: ModalController,
-       public storage: Storage) {
+       public storage: Storage,
+       private viewCtrl:ViewController) {
          }
-         addComments(request_id) {          
-          let modal = this.modalCtrl.create('CommentsPage', {requestId:request_id});
+         addComments(request_id,comments) {          
+          let modal = this.modalCtrl.create('CommentsPage', {requestId:request_id,comments:comments});
           modal.present();
+
         }
         ionViewDidLoad() {         
           this.loading = this.loadingCtrl.create({

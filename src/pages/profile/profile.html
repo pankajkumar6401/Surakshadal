@@ -8,9 +8,9 @@
 
   <ion-navbar>
       <ion-item style="background-color:#488aff;">
-        <!-- <p item-start ion-button color="primary" (click)="goToLoginPage()" >
+        <p item-start ion-button color="primary" (click)="goToLoginPage()" >
           Sign Out
-        </p>  -->
+        </p> 
         <ion-title text-center>Profile</ion-title>
       </ion-item>
   </ion-navbar>
@@ -18,7 +18,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content >
   <ion-item>  
     <ion-avatar item-start (click)="openProfileImage()">
       <img src="assets/images/profile.png" class="item item-thumbnail" style="margin: 0 auto;">  
@@ -27,17 +27,17 @@
     <!-- <button ion-button round small outline item-end>Upload Photo</button> -->
   </ion-item>    
   <ion-list class="detail-list">
-      <ion-item (click)="openPersonal()">
-        <ion-icon name="person" item-start></ion-icon>
+    <ion-item (click)="openPersonal()">
+      <ion-icon name="person" item-start></ion-icon>
         Personal detail
-      </ion-item>
-      <ion-item (click)="openAddress()">
-          <ion-icon name="home" item-start ></ion-icon>
+    </ion-item>
+    <ion-item (click)="openAddress()">
+      <ion-icon name="home" item-start ></ion-icon>
           Address Detail  
-      </ion-item>
-      <ion-item (click)="openFamily()">
-          <ion-icon name="people" item-start></ion-icon>
+    </ion-item>
+    <ion-item (click)="openFamily()">
+      <ion-icon name="people" item-start></ion-icon>
           Family Detail
-      </ion-item>
-    </ion-list>
+    </ion-item>
+  </ion-list>
 </ion-content>

@@ -8,44 +8,24 @@
 
   <ion-navbar>
       <ion-item>
-          <button item-start ion-button color="default" (click)="dismiss()" >
-             Cancel
-          </button>      
+          <span item-start navPop >
+              <ion-icon name="arrow-round-back"></ion-icon>
+          </span>       
          <ion-title>Comments</ion-title>
         </ion-item>
   </ion-navbar>
 </ion-header>
-<!-- <ion-content >
-    <ion-list class="comment-box" *ngFor="let comment of comments">
-      <ion-item>
-        <ion-avatar>
-            <img src="assets/images/profile.png">
-        </ion-avatar>
-        <h3>My Neighbor Totoro</h3>
-        <p>The age limit for the show is 4 to 13 years old. The age limit for the show is  limit for the show is  limit for the show is 4 to 13 years old.</p>        
-      </ion-item>
-    </ion-list>
-    <ion-list >
-      <ion-item class="my-comment">
-        <ion-avatar item-start>
-        <img src="assets/images/profile.png">
-        </ion-avatar>
-        <ion-input type="text" placeholder="write a comment"></ion-input>    
-        <button ion-button clear item-end><ion-icon name="send"></ion-icon></button>            
-      </ion-item>
-   </ion-list>    
-</ion-content> -->
 <ion-content >
   <ion-list class="comment-box" *ngFor="let comment of comments">
     <ion-item>
       <ion-avatar item-start>
-        <img *ngIf="comment.profile_image" [src]="laravel.getProflieImagePath(comment.profile_image)">
-        <img *ngIf="!comment.profile_image" src="assets/images/profile.png">
+        <img *ngIf="comment.photo" [src]="laravel.getProflieImagePath(comment.photo)">
+        <img *ngIf="!comment.photo" src="assets/images/profile.png">
       </ion-avatar>
-      <!-- <h3>{{comment.user_name}}</h3> -->
-      <p>{{comment['3']}}</p> 
+      <h3>{{comment.name}}</h3>
+      <p text-wrap>{{comment.message}}</p> 
       <ion-note item-end>
-          {{comment.request_time}}
+          {{comment.comment_time}}
        </ion-note>
              
     </ion-item>
@@ -55,8 +35,8 @@
   <form [formGroup]="addcommentForm">
     <ion-item class="my-comment">
       <ion-avatar item-start>
-          <!-- <img *ngIf="profile_image" [src]="laravel.getProflieImagePath(profile_image)"> -->   
-          <img src="assets/images/profile.png">
+        <!-- <img *ngIf="comment.profile_image" [src]="laravel.getProflieImagePath(comment.profile_image)"> -->
+        <img src="assets/images/profile.png">
       </ion-avatar>  
       <ion-item [class.invalid]="!addcommentForm.controls.message.valid && (messageChanged || submitAttempt)">
         <ion-input #message type="text" formControlName="message"  placeholder="write a comment"></ion-input>

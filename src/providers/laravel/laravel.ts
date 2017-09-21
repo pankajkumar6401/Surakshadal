@@ -33,7 +33,7 @@ export class LaravelProvider {
   getRequestApi(){
     return this.getUrl() + 'api/request/data';
   }
-  getPersonalaDetailApi(){
+  getProfileDetailApi(){
     return this.getUrl() + 'api/home';
   }
   getAddRequestApi(){

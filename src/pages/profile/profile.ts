@@ -1,4 +1,4 @@
-import { Http } from '@angular/http';
+import { Http,Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
@@ -31,28 +31,52 @@ export class ProfilePage {
     public storage: Storage
   ) {
   }
-  openProfileImage() {
-    let profileimage = this.modalCtrl.create('ProfileimagePage');
-    profileimage.present();
-  }
-  openPersonal() {
-    let personalModal = this.modalCtrl.create('PersonaldetailPage');
-    personalModal.present();
-  }
-  
-  openAddress() {
-    let addressModal = this.modalCtrl.create('AddressdetailPage');
-    addressModal.present();
-  }
-  openFamily() {
-    let familyModal = this.modalCtrl.create('FamilydetailPage');
-    familyModal.present();
-  }
   ionViewDidLoad() {
+     this.loading = this.loadingCtrl.create({
+      content: 'Please Wait'
+    });
+    this.loading.present();
+      let headers = new Headers();
+      let token:string = this.laravel.getToken();
+      console.log(token);
+      headers.append('Authorization', token);
+      this.http.get(this.laravel.getProfileDetailApi(),{
+        headers: headers
+      })
+      .subscribe(res => {
+         this.loading.dismiss();
+         this.user_detail = res.json();
+
+      },
+      error => {
+        this.loading.dismiss();
+        // let errorMsg = 'Something went wrong. Please contact your app developer';
+        // this.toast.create({
+        //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+        //   duration:3000
+        // }).present();
+      });
     }
     goToLoginPage(){
       this.storage.remove('surakshadal_userTokenInfo')
       this.navCtrl.setRoot('LoginPage')
       window.location.reload(true)
     }
+      openProfileImage() {
+        let profileimage = this.modalCtrl.create('ProfileimagePage');
+        profileimage.present();
+      }
+      openPersonal() {
+        let personalModal = this.modalCtrl.create('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail']});
+        personalModal.present();
+      }
+      
+      openAddress() {
+        let addressModal = this.modalCtrl.create('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.districts,tehsils:this.user_detail.tehsils});
+        addressModal.present();
+      }
+      openFamily() {
+        let familyModal = this.modalCtrl.create('FamilydetailPage',{userFamilyData:this.user_detail['user_detail']});
+        familyModal.present();
+      }
 }

@@ -15,77 +15,61 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <form>
+    <form [formGroup]="profiledetailForm" (click)="save()">
         <ion-list style="position:relative;">
-            <ion-item>
+            <ion-item [class.invalid]="!profiledetailForm.controls.aadhar.valid && (aadharChanged || submitAttempt)">
              <ion-label floating>Adhaar Number</ion-label>
-             <ion-input type="text" autocapitalize="off"></ion-input>
-            </ion-item>         
-            <ion-item>
+             <ion-input #aadhar type="text" formControlName="aadhar" (change)="elementChanged(aadhar)"></ion-input>
+            </ion-item>
+            <ion-item class="error-message" *ngIf="!profiledetailForm.controls.aadhar.valid  && (aadharChanged || submitAttempt)">
+                <p>Please enter your Aadhar</p>
+              </ion-item>          
+            <!-- <ion-item [class.invalid]="!profiledetailForm.controls.idproof_type.valid && (idproof_typeChanged || submitAttempt)">
                 <ion-label floating>ID Proofs</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
-            </ion-item>
-            <ion-item>
+                <ion-input #idproof_type type="text" formControlName="idproof_type" (change)="elementChanged(idproof_type)"></ion-input>
+            </ion-item> -->
+            <ion-item [class.invalid]="!profiledetailForm.controls.mobile.valid && (mobileChanged || submitAttempt)">
                 <ion-label floating>Mobile Number</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
+                <ion-input #mobile type="text" formControlName="mobile" (change)="elementChanged(mobile)"></ion-input>
                 </ion-item>
-            <ion-item>
-                <ion-label floating>Email Address</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
-                </ion-item>
-            <ion-item>
+            <ion-item [class.invalid]="!profiledetailForm.controls.phone.valid && (phoneChanged || submitAttempt)">
                 <ion-label floating>Phone Number</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
+                <ion-input #phone type="text" formControlName="phone" (change)="elementChanged(phone)"></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item [class.invalid]="!profiledetailForm.controls.address_1.valid && (address_1Changed || submitAttempt)">
                 <ion-label floating>Address Line-1</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
+                <ion-input #address_1 type="text" formControlName="address_1" (change)="elementChanged(address_1)"></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item [class.invalid]="!profiledetailForm.controls.address_2.valid && (address_2Changed || submitAttempt)">
                 <ion-label floating>Address Line-2</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
+                <ion-input #address_2 type="text" formControlName="address_2" (change)="elementChanged(address_2)"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label floating>State</ion-label>
-                <ion-select>
-                    <ion-option value="nes">NES</ion-option>
-                    <ion-option value="n64">Nintendo64</ion-option>
-                    <ion-option value="ps">PlayStation</ion-option>
-                    <ion-option value="genesis">Sega Genesis</ion-option>
-                    <ion-option value="saturn">Sega Saturn</ion-option>
-                    <ion-option value="snes">SNES</ion-option>
-                  </ion-select>
+                <ion-label floating>State</ion-label>               
+                <ion-select #state formControlName="state">
+                    <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>                   
+                </ion-select>
             </ion-item>
             <ion-item>
                 <ion-label floating>District</ion-label>
-                <ion-select>
-                    <ion-option value="nes">NES</ion-option>
-                    <ion-option value="n64">Nintendo64</ion-option>
-                    <ion-option value="ps">PlayStation</ion-option>
-                    <ion-option value="genesis">Sega Genesis</ion-option>
-                    <ion-option value="saturn">Sega Saturn</ion-option>
-                    <ion-option value="snes">SNES</ion-option>
+                <ion-select #district formControlName="district">
+                    <ion-option *ngFor="let district of districts" [value]="district.id">{{district.name}}</ion-option>
                   </ion-select>
             </ion-item> 
             <ion-item>
                 <ion-label floating>Tehsil</ion-label>
-                <ion-select>
-                    <ion-option value="nes">NES</ion-option>
-                    <ion-option value="n64">Nintendo64</ion-option>
-                    <ion-option value="ps">PlayStation</ion-option>
-                    <ion-option value="genesis">Sega Genesis</ion-option>
-                    <ion-option value="saturn">Sega Saturn</ion-option>
-                    <ion-option value="snes">SNES</ion-option>
+                <ion-select  #tehsil formControlName="tehsil">
+                    <ion-option *ngFor="let tehsil of tehsils" [value]="tehsil.id">{{tehsil.name}}</ion-option>
                   </ion-select>
             </ion-item> 
-            <ion-item>
+            <ion-item [class.invalid]="!profiledetailForm.controls.pincode.valid && (pincodeChanged || submitAttempt)">
                 <ion-label floating>pincode</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
+                <ion-input #pincode type="text" formControlName="pincode" (change)="elementChanged(pincode)"></ion-input>
             </ion-item>     
                  
         </ion-list>
         <div padding>
-            <button ion-button color="primary" block type="submit">Submit</button>
+            <button ion-button color="primary" block (click)="save()">Submit</button>
         </div>
       </form>
 

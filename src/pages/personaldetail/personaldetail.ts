@@ -8,7 +8,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
-import { Calendar } from '@ionic-native/calendar';
+
 
 
 
@@ -26,12 +26,7 @@ import { Calendar } from '@ionic-native/calendar';
 })
 export class PersonaldetailPage {
   profiledetailForm:any;
-  user_detail: any= {
-      first_name:'',
-      father_Name:'',
-      mother_Name:'',
-      email:''
-  }
+  user_detail: any;
   nameChanged: boolean = false;
   fatherNameChanged: boolean = false;
   mobileChanged: boolean = false;
@@ -48,9 +43,10 @@ export class PersonaldetailPage {
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
     public http: Http,
-    private calendar: Calendar,
     public storage: Storage) 
     {
+      this.user_detail= navParams.get('userDetailsData');
+      console.log(JSON.stringify(this.user_detail));
     this.profiledetailForm = this.formBuilder.group({
       name:['', Validators.compose([Validators.required, NameValidator.isValid])],
       fatherName: ['', Validators.compose([Validators.required, NameValidator.isValid])],
@@ -58,39 +54,15 @@ export class PersonaldetailPage {
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
 
     });  
-    this.getProfileDetails();
   }
   ionViewDidLoad() {
+     this.profiledetailForm.controls.name.setValue(this.user_detail.first_name);
+        this.profiledetailForm.controls.fatherName.setValue(this.user_detail.father_name);
+        this.profiledetailForm.controls.motherName.setValue(this.user_detail.mother_name);
+        this.profiledetailForm.controls.email.setValue(this.user_detail.email);
     console.log('ionViewDidLoad PersonaldetailPage');
   }
-  getProfileDetails(){
-    this.loading = this.loadingCtrl.create({
-      content: 'Please Wait'
-    });
-    this.loading.present();
-      let headers = new Headers();
-      let token:string = this.laravel.getToken();
-      console.log(token);
-      headers.append('Authorization', token);
-      this.http.get(this.laravel.getProfileDetailApi(),{
-        headers: headers
-      })
-      .subscribe(res => {
-        this.user_detail = res.json().user_detail;
-        this.profiledetailForm.controls.name.setValue(this.user_detail.first_name);
-        this.profiledetailForm.controls.fatherName.setValue(this.user_detail.father_Name);
-        this.profiledetailForm.controls.motherName.setValue(this.user_detail.mother_Name);
-        this.profiledetailForm.controls.email.setValue(this.user_detail.email);
-      },
-      error => {
-        this.loading.dismiss();
-        let errorMsg = 'Something went wrong. Please contact your app developer';
-        this.toast.create({
-          message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-          duration:3000
-        }).present();
-      });
-    }
+
     save(){
       this.submitAttempt = true;
       if (this.profiledetailForm.valid){
@@ -139,16 +111,6 @@ export class PersonaldetailPage {
         });
       }
   }
-
-  calender(){
-  this.calendar.createCalendar('MyCalendar').then(
-    (msg) => { console.log(msg); },
-    (err) => { console.log(err); }
-  );
-}
-  // dismiss(data) {
-  //   this.viewCtrl.dismiss(data);
-  // }
   elementChanged(input){
     let field = input.ngControl.name;
     this[field + "Changed"] = true;
@@ -161,4 +123,35 @@ export class PersonaldetailPage {
   //   // });
   // }
 }
+  // getProfileDetails(){
+  //   this.loading = this.loadingCtrl.create({
+  //     content: 'Please Wait'
+  //   });
+  //   this.loading.present();
+  //     let headers = new Headers();
+  //     let token:string = this.laravel.getToken();
+  //     console.log(token);
+  //     headers.append('Authorization', token);
+  //     this.http.get(this.laravel.getProfileDetailApi(),{
+  //       headers: headers
+  //     })
+  //     .subscribe(res => {
+  //        this.loading.dismiss();
+  //       this.user_detail = res.json();
+  //       let localuserdetail= this.user_detail[0];
 
+  //       console.log(JSON.stringify(localuserdetail))
+  //       this.profiledetailForm.controls.name.setValue(localuserdetail[0].first_name);
+  //       this.profiledetailForm.controls.fatherName.setValue(localuserdetail[0].father_name);
+  //       this.profiledetailForm.controls.motherName.setValue(localuserdetail[0].mother_name);
+  //       this.profiledetailForm.controls.email.setValue(localuserdetail[0].email);
+  //     },
+  //     error => {
+  //       this.loading.dismiss();
+  //       let errorMsg = 'Something went wrong. Please contact your app developer';
+  //       this.toast.create({
+  //         message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+  //         duration:3000
+  //       }).present();
+  //     });
+  //   }

@@ -1,6 +1,6 @@
 page-profile {
     .toolbar-background{
-        background-color: #488aff;
+        background-color: #4d4183;
     }
     .toolbar-title{
         color: #fff;
@@ -13,7 +13,8 @@ page-profile {
         background: transparent;
     }
     .item ion-icon{
-        margin-left: 8px !important;
+       color: #4d4183;
+       margin-left: 8px !important;
     }
     .list-ios > .item-block:first-child{
         border-top: 0;
@@ -42,6 +43,5 @@ page-profile {
     .item p{
         color: #fff;
     }
-
    
 }

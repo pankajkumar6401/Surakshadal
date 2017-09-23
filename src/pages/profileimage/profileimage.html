@@ -8,7 +8,7 @@
 
   <ion-navbar>
       <ion-item>
-          <button item-start ion-button color="primary" (click)="dismiss()" >
+          <button item-start ion-button color="primary" navPop>
              Cancel
           </button>      
          <ion-title>Profile Image</ion-title>
@@ -20,7 +20,9 @@
 
 <ion-content padding>
   <div class="editprofilepicture">
-    <img src="assets/images/profile.png" class="item item-thumbnail">  
-    <button ion-button (click)="presentActionSheet()" color="light" clear class="button"><ion-icon name= "camera"></ion-icon><span> Edit</span></button>
+          <img *ngIf="user_detail.photo" [src]="laravel.getProflieImagePath(user_detail.photo)">
+          <!-- <img *ngIf="!user_detail.profile_image" src="assets/images/profile.png"> -->
+            
+      <button ion-button (click)="presentActionSheet()" color="light" clear class="button"><ion-icon name= "camera"></ion-icon><span> Edit</span></button>   
   </div>
 </ion-content>

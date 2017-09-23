@@ -42,7 +42,7 @@ export class AddrequestPage {
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
     public http: Http,
-    public storage: Storage) {
+    private storage: Storage) {
 
       this.addrequestForm =this.formBuilder.group({
         type: ['',Validators.required],

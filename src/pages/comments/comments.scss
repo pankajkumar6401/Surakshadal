@@ -37,7 +37,21 @@ page-comments {
         padding: 20px 15px;
         color: #fff;
     }
-    ion-label{
-        margin:0 !important;
+    .comment-list{
+        position: relative;
+    }
+    .comment-box, .comment-list ion-label{
+        margin-bottom:0 !important;
+    }
+    .comment-list img{
+        position: absolute;
+        top: 14px;
+    }
+    .comment-list .comment-time{
+        position: absolute;
+        top: 7px;
+        right: 7px;
+        font-size: 12px;
+        color: #4d4183;
     }
 }

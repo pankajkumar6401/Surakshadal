@@ -17,7 +17,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="request_list">
 
   <ion-card  *ngFor="let request of requests">
       
@@ -27,7 +27,7 @@
           <img *ngIf="!request.profile_image" src="assets/images/profile.png">
         </ion-avatar>
         <h2>{{request.user_name}}</h2>   
-        <ion-note item-end>
+        <ion-note item-end class="request-time">
            {{request.request_time }}
         </ion-note>
       </ion-item>   

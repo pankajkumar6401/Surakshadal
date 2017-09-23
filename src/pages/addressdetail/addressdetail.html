@@ -15,35 +15,23 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <form [formGroup]="profiledetailForm" (click)="save()">
-        <ion-list style="position:relative;">
-            <ion-item [class.invalid]="!profiledetailForm.controls.aadhar.valid && (aadharChanged || submitAttempt)">
-             <ion-label floating>Adhaar Number</ion-label>
-             <ion-input #aadhar type="text" formControlName="aadhar" (change)="elementChanged(aadhar)"></ion-input>
-            </ion-item>
-            <ion-item class="error-message" *ngIf="!profiledetailForm.controls.aadhar.valid  && (aadharChanged || submitAttempt)">
-                <p>Please enter your Aadhar</p>
-              </ion-item>          
-            <!-- <ion-item [class.invalid]="!profiledetailForm.controls.idproof_type.valid && (idproof_typeChanged || submitAttempt)">
-                <ion-label floating>ID Proofs</ion-label>
-                <ion-input #idproof_type type="text" formControlName="idproof_type" (change)="elementChanged(idproof_type)"></ion-input>
-            </ion-item> -->
-            <ion-item [class.invalid]="!profiledetailForm.controls.mobile.valid && (mobileChanged || submitAttempt)">
-                <ion-label floating>Mobile Number</ion-label>
-                <ion-input #mobile type="text" formControlName="mobile" (change)="elementChanged(mobile)"></ion-input>
-                </ion-item>
-            <ion-item [class.invalid]="!profiledetailForm.controls.phone.valid && (phoneChanged || submitAttempt)">
-                <ion-label floating>Phone Number</ion-label>
-                <ion-input #phone type="text" formControlName="phone" (change)="elementChanged(phone)"></ion-input>
-            </ion-item>
-            <ion-item [class.invalid]="!profiledetailForm.controls.address_1.valid && (address_1Changed || submitAttempt)">
+    <form [formGroup]="addressdetailForm" (click)="save()">
+        <ion-list style="position:relative;">          
+               
+            <ion-item [class.invalid]="!addressdetailForm.controls.address_1.valid && (address_1Changed || submitAttempt)">
                 <ion-label floating>Address Line-1</ion-label>
                 <ion-input #address_1 type="text" formControlName="address_1" (change)="elementChanged(address_1)"></ion-input>
             </ion-item>
-            <ion-item [class.invalid]="!profiledetailForm.controls.address_2.valid && (address_2Changed || submitAttempt)">
+            <ion-item class="error-message" *ngIf="!addressdetailForm.controls.address_1.valid  && (address_1Changed || submitAttempt)">
+                    <p>Please enter your name</p>
+                  </ion-item> 
+            <ion-item [class.invalid]="!addressdetailForm.controls.address_2.valid && (address_2Changed || submitAttempt)">
                 <ion-label floating>Address Line-2</ion-label>
                 <ion-input #address_2 type="text" formControlName="address_2" (change)="elementChanged(address_2)"></ion-input>
             </ion-item>
+            <ion-item class="error-message" *ngIf="!addressdetailForm.controls.address_2.valid  && (address_2Changed || submitAttempt)">
+                    <p>Please enter your name</p>
+                  </ion-item> 
             <ion-item>
                 <ion-label floating>State</ion-label>               
                 <ion-select #state formControlName="state">
@@ -62,10 +50,13 @@
                     <ion-option *ngFor="let tehsil of tehsils" [value]="tehsil.id">{{tehsil.name}}</ion-option>
                   </ion-select>
             </ion-item> 
-            <ion-item [class.invalid]="!profiledetailForm.controls.pincode.valid && (pincodeChanged || submitAttempt)">
+            <ion-item [class.invalid]="!addressdetailForm.controls.pincode.valid && (pincodeChanged || submitAttempt)">
                 <ion-label floating>pincode</ion-label>
                 <ion-input #pincode type="text" formControlName="pincode" (change)="elementChanged(pincode)"></ion-input>
-            </ion-item>     
+            </ion-item>   
+            <ion-item class="error-message" *ngIf="!addressdetailForm.controls.pincode.valid  && (pincodeChanged || submitAttempt)">
+                    <p>Please enter your name</p>
+            </ion-item>   
                  
         </ion-list>
         <div padding>

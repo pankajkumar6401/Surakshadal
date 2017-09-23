@@ -17,16 +17,16 @@
 </ion-header>
 <ion-content >
   <ion-list class="comment-box" *ngFor="let comment of comments">
-    <ion-item>
+    <ion-item class="comment-list">
       <ion-avatar item-start>
         <img *ngIf="comment.photo" [src]="laravel.getProflieImagePath(comment.photo)">
         <img *ngIf="!comment.photo" src="assets/images/profile.png">
       </ion-avatar>
       <h3>{{comment.name}}</h3>
       <p text-wrap>{{comment.message}}</p> 
-      <ion-note item-end>
+      <p item-end class="comment-time">
           {{comment.comment_time}}
-       </ion-note>
+       </p>
              
     </ion-item>
   </ion-list>

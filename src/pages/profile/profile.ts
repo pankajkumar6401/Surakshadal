@@ -28,8 +28,9 @@ export class ProfilePage {
     public loadingCtrl: LoadingController,
     public http: Http,
     public modalCtrl: ModalController,
-    public storage: Storage
+    private storage: Storage
   ) {
+  
   }
   ionViewDidLoad() {
      this.loading = this.loadingCtrl.create({
@@ -63,16 +64,16 @@ export class ProfilePage {
       window.location.reload(true)
     }
       openProfileImage() {
-        let profileimage = this.modalCtrl.create('ProfileimagePage');
+        let profileimage = this.modalCtrl.create('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});
         profileimage.present();
       }
       openPersonal() {
-        let personalModal = this.modalCtrl.create('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail']});
+        let personalModal = this.modalCtrl.create('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail'],idproof_types:this.user_detail.id_types});
         personalModal.present();
       }
       
       openAddress() {
-        let addressModal = this.modalCtrl.create('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.districts,tehsils:this.user_detail.tehsils});
+        let addressModal = this.modalCtrl.create('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.district,tehsils:this.user_detail.tehsil});
         addressModal.present();
       }
       openFamily() {

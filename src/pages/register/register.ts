@@ -42,7 +42,7 @@ export class RegisterPage {
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
     public http: Http,
-    public storage: Storage
+    private storage: Storage
   ) {
   
     this.registerForm = this.formBuilder.group({

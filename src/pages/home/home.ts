@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController , ViewController} from 'ionic-angular';
 import { Http} from '@angular/http';
 import { Storage } from '@ionic/storage';
+import {App} from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -12,8 +13,8 @@ import { Storage } from '@ionic/storage';
 export class HomePage {
     requests:any;
     loading:any;
-    request={ };
-    request_id:any;  
+    // request={ };
+    // request_id:any;  
     constructor(
        public navCtrl: NavController, 
        public navParams:NavParams, 
@@ -22,7 +23,8 @@ export class HomePage {
        public loadingCtrl: LoadingController,
        public toast: ToastController,
        public modalCtrl: ModalController,
-       public storage: Storage,
+       private storage: Storage,
+       private app:App,
        private viewCtrl:ViewController) {
          }
          addComments(request_id,comments) {          
@@ -55,9 +57,9 @@ export class HomePage {
             })
           }
         goToLoginPage(){
-          this.storage.remove('surakshadal_userTokenInfo')
-          this.navCtrl.setRoot('LoginPage')
-          window.location.reload(true)
+          // this.storage.remove('surakshadal_userTokenInfo')
+          this.app.getRootNav().setRoot('LoginPage');
+          // window.location.reload(true)
         }
         
     

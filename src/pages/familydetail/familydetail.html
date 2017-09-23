@@ -15,11 +15,11 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <form>
+    <form [formGroup]="familydetailForm" (click)="save()">
         <ion-list style="position:relative;">
-            <ion-item>
+            <ion-item [class.invalid]="!familydetailForm.controls.member.valid && (memberChanged || submitAttempt)">
              <ion-label floating>Family Member Name</ion-label>
-             <ion-input type="text" autocapitalize="off"></ion-input>
+              <ion-input #member type="text" formControlName="member" (change)="elementChanged(member)"></ion-input>
             </ion-item>
             <ion-item>
                <ion-label floating>Relation Type</ion-label>                
@@ -31,17 +31,17 @@
                     <ion-option value="Other">Other</ion-option>                    
                 </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item [class.invalid]="!familydetailForm.controls.familymobile.valid && (familymobileChanged || submitAttempt)">
                 <ion-label floating>Phone Number</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
+                 <ion-input #familymobile type="text" formControlName="familymobile" (change)="elementChanged(familymobile)"></ion-input>
             </ion-item>
-            <ion-item>               
+            <ion-item [class.invalid]="!familydetailForm.controls.familydetail.valid && (familydetailChanged || submitAttempt)">               
                 <ion-label floating>Family Detail</ion-label>
-                <ion-input type="text" autocapitalize="off"></ion-input>
+                 <ion-input #familydetail type="text" formControlName="familydetail" (change)="elementChanged(familydetail)"></ion-input>
             </ion-item> 
         </ion-list>
         <div padding>
-            <button ion-button color="primary" block type="submit">Submit</button>
+            <button ion-button color="primary" block (click)="save()">Submit</button>
         </div>
     </form>
 </ion-content>

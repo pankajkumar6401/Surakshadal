@@ -33,6 +33,7 @@ export class PersonaldetailPage {
   emailChanged: boolean = false;
   submitAttempt: boolean = false;
   loading:any;
+  idproof_types=[];
 
   constructor(
     public navCtrl: NavController, 
@@ -43,15 +44,21 @@ export class PersonaldetailPage {
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
     public http: Http,
-    public storage: Storage) 
+    private storage: Storage) 
     {
       this.user_detail= navParams.get('userDetailsData');
+      this.idproof_types= navParams.get('idproof_types');
       console.log(JSON.stringify(this.user_detail));
-    this.profiledetailForm = this.formBuilder.group({
+      this.profiledetailForm = this.formBuilder.group({
       name:['', Validators.compose([Validators.required, NameValidator.isValid])],
       fatherName: ['', Validators.compose([Validators.required, NameValidator.isValid])],
       motherName: ['', Validators.compose([Validators.required, NameValidator.isValid])],
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
+      mobile_no: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
+      phone: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
+      aadhar:['', Validators.compose([Validators.required, NumberValidator.isValid])],
+      id_type: ['', Validators.required],          
+      dob: ['', Validators.required]          
 
     });  
   }
@@ -60,6 +67,11 @@ export class PersonaldetailPage {
         this.profiledetailForm.controls.fatherName.setValue(this.user_detail.father_name);
         this.profiledetailForm.controls.motherName.setValue(this.user_detail.mother_name);
         this.profiledetailForm.controls.email.setValue(this.user_detail.email);
+        this.profiledetailForm.controls.mobile_no.setValue(this.user_detail.mobile);
+        this.profiledetailForm.controls.phone.setValue(this.user_detail.phone);
+        this.profiledetailForm.controls.aadhar.setValue(this.user_detail.aadhar);
+        this.profiledetailForm.controls.id_type.setValue(this.user_detail.idproof_type);
+        this.profiledetailForm.controls.dob.setValue(this.user_detail.dob);
     console.log('ionViewDidLoad PersonaldetailPage');
   }
 
@@ -68,37 +80,38 @@ export class PersonaldetailPage {
       if (this.profiledetailForm.valid){
         let profileData = {
           'first_name': this.profiledetailForm.controls.name.value,
-          'father_Name': this.profiledetailForm.controls.fatherName.value,
+          'father_name': this.profiledetailForm.controls.fatherName.value,
           'mother_Name': this.profiledetailForm.controls.motherName.value,
-          'email': this.profiledetailForm.controls.email.value
+          'email': this.profiledetailForm.controls.email.value,
+          'phone': this.profiledetailForm.controls.phone.value,
+          'mobile_no': this.profiledetailForm.controls.mobile_no.value,
+          'aadhar': this.profiledetailForm.controls.aadhar.value,
+          'dob': this.profiledetailForm.controls.dob.value,
+          'id_type': this.profiledetailForm.controls.id_type.value,
         }
-    
         let headers = new Headers();
         let token:string = this.laravel.getToken();
+        console.log(token);
         headers.append('Authorization', token);
         this.loading = this.loadingCtrl.create({
-          content: 'Please Wait'
-        })
+          content: 'Please wait...'
+        });
         this.loading.present();
-        this.http.post(this.laravel.getProfileDetailApi(),profileData,{
+        this.http.post(this.laravel.getUpdatePersonalDetail(),profileData,{
           headers: headers
-        }).subscribe(res=>{
-          this.loading.dismiss();
-          if(res.json().success){
+        }).map(res => res.json())
+        .subscribe(res => {
+          //success
+          // this.navCtrl.setRoot('HomePage'); it's not required here 
+          /// now we have to dismiss loading if we got any response from back-end 
+          this.loading.dismiss(); 
+          if(res.success){
             this.navCtrl.setRoot('PersonaldetailPage');
           }else{
-            let errorMsg = 'Something went wrong. Please contact your app developer';
-            if(res.json().hasOwnProperty('msg')){
-              if(res.json().msg instanceof String){
-                errorMsg = res.json().msg
-              }else{
-                errorMsg = res.json().msg.join();
-              }
-            }
             this.toast.create({
-              message: errorMsg,
-              duration: 3000
-            }).present();  
+              message: 'Something went wrong. Please contact your app developer' ,
+              duration:3000
+            }).present();
           }
         },
         error => {
@@ -115,43 +128,5 @@ export class PersonaldetailPage {
     let field = input.ngControl.name;
     this[field + "Changed"] = true;
   }
-  
 
-  // ionViewDidLoad() {         
-  //   // this.loading = this.loadingCtrl.create({
-  //   // content: 'Please wait...'
-  //   // });
-  // }
 }
-  // getProfileDetails(){
-  //   this.loading = this.loadingCtrl.create({
-  //     content: 'Please Wait'
-  //   });
-  //   this.loading.present();
-  //     let headers = new Headers();
-  //     let token:string = this.laravel.getToken();
-  //     console.log(token);
-  //     headers.append('Authorization', token);
-  //     this.http.get(this.laravel.getProfileDetailApi(),{
-  //       headers: headers
-  //     })
-  //     .subscribe(res => {
-  //        this.loading.dismiss();
-  //       this.user_detail = res.json();
-  //       let localuserdetail= this.user_detail[0];
-
-  //       console.log(JSON.stringify(localuserdetail))
-  //       this.profiledetailForm.controls.name.setValue(localuserdetail[0].first_name);
-  //       this.profiledetailForm.controls.fatherName.setValue(localuserdetail[0].father_name);
-  //       this.profiledetailForm.controls.motherName.setValue(localuserdetail[0].mother_name);
-  //       this.profiledetailForm.controls.email.setValue(localuserdetail[0].email);
-  //     },
-  //     error => {
-  //       this.loading.dismiss();
-  //       let errorMsg = 'Something went wrong. Please contact your app developer';
-  //       this.toast.create({
-  //         message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-  //         duration:3000
-  //       }).present();
-  //     });
-  //   }

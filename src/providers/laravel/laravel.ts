@@ -43,12 +43,23 @@ export class LaravelProvider {
     return this.getUrl() + 'api/post/comment';
   }
   getProflieImagePath(imagefile){
-
     return this.getUrl() + 'storage/images/profile/' + imagefile;
   }
   getRequestImagePath(imagefile){    
         return this.getUrl() + 'storage/images/request_images/' + imagefile;
-      }
+  }
+  getUpdateProfileImage(){
+    return this.getUrl() + 'api/update/profile/image';
+  }
+  getUpdatePersonalDetail(){
+    return this.getUrl() + 'api/update/personal/detail';
+  }
+  getUpdateAddressDetail(){
+    return this.getUrl() + 'api/update/address';
+  } 
+  getUpdateFamilyDetail(){
+    return this.getUrl() + 'api/update/family/details';
+  }  
   setToken(val){
     this.token = val;
   }

@@ -27,7 +27,7 @@ export class I18nPage {
     public navCtrl: NavController, 
     public navParams: NavParams,
     translate: TranslateService,
-    public storage: Storage
+    private storage: Storage
   ) {
     this.translate = translate;
   }

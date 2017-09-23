@@ -21,84 +21,83 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'addressdetail.html',
 })
 export class AddressdetailPage {
-  profiledetailForm:any;
+  addressdetailForm:any;
   user_detail:any;
   submitAttempt: boolean = false;
   loading:any;
   states=[];
   districts=[];
   tehsils=[];
-  constructor(public navCtrl: NavController, public navParams: NavParams, public viewCtrl: ViewController, private formBuilder: FormBuilder,
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public viewCtrl: ViewController, 
+    public formBuilder: FormBuilder,
     public toast: ToastController,   
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
-    public http: Http, ) {
-      this.user_detail= navParams.get('userAddressData');
-     this.states = navParams.get('states');
-     this.districts = navParams.get('districts');
-     this.tehsils = navParams.get('tehsils');
-      console.log(JSON.stringify(this.user_detail));
-      this.profiledetailForm = this.formBuilder.group({
-        aadhar:['', Validators.compose([Validators.required, NumberValidator.isValid])],
-        pincode: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
-        mobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
-        phone: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
+    public http: Http,
+    private storage: Storage ) 
+    {
+        this.user_detail= navParams.get('userAddressData');
+        this.states = navParams.get('states');
+        this.districts = navParams.get('districts');
+        this.tehsils = navParams.get('tehsils');  
+        console.log(JSON.stringify(this.user_detail));
+        this.addressdetailForm = this.formBuilder.group({        
+        pincode: ['', Validators.compose([Validators.required, NumberValidator.isValid])],       
         address_1: ['', Validators.required],
         address_2: ['', Validators.required],
         state: ['', Validators.required],       
         district: ['', Validators.required] ,      
-        tehsil: ['', Validators.required]       
-  
+        tehsil: ['', Validators.required]
       });  
   }
   ionViewDidLoad() {
-    this.profiledetailForm.controls.aadhar.setValue(this.user_detail.aadhar);
-    this.profiledetailForm.controls.pincode.setValue(this.user_detail.pincode);
-    this.profiledetailForm.controls.mobile.setValue(this.user_detail.mobile);
-    this.profiledetailForm.controls.phone.setValue(this.user_detail.phone);
-    this.profiledetailForm.controls.address_1.setValue(this.user_detail.address_1);
-    this.profiledetailForm.controls.address_2.setValue(this.user_detail.address_2);
-    this.profiledetailForm.controls.state.setValue(this.user_detail.state_id);
-    this.profiledetailForm.controls.district.setValue(this.user_detail.district_id);
-    this.profiledetailForm.controls.tehsil.setValue(this.user_detail.tehsil_id);
+   
+    this.addressdetailForm.controls.pincode.setValue(this.user_detail.pincode);    
+    this.addressdetailForm.controls.address_1.setValue(this.user_detail.address_1);
+    this.addressdetailForm.controls.address_2.setValue(this.user_detail.address_2);
+    this.addressdetailForm.controls.state.setValue(this.user_detail.state_id);
+    this.addressdetailForm.controls.district.setValue(this.user_detail.district_id);
+    this.addressdetailForm.controls.tehsil.setValue(this.user_detail.tehsil_id);
     console.log('ionViewDidLoad AddressdetailPage');
   }
   save(){
     this.submitAttempt = true;
-    if (this.profiledetailForm.valid){
+    if (this.addressdetailForm.valid){
       let profileData = {
-        'first_name': this.profiledetailForm.controls.name.value,
-        'father_Name': this.profiledetailForm.controls.fatherName.value,
-        'mother_Name': this.profiledetailForm.controls.motherName.value,
-        'email': this.profiledetailForm.controls.email.value
+       
+        'pincode': this.addressdetailForm.controls.pincode.value,
+        'address_1': this.addressdetailForm.controls.address_1.value,
+        'address_2': this.addressdetailForm.controls.address_2.value,
+        'state': this.addressdetailForm.controls.state.value,
+        'district': this.addressdetailForm.controls.district.value,
+        'tehsil': this.addressdetailForm.controls.tehsil.value
       }
-  
       let headers = new Headers();
       let token:string = this.laravel.getToken();
+      console.log(token);
       headers.append('Authorization', token);
       this.loading = this.loadingCtrl.create({
-        content: 'Please Wait'
-      })
+        content: 'Please wait...'
+      });
       this.loading.present();
-      this.http.post(this.laravel.getProfileDetailApi(),profileData,{
+      this.http.post(this.laravel.getUpdateAddressDetail(),profileData,{
         headers: headers
-      }).subscribe(res=>{
-        this.loading.dismiss();
-        if(res.json().success){
-          this.navCtrl.setRoot('PersonaldetailPage');
+      }).map(res => res.json())
+      .subscribe(res => {
+        //success
+        // this.navCtrl.setRoot('HomePage'); it's not required here 
+        /// now we have to dismiss loading if we got any response from back-end 
+        this.loading.dismiss(); 
+        if(res.success){
+          this.navCtrl.setRoot('AddressdetailPage');
         }else{
-          let errorMsg = 'Something went wrong. Please contact your app developer';
-          if(res.json().hasOwnProperty('msg')){
-            if(res.json().msg instanceof String){
-              errorMsg = res.json().msg
-            }else{
-              errorMsg = res.json().msg.join();
-            }
-          }
           this.toast.create({
-            message: errorMsg,
-            duration: 3000
-          }).present();  
+            message: 'Something went wrong. Please contact your app developer' ,
+            duration:3000
+          }).present();
         }
       },
       error => {
@@ -111,5 +110,8 @@ export class AddressdetailPage {
       });
     }
 }
-
+elementChanged(input){
+  let field = input.ngControl.name;
+  this[field + "Changed"] = true;
+}
 }

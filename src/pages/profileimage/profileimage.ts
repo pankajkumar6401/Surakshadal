@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,LoadingController, ViewController } from 'ionic-angular';
+import {IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController } from 'ionic-angular';
 import { ActionSheetController } from 'ionic-angular'
 import { Camera, CameraOptions } from '@ionic-native/camera';
-
+import { Http, Headers } from '@angular/http';
+import { LaravelProvider } from './../../providers/laravel/laravel';
+import { Component } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+import { Storage } from '@ionic/storage';
+import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the ProfileimagePage page.
  *
@@ -16,13 +20,23 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
   templateUrl: 'profileimage.html',
 })
 export class ProfileimagePage {
+  profilepictureForm:any;
   image:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController, ) {
+  user_detail:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams,private camera:Camera, public actionSheetCtrl: ActionSheetController,public viewCtrl: ViewController, private storage: Storage,
+    public toast: ToastController,
+    private formBuilder: FormBuilder, 
+    public laravel: LaravelProvider,
+    public loadingCtrl: LoadingController,
+    public http: Http, ) {
+    this.user_detail= navParams.get('profileimageData');
+    console.log(JSON.stringify(this.user_detail));
+    // this.profilepictureForm = this.formBuilder.group({
+    //   photo:['', Validators.required]});
   }
-  dismiss(data) {
-    this.viewCtrl.dismiss(data);
-  }
+
   ionViewDidLoad() {
+    // this.user_detail.photo.setValue(this.user_detail.photo);
     console.log('ionViewDidLoad ProfileimagePage');
   }
   presentActionSheet() {

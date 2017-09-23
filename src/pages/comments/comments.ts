@@ -29,7 +29,7 @@ export class CommentsPage {
     public viewCtrl: ViewController,
     public http: Http,
     public laravel:LaravelProvider,
-    public storage: Storage,
+    private storage: Storage,
     public toast: ToastController,
     private formBuilder: FormBuilder,
     public loadingCtrl: LoadingController ) {

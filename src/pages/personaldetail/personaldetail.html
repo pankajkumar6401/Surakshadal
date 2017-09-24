@@ -50,7 +50,7 @@
           </ion-item>
           <ion-item [class.invalid]="!profiledetailForm.controls.mobile_no.valid && (mobile_noChanged || submitAttempt)">
               <ion-label floating>Mobile Number</ion-label>
-              <ion-input #mobile_no type="text" formControlName="mobile_no" (change)="elementChanged(mobile_no)"></ion-input>
+              <ion-input #mobile_no type="text" formControlName="mobile_no" (change)="elementChanged(mobile_no)" ></ion-input>
               </ion-item>
           <ion-item [class.invalid]="!profiledetailForm.controls.phone.valid && (phoneChanged || submitAttempt)">
               <ion-label floating>Phone Number</ion-label>
@@ -72,6 +72,16 @@
                 <ion-select #id_type formControlName="id_type" (change)="elementChanged(id_type)">
                     <ion-option *ngFor="let idproof_type of idproof_types" [value]="idproof_type.id">{{idproof_type.name}}</ion-option>                   
                 </ion-select>
+            </ion-item> 
+            <ion-item [class.invalid]="!profiledetailForm.controls.idnumber.valid && (idnumberChanged || submitAttempt)">
+                <ion-label floating>ID Type Number</ion-label>
+                <ion-input #idnumber type="text" formControlName="idnumber" (change)="elementChanged(idnumber)"></ion-input>
+            </ion-item> 
+            <ion-item class="error-message" *ngIf="!profiledetailForm.controls.idnumber.valid  && (idnumberChanged || submitAttempt)">
+                <p>Please enter your Aadhar</p>
+            </ion-item>
+            <ion-item [class.invalid]="!profiledetailForm.controls.user_id.valid && (user_idChanged || submitAttempt)" class="hidden-field">                
+                <ion-input #user_id type="hidden" formControlName="user_id" (change)="elementChanged(user_id)"></ion-input>
             </ion-item> 
       </ion-list>
       <div padding>

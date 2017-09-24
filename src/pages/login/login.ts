@@ -75,6 +75,7 @@ export class LoginPage {
           password:credential.password,
           scope:'*'
         }).subscribe(res => {
+          localStorage['surakshadal_userTokenInfo']=res.json().token_type+' '+res.json().access_token;
           this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
             .then(
                 data => {

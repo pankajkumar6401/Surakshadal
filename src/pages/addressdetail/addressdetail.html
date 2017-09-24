@@ -15,7 +15,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <form [formGroup]="addressdetailForm" (click)="save()">
+    <form [formGroup]="addressdetailForm">
         <ion-list style="position:relative;">          
                
             <ion-item [class.invalid]="!addressdetailForm.controls.address_1.valid && (address_1Changed || submitAttempt)">
@@ -34,13 +34,13 @@
                   </ion-item> 
             <ion-item>
                 <ion-label floating>State</ion-label>               
-                <ion-select #state formControlName="state">
+                <ion-select #state formControlName="state" (ionChange)="getDist()">
                     <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>                   
                 </ion-select>
             </ion-item>
             <ion-item>
                 <ion-label floating>District</ion-label>
-                <ion-select #district formControlName="district">
+                <ion-select #district formControlName="district" (ionChange)="getTehsil()">
                     <ion-option *ngFor="let district of districts" [value]="district.id">{{district.name}}</ion-option>
                   </ion-select>
             </ion-item> 
@@ -56,6 +56,9 @@
             </ion-item>   
             <ion-item class="error-message" *ngIf="!addressdetailForm.controls.pincode.valid  && (pincodeChanged || submitAttempt)">
                     <p>Please enter your name</p>
+            </ion-item> 
+            <ion-item [class.invalid]="!addressdetailForm.controls.user_id.valid && (user_idChanged || submitAttempt)" class="hidden-field">                
+                <ion-input #user_id type="hidden" formControlName="user_id" (change)="elementChanged(user_id)"></ion-input>
             </ion-item>   
                  
         </ion-list>

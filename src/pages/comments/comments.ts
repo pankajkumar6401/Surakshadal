@@ -23,6 +23,7 @@ export class CommentsPage {
   comments:any;
   request_id:any;
   loading:any;
+  loggedUserImage:any;
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -33,6 +34,7 @@ export class CommentsPage {
     public toast: ToastController,
     private formBuilder: FormBuilder,
     public loadingCtrl: LoadingController ) {
+     this.loggedUserImage=localStorage['photo']
       this.addcommentForm =this.formBuilder.group({        
         message: ['',Validators.required]
       });

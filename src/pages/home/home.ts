@@ -1,7 +1,7 @@
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController , ViewController} from 'ionic-angular';
-import { Http} from '@angular/http';
+import { Http, Headers} from '@angular/http';
 import { Storage } from '@ionic/storage';
 import {App} from 'ionic-angular';
 
@@ -37,13 +37,16 @@ export class HomePage {
           content: 'Please wait...'
         });
         this.loading.present();
-        this.http.get(this.laravel.getRequestApi()).subscribe(res => {
-          this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
-            .then(
-                data => {
-                  this.requests=res.json()
-                  // console.log(JSON.stringify(this.requests))
-                  this.loading.dismiss();
+        let headers = new Headers();
+        let token:string = this.laravel.getToken();
+        console.log(token);
+        headers.append('Authorization', token);
+        this.http.get(this.laravel.getProfileDetailApi(),{
+          headers: headers
+        })
+        .subscribe(res => {
+          this.loading.dismiss();
+          this.requests = res.json();
 
                 },
                 error => {
@@ -54,8 +57,8 @@ export class HomePage {
                   }).present();
               });
    
-            })
-          }
+            }
+          
         goToLoginPage(){
           // this.storage.remove('surakshadal_userTokenInfo')
           this.app.getRootNav().setRoot('LoginPage');

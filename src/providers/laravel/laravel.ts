@@ -60,6 +60,16 @@ export class LaravelProvider {
   getUpdateFamilyDetail(){
     return this.getUrl() + 'api/update/family/details';
   }  
+  getStateId(id){
+    return this.getUrl() + 'api/get/district/'+id;
+  }
+  getTehsil(id){
+    return this.getUrl() + 'api/get/tehsil/'+id;
+  }
+
+
+ 
+
   setToken(val){
     this.token = val;
   }

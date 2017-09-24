@@ -29,6 +29,7 @@ export class FamilydetailPage {
   familydetail: boolean = false;
   submitAttempt: boolean = false;
   loading:any;
+  relations=[];
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -40,59 +41,52 @@ export class FamilydetailPage {
     public http: Http,
     private storage: Storage) {
 
-      this.user_detail= navParams.get('userDetailsData');
+      this.user_detail= navParams.get('userFamilyData');
+      this.relations= navParams.get('relations');
       console.log(JSON.stringify(this.user_detail));
       this.familydetailForm = this.formBuilder.group({
         member:['', Validators.required]   ,
         familymobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
-        familydetail: ['', Validators.required]
+        familydetail: ['', Validators.required],
+        relation_type:['']
       });
   }
   dismiss(data) {
     this.viewCtrl.dismiss(data);
   }
   ionViewDidLoad() {
-    // this.familydetailForm.controls.name.setValue(this.user_detail.first_name);
-    // this.familydetailForm.controls.fatherName.setValue(this.user_detail.father_name);
-    // this.familydetailForm.controls.motherName.setValue(this.user_detail.mother_name);
-    // this.familydetailForm.controls.email.setValue(this.user_detail.email);
     console.log('ionViewDidLoad FamilydetailPage');
   }
   save(){
     this.submitAttempt = true;
     if (this.familydetailForm.valid){
       let profileData = {
-        'member': this.familydetailForm.controls.member.value,
-        'familynumber': this.familydetailForm.controls.familynumber.value,
-        'familydetail': this.familydetailForm.controls.familydetail.value
+        'name': this.familydetailForm.controls.member.value,
+        'contact_no': this.familydetailForm.controls.familymobile.value,
+        'relation_type': this.familydetailForm.controls.relation_type.value
       }
   
       let headers = new Headers();
       let token:string = this.laravel.getToken();
+      console.log(token);
       headers.append('Authorization', token);
       this.loading = this.loadingCtrl.create({
-        content: 'Please Wait'
-      })
+        content: 'Please wait...'
+      });
       this.loading.present();
       this.http.post(this.laravel.getUpdateFamilyDetail(),profileData,{
         headers: headers
-      }).subscribe(res=>{
+      }).map(res => res.json())
+      .subscribe(res => {
+        
         this.loading.dismiss();
-        if(res.json().success){
-          this.navCtrl.setRoot('PersonaldetailPage');
+        if(res.success){
+          this.navCtrl.setRoot('FamilydetailPage');
         }else{
-          let errorMsg = 'Something went wrong. Please contact your app developer';
-          if(res.json().hasOwnProperty('msg')){
-            if(res.json().msg instanceof String){
-              errorMsg = res.json().msg
-            }else{
-              errorMsg = res.json().msg.join();
-            }
-          }
           this.toast.create({
-            message: errorMsg,
-            duration: 3000
-          }).present();  
+            message: 'family Detail added' ,
+            duration:3000
+          }).present();
         }
       },
       error => {

@@ -36,7 +36,8 @@
     <ion-item class="my-comment">
       <ion-avatar item-start>
         <!-- <img *ngIf="comment.profile_image" [src]="laravel.getProflieImagePath(comment.profile_image)"> -->
-        <img src="assets/images/profile.png">
+        <img *ngIf="!loggedUserImage" src="assets/images/profile.png">
+         <img *ngIf="loggedUserImage" [src]="laravel.getProflieImagePath(loggedUserImage)">
       </ion-avatar>  
       <ion-item [class.invalid]="!addcommentForm.controls.message.valid && (messageChanged || submitAttempt)">
         <ion-input #message type="text" formControlName="message"  placeholder="write a comment"></ion-input>

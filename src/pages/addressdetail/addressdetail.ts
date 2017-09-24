@@ -45,12 +45,13 @@ export class AddressdetailPage {
         this.tehsils = navParams.get('tehsils');  
         console.log(JSON.stringify(this.user_detail));
         this.addressdetailForm = this.formBuilder.group({        
-        pincode: ['', Validators.compose([Validators.required, NumberValidator.isValid])],       
-        address_1: ['', Validators.required],
-        address_2: ['', Validators.required],
-        state: ['', Validators.required],       
-        district: ['', Validators.required] ,      
-        tehsil: ['', Validators.required]
+        pincode: [''],       
+        address_1: [''],
+        address_2: [''],
+        state: [''],       
+        district: [''] ,      
+        tehsil: [''],
+        user_id:['']     
       });  
   }
   ionViewDidLoad() {
@@ -61,6 +62,7 @@ export class AddressdetailPage {
     this.addressdetailForm.controls.state.setValue(this.user_detail.state_id);
     this.addressdetailForm.controls.district.setValue(this.user_detail.district_id);
     this.addressdetailForm.controls.tehsil.setValue(this.user_detail.tehsil_id);
+    this.addressdetailForm.controls.user_id.setValue(this.user_detail.id);
     console.log('ionViewDidLoad AddressdetailPage');
   }
   save(){
@@ -69,11 +71,13 @@ export class AddressdetailPage {
       let profileData = {
        
         'pincode': this.addressdetailForm.controls.pincode.value,
-        'address_1': this.addressdetailForm.controls.address_1.value,
-        'address_2': this.addressdetailForm.controls.address_2.value,
+        'address_line_1': this.addressdetailForm.controls.address_1.value,
+        'address_line_2': this.addressdetailForm.controls.address_2.value,
         'state': this.addressdetailForm.controls.state.value,
-        'district': this.addressdetailForm.controls.district.value,
-        'tehsil': this.addressdetailForm.controls.tehsil.value
+        'distric': this.addressdetailForm.controls.district.value,
+        'tehsil': this.addressdetailForm.controls.tehsil.value,
+        'user_id': this.addressdetailForm.controls.user_id.value
+  
       }
       let headers = new Headers();
       let token:string = this.laravel.getToken();
@@ -95,14 +99,14 @@ export class AddressdetailPage {
           this.navCtrl.setRoot('AddressdetailPage');
         }else{
           this.toast.create({
-            message: 'Something went wrong. Please contact your app developer' ,
+            message: 'Address has been Updated' ,
             duration:3000
           }).present();
         }
       },
       error => {
         this.loading.dismiss();
-        let errorMsg = 'Something went wrong. Please contact your app developer';
+        let errorMsg = 'Something went wrong.';
         this.toast.create({
           message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
           duration:3000
@@ -114,4 +118,82 @@ elementChanged(input){
   let field = input.ngControl.name;
   this[field + "Changed"] = true;
 }
+getDist(){
+ // alert( this.addressdetailForm.controls.state.value)
+         let headers = new Headers();
+      let token:string = this.laravel.getToken();
+      console.log(token);
+      headers.append('Authorization', token);
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+       this.loading.present();
+      this.http.get(this.laravel.getStateId(this.addressdetailForm.controls.state.value),{
+        headers: headers
+      }).map(res => res.json())
+      .subscribe(res => {
+        this.loading.dismiss();
+        this.districts=res;
+        //success
+        
+        // this.navCtrl.setRoot('HomePage'); it's not required here 
+        /// now we have to dismiss loading if we got any response from back-end 
+        // if(res.success){
+        //  // this.navCtrl.setRoot('AddressdetailPage');
+        // }else{
+        //   this.toast.create({
+        //     message: 'Something went wrong. Please contact your app developer' ,
+        //     duration:3000
+        //   }).present();
+        // }
+      },
+      error => {
+        this.loading.dismiss();
+        let errorMsg = 'Something went wrong. Please contact your app developer';
+        this.toast.create({
+          message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+          duration:3000
+        }).present();
+      });
+    }
+    getTehsil(){
+        //alert( this.addressdetailForm.controls.district.value)
+         let headers = new Headers();
+      let token:string = this.laravel.getToken();
+      console.log(token);
+      headers.append('Authorization', token);
+      this.loading = this.loadingCtrl.create({
+        content: 'Please wait...'
+      });
+       this.loading.present();
+      this.http.get(this.laravel.getTehsil(this.addressdetailForm.controls.district.value),{
+        headers: headers
+      }).map(res => res.json())
+      .subscribe(res => {
+        this.loading.dismiss();
+        this.tehsils=res;
+        //success
+        
+        // this.navCtrl.setRoot('HomePage'); it's not required here 
+        /// now we have to dismiss loading if we got any response from back-end 
+        // if(res.success){
+        //  // this.navCtrl.setRoot('AddressdetailPage');
+        // }else{
+        //   this.toast.create({
+        //     message: 'Something went wrong. Please contact your app developer' ,
+        //     duration:3000
+        //   }).present();
+        // }
+      },
+      error => {
+        this.loading.dismiss();
+        let errorMsg = 'Something went wrong. Please contact your app developer';
+        this.toast.create({
+          message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+          duration:3000
+        }).present();
+      });
+    }
+
 }
+

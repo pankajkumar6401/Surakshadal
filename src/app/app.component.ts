@@ -29,10 +29,11 @@ export class MyApp {
 
       this.storage.get('surakshadal_userTokenInfo').then((val) => {
         // alert(val)
-        if(val){
-          console.log(val);
+        let myVal=localStorage['surakshadal_userTokenInfo']
+        if(myVal){
+          console.log(myVal);
           this.loading.dismiss();
-          this.laravel.setToken(val);
+          this.laravel.setToken(myVal);
           this.nav.setRoot('TabRootPage');
         }else{
           this.loading.dismiss();

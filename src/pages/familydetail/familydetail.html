@@ -15,20 +15,16 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <form [formGroup]="familydetailForm" (click)="save()">
+    <form [formGroup]="familydetailForm" >
         <ion-list style="position:relative;">
             <ion-item [class.invalid]="!familydetailForm.controls.member.valid && (memberChanged || submitAttempt)">
              <ion-label floating>Family Member Name</ion-label>
               <ion-input #member type="text" formControlName="member" (change)="elementChanged(member)"></ion-input>
             </ion-item>
-            <ion-item>
+            <ion-item [class.invalid]="!familydetailForm.controls.relation_type.valid && (relation_typeChanged || submitAttempt)">
                <ion-label floating>Relation Type</ion-label>                
-                <ion-select>
-                    <ion-option value="Father">Father</ion-option>
-                    <ion-option value="Mother">Mother</ion-option>
-                    <ion-option value="Brother">Brother</ion-option>
-                    <ion-option value="Sister">Sister</ion-option>
-                    <ion-option value="Other">Other</ion-option>                    
+                <ion-select #relation_type formControlName="relation_type" (change)="elementChanged(relation_type)">
+                    <ion-option *ngFor="let relation of relations" [value]="relation.id">{{relation.name}}</ion-option>                  
                 </ion-select>
             </ion-item>
             <ion-item [class.invalid]="!familydetailForm.controls.familymobile.valid && (familymobileChanged || submitAttempt)">

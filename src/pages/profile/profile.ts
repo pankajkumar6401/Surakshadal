@@ -21,6 +21,8 @@ export class ProfilePage {
   loading:any;
   visiblePass:boolean = false;
   user_detail:any;
+  name:any;
+  photo:any;
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public toast: ToastController,
@@ -47,7 +49,10 @@ export class ProfilePage {
       .subscribe(res => {
          this.loading.dismiss();
          this.user_detail = res.json();
-
+         localStorage['name']=this.user_detail['user_detail'].first_name+' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name;
+         localStorage['photo']=this.user_detail['user_detail'].photo;
+       this.photo=localStorage['photo'];
+       this.name=localStorage['name'];
       },
       error => {
         this.loading.dismiss();
@@ -59,6 +64,7 @@ export class ProfilePage {
       });
     }
     goToLoginPage(){
+      localStorage.clear();
       this.storage.remove('surakshadal_userTokenInfo')
       this.navCtrl.setRoot('LoginPage')
       window.location.reload(true)

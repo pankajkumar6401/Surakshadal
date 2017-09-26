@@ -66,9 +66,15 @@ export class LaravelProvider {
   getTehsil(id){
     return this.getUrl() + 'api/get/tehsil/'+id;
   }
-
-
- 
+  getRequestType(){
+    return this.getUrl() +'api/get/request/type';
+  }
+  getLikeApi(id){
+    return this.getUrl() +'api/addlike/' +id;
+  }
+  getUnlikeApi(){
+    return this.getUrl() +'api/dislike/{id}';
+  }
 
   setToken(val){
     this.token = val;

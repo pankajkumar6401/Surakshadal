@@ -6,6 +6,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -29,11 +30,11 @@ export class MyApp {
 
       this.storage.get('surakshadal_userTokenInfo').then((val) => {
         // alert(val)
-        let myVal=localStorage['surakshadal_userTokenInfo']
-        if(myVal){
-          console.log(myVal);
+        // let myVal=localStorage['surakshadal_userTokenInfo']
+        if(val){
+          console.log(val);
           this.loading.dismiss();
-          this.laravel.setToken(myVal);
+          this.laravel.setToken(val);
           this.nav.setRoot('TabRootPage');
         }else{
           this.loading.dismiss();

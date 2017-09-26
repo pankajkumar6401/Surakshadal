@@ -48,7 +48,7 @@ export class FamilydetailPage {
         member:['', Validators.required]   ,
         familymobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
         familydetail: ['', Validators.required],
-        relation_type:['']
+        relation:['']
       });
   }
   dismiss(data) {
@@ -63,7 +63,7 @@ export class FamilydetailPage {
       let profileData = {
         'name': this.familydetailForm.controls.member.value,
         'contact_no': this.familydetailForm.controls.familymobile.value,
-        'relation_type': this.familydetailForm.controls.relation_type.value
+        'relation_type': this.familydetailForm.controls.relation.value
       }
   
       let headers = new Headers();

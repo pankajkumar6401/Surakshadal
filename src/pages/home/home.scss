@@ -26,5 +26,17 @@ page-home {
         font-size: 12px;
         color: #4d4183;
     }
+    .request_list h4, .request_list h2{
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        cursor: pointer;
+    }
+    .request_list .swiper-slide img{
+        width: 100%;
+    }
+    .card .note-md{
+        margin-top: -15px !important;
+    }
     
 }

@@ -4,6 +4,14 @@ import { IonicPage, NavController, NavParams, ToastController,ModalController, L
 import { Http, Headers} from '@angular/http';
 import { Storage } from '@ionic/storage';
 import {App} from 'ionic-angular';
+// import { SwiperModule } from 'ngx-swiper-wrapper';
+// import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+// const SWIPER: SwiperConfigInterface = {
+//   direction: 'horizontal',
+//   slidesPerView: 2,
+//   keyboardControl: true
+// };
+
 
 @IonicPage()
 @Component({
@@ -13,8 +21,9 @@ import {App} from 'ionic-angular';
 export class HomePage {
     requests:any;
     loading:any;
-    // request={ };
-    // request_id:any;  
+   
+   request:any;
+    request_id:any;  
     constructor(
        public navCtrl: NavController, 
        public navParams:NavParams, 
@@ -25,7 +34,8 @@ export class HomePage {
        public modalCtrl: ModalController,
        private storage: Storage,
        private app:App,
-       private viewCtrl:ViewController) {
+       private viewCtrl:ViewController,
+      ) {        
          }
          addComments(request_id,comments) {          
           let modal = this.modalCtrl.create('CommentsPage', {requestId:request_id,comments:comments});
@@ -41,13 +51,13 @@ export class HomePage {
         let token:string = this.laravel.getToken();
         console.log(token);
         headers.append('Authorization', token);
-        this.http.get(this.laravel.getProfileDetailApi(),{
+        this.http.get(this.laravel.getRequestApi(),{
           headers: headers
         })
         .subscribe(res => {
           this.loading.dismiss();
-          this.requests = res.json();
-
+          this.requests = res.json()[0];
+          
                 },
                 error => {
                   this.loading.dismiss();
@@ -56,14 +66,48 @@ export class HomePage {
                     duration: 3000
                   }).present();
               });
-   
+            }
+
+            addLike(){
+            
+              let headers = new Headers();
+              let token:string = this.laravel.getToken();
+              console.log(token);
+              headers.append('Authorization', token);
+              this.loading = this.loadingCtrl.create({
+                content: 'Please wait...'
+              });
+              this.loading.present();
+              this.http.post(this.laravel.getLikeApi(this.requests.request_id),{
+                  headers: headers
+                    }).map(res => res.json())
+                    .subscribe(res => {
+                      this.loading.dismiss(); 
+                      if(res.success){
+                        this.navCtrl.setRoot('HomePage');
+                      }else{
+                        this.toast.create({
+                          message: 'Address has been Updated' ,
+                          duration:3000
+                        }).present();
+                      }
+                   },
+                    error => {
+                      this.loading.dismiss();
+                      let errorMsg = 'Something went wrong.';
+                      this.toast.create({
+                        message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+                        duration:3000
+                      }).present();
+                    });
+            
             }
           
-        goToLoginPage(){
-          // this.storage.remove('surakshadal_userTokenInfo')
-          this.app.getRootNav().setRoot('LoginPage');
-          // window.location.reload(true)
-        }
+        // goToLoginPage(){
+        //   // this.storage.remove('surakshadal_userTokenInfo')
+        //   this.app.getRootNav().setRoot('LoginPage');
+        //   // window.location.reload(true)
+        // }
         
     
      }

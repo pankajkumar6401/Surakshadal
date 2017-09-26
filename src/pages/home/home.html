@@ -25,7 +25,8 @@
           <img *ngIf="request.profile_image" [src]="laravel.getProflieImagePath(request.profile_image)">
           <img *ngIf="!request.profile_image" src="assets/images/profile.png">
         </ion-avatar>
-        <h2>{{request.user_name}}</h2>   
+        <h2 title="{{request.user_name}}">{{request.user_name}}{{request.request_id}}</h2>   
+        <h4 title="{{request.tehsil+' '+request.district+' '+request.state}}">{{request.tehsil+' '+request.district+' '+request.state}}</h4>
         <ion-note item-end class="request-time">
            {{request.request_time }}
         </ion-note>
@@ -33,16 +34,28 @@
      
     
       <ion-card-content>
-        <p>{{request['3']}}</p>
-        <img *ngIf="request.profile_image" [src]="laravel.getRequestImagePath(request.request_image)">
-        <!-- <img *ngIf="!request.profile_image" src="assets/images/profile.png"> -->
+        <p >{{request.request_message}}</p>
       </ion-card-content>
+      <!-- <ion-slides pager centeredSlides>
+          <ion-slide *ngFor="let img of request.request_image">
+            <img [src]="laravel.getRequestImagePath(img)" />
+          </ion-slide>
+        </ion-slides> -->
+        <div  class="swiper-container" >
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                  <div *ngFor="let img of request.request_image">
+                      <img [src]="laravel.getRequestImagePath(img)" />
+                  </div>
+              </div>
+            </div>
+          </div>
       <ion-grid>
         <ion-row>
           <ion-col>
-            <button ion-button icon-left clear small>
+            <button ion-button icon-left clear small (click)="addLike()">
               <ion-icon name="thumbs-up"></ion-icon><br>
-              <div>{{request.like_count}}</div>
+              <div >{{request.like_count}}</div>
             </button>
           </ion-col>
           <ion-col>

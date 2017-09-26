@@ -23,12 +23,6 @@ export class AddrequestPage {
    image:any;
    addrequestForm:any;
    types:any;
-   items = [
-    'SOS',
-    'Complaints',
-    'Information',
-    
-  ];
    submitAttempt: boolean = false;
    loading:any;
 
@@ -48,9 +42,27 @@ export class AddrequestPage {
         type: ['',Validators.required],
         message: ['',Validators.required]
       });
+
   }
 
   ionViewDidLoad() {
+    let headers = new Headers();
+    let token:string = this.laravel.getToken();
+    headers.append('Authorization', token);
+
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+
+    this.http.get(this.laravel.getRequestType(),{
+      headers: headers
+    })
+    .subscribe(res => {
+      // console.log(res.json());
+      this.loading.dismiss();
+      this.types= res.json();
+    })
     console.log('ionViewDidLoad AddrequestPage');
   }
   elementChanged(input){
@@ -78,8 +90,10 @@ export class AddrequestPage {
       }).map(res => res.json())
       .subscribe(res => {
         //success
-        this.navCtrl.setRoot('HomePage');
+        // this.navCtrl.setRoot('HomePage');
+        this.loading.dismiss();
         if(res.success){
+        
           this.navCtrl.setRoot('HomePage');
         }else{
           this.toast.create({

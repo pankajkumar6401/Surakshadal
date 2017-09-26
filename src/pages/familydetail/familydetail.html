@@ -21,9 +21,9 @@
              <ion-label floating>Family Member Name</ion-label>
               <ion-input #member type="text" formControlName="member" (change)="elementChanged(member)"></ion-input>
             </ion-item>
-            <ion-item [class.invalid]="!familydetailForm.controls.relation_type.valid && (relation_typeChanged || submitAttempt)">
+            <ion-item >
                <ion-label floating>Relation Type</ion-label>                
-                <ion-select #relation_type formControlName="relation_type" (change)="elementChanged(relation_type)">
+                <ion-select #relation formControlName="relation" (change)="elementChanged(relation)">
                     <ion-option *ngFor="let relation of relations" [value]="relation.id">{{relation.name}}</ion-option>                  
                 </ion-select>
             </ion-item>

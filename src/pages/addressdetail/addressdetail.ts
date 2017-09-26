@@ -112,14 +112,16 @@ export class AddressdetailPage {
           duration:3000
         }).present();
       });
+      
     }
+    
 }
 elementChanged(input){
   let field = input.ngControl.name;
   this[field + "Changed"] = true;
 }
-getDist(){
- // alert( this.addressdetailForm.controls.state.value)
+    getDist(){
+      // alert( this.addressdetailForm.controls.state.value)
          let headers = new Headers();
       let token:string = this.laravel.getToken();
       console.log(token);
@@ -134,18 +136,6 @@ getDist(){
       .subscribe(res => {
         this.loading.dismiss();
         this.districts=res;
-        //success
-        
-        // this.navCtrl.setRoot('HomePage'); it's not required here 
-        /// now we have to dismiss loading if we got any response from back-end 
-        // if(res.success){
-        //  // this.navCtrl.setRoot('AddressdetailPage');
-        // }else{
-        //   this.toast.create({
-        //     message: 'Something went wrong. Please contact your app developer' ,
-        //     duration:3000
-        //   }).present();
-        // }
       },
       error => {
         this.loading.dismiss();
@@ -172,18 +162,6 @@ getDist(){
       .subscribe(res => {
         this.loading.dismiss();
         this.tehsils=res;
-        //success
-        
-        // this.navCtrl.setRoot('HomePage'); it's not required here 
-        /// now we have to dismiss loading if we got any response from back-end 
-        // if(res.success){
-        //  // this.navCtrl.setRoot('AddressdetailPage');
-        // }else{
-        //   this.toast.create({
-        //     message: 'Something went wrong. Please contact your app developer' ,
-        //     duration:3000
-        //   }).present();
-        // }
       },
       error => {
         this.loading.dismiss();

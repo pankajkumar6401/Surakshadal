@@ -49,10 +49,11 @@ export class ProfilePage {
       .subscribe(res => {
          this.loading.dismiss();
          this.user_detail = res.json();
-         localStorage['name']=this.user_detail['user_detail'].first_name+' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name;
+         localStorage['name']=this.user_detail['user_detail'].first_name;
          localStorage['photo']=this.user_detail['user_detail'].photo;
        this.photo=localStorage['photo'];
        this.name=localStorage['name'];
+      //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
       },
       error => {
         this.loading.dismiss();
@@ -83,7 +84,7 @@ export class ProfilePage {
         addressModal.present();
       }
       openFamily() {
-        let familyModal = this.modalCtrl.create('FamilydetailPage',{userFamilyData:this.user_detail['user_detail']});
+        let familyModal = this.modalCtrl.create('FamilydetailPage',{userFamilyData:this.user_detail['user_detail'],relations:this.user_detail.relations});
         familyModal.present();
       }
 }

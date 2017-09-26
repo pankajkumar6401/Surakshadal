@@ -23,15 +23,15 @@
            <button ion-button color="primary" (click)="presentActionSheet()"  class="button" ><ion-icon name= "camera"></ion-icon><span> Add Request image</span></button> 
         </ion-item>
         <br>
-        <ion-item [class.invalid]="!addrequestForm.controls.type.valid && (typeChanged || submitAttempt)">
+        <ion-item >
             <ion-label floating>Request Type</ion-label>            
-            <ion-select #type formControlName="type" (change)="elementChanged(type)">
-                <ion-option *ngFor="let item of items">{{item}}</ion-option>
+            <ion-select #type formControlName="type" (change)="elementChanged(type)" >
+                <ion-option  *ngFor="let type of types"[value]="type.id">{{type.name}}</ion-option>
             </ion-select>
         </ion-item>  
-        <ion-item class="error-message" *ngIf="!addrequestForm.controls.type.valid  && (typeChanged || submitAttempt)">
+        <!-- <ion-item class="error-message" *ngIf="!addrequestForm.controls.type.valid  && (typeChanged || submitAttempt)">
             <p>Please Select A Type.</p>
-        </ion-item>  
+        </ion-item>   -->
         <ion-list style="position:relative;">               
           <ion-item [class.invalid]="!addrequestForm.controls.message.valid && (messageChanged || submitAttempt)">
             <ion-label floating> Request Detail</ion-label>

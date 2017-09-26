@@ -75,7 +75,7 @@ export class LoginPage {
           password:credential.password,
           scope:'*'
         }).subscribe(res => {
-          localStorage['surakshadal_userTokenInfo']=res.json().token_type+' '+res.json().access_token;
+          // localStorage['surakshadal_userTokenInfo']=res.json().token_type+' '+res.json().access_token;
           this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
             .then(
                 data => {
@@ -103,11 +103,11 @@ export class LoginPage {
     }
   }
 
-  goToResetPassword(){
-    this.navCtrl.push('LoginPage');
-  }
-  goToRegister(){
-    this.navCtrl.push('RegisterPage')
-  }
+  // goToResetPassword(){
+  //   this.navCtrl.push('LoginPage');
+  // }
+  // goToRegister(){
+  //   this.navCtrl.push('RegisterPage')
+  // }
 
 }

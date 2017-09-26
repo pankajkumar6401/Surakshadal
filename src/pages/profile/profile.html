@@ -8,9 +8,7 @@
 
   <ion-navbar>
       <ion-item style="background-color:#4d4183;">
-        <p item-start ion-button color="primary" (click)="goToLoginPage()" >
-          Sign Out
-        </p> 
+       
         <ion-title text-center>Profile</ion-title>
         <span item-end icon-only (click)="save()">
           <ion-icon name="checkmark"></ion-icon>
@@ -32,26 +30,30 @@
     <!-- <button ion-button round small outline item-end>Upload Photo</button> -->
   </ion-item>    
   <ion-list class="detail-list">
-    <ion-item (click)="openPersonal()">
+    <button ion-item (click)="openPersonal()">
       <ion-icon name="person" item-start></ion-icon>
         Personal detail
         <span item-end icon-only (click)="save()">
           <ion-icon name="arrow-round-forward"></ion-icon>
        </span>
-    </ion-item>
-    <ion-item (click)="openAddress()">
+    </button>
+    <button ion-item (click)="openAddress()">
       <ion-icon name="home" item-start ></ion-icon>
           Address Detail  
           <span item-end icon-only (click)="save()">
             <ion-icon name="arrow-round-forward"></ion-icon>
          </span>
-    </ion-item>
-    <ion-item (click)="openFamily()">
+        </button>
+    <button ion-item (click)="openFamily()">
       <ion-icon name="people" item-start></ion-icon>
           Family Detail
           <span item-end icon-only (click)="save()">
             <ion-icon name="arrow-round-forward"></ion-icon>
          </span>
-    </ion-item>
+    </button>
+    <div padding>
+      <button ion-button color="primary" block (click)="goToLoginPage()">Logout</button>
+  </div>
   </ion-list>
+  
 </ion-content>

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController , ViewController} from 'ionic-angular';
 import { Http, Headers} from '@angular/http';
 import { Storage } from '@ionic/storage';
-import {App} from 'ionic-angular';
+import {App,Slides } from 'ionic-angular';
 // import { SwiperModule } from 'ngx-swiper-wrapper';
 // import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 // const SWIPER: SwiperConfigInterface = {
@@ -23,7 +23,8 @@ export class HomePage {
     loading:any;
    
    request:any;
-    request_id:any;  
+    request_id:any; 
+    request_image=[]; 
     constructor(
        public navCtrl: NavController, 
        public navParams:NavParams, 
@@ -56,7 +57,7 @@ export class HomePage {
         })
         .subscribe(res => {
           this.loading.dismiss();
-          this.requests = res.json()[0];
+          this.requests = res.json();
           
                 },
                 error => {
@@ -68,7 +69,7 @@ export class HomePage {
               });
             }
 
-            addLike(){
+            addLike(id){
             
               let headers = new Headers();
               let token:string = this.laravel.getToken();
@@ -78,19 +79,20 @@ export class HomePage {
                 content: 'Please wait...'
               });
               this.loading.present();
-              this.http.post(this.laravel.getLikeApi(this.requests.request_id),{
+              this.http.get(this.laravel.getLikeApi(id),{
                   headers: headers
                     }).map(res => res.json())
                     .subscribe(res => {
                       this.loading.dismiss(); 
-                      if(res.success){
-                        this.navCtrl.setRoot('HomePage');
-                      }else{
-                        this.toast.create({
-                          message: 'Address has been Updated' ,
-                          duration:3000
-                        }).present();
-                      }
+                      // if(res.success){
+                      //   this.navCtrl.setRoot('HomePage');
+                      // }else{
+                        this.ionViewDidLoad();
+                        // this.toast.create({
+                        //   message: 'Address has been Updated' ,
+                        //   duration:3000
+                        // }).present();
+                      
                    },
                     error => {
                       this.loading.dismiss();
@@ -102,6 +104,42 @@ export class HomePage {
                     });
             
             }
+            addDisLike(id){
+              
+                let headers = new Headers();
+                let token:string = this.laravel.getToken();
+                console.log(token);
+                headers.append('Authorization', token);
+                this.loading = this.loadingCtrl.create({
+                  content: 'Please wait...'
+                });
+                this.loading.present();
+                this.http.get(this.laravel.getDisLikeApi(id),{
+                    headers: headers
+                      }).map(res => res.json())
+                      .subscribe(res => {
+                        this.loading.dismiss(); 
+                        this.ionViewDidLoad();
+                        // if(res.success){
+                        //   this.navCtrl.setRoot('HomePage');
+                        // }else{
+                          // this.toast.create({
+                          //   message: 'Address has been Updated' ,
+                          //   duration:3000
+                          // }).present();
+                        
+                     },
+                      error => {
+                        this.loading.dismiss();
+                        let errorMsg = 'Something went wrong.';
+                        this.toast.create({
+                          message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+                          duration:3000
+                        }).present();
+                      });
+              
+              }
+            
           
         // goToLoginPage(){
         //   // this.storage.remove('surakshadal_userTokenInfo')

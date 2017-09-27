@@ -9,6 +9,9 @@
   <ion-navbar>
       <ion-item style="background-color:#4d4183;">
     <ion-title text-center>Add Request</ion-title>
+    <span item-end icon-only type="submit" (click)="addreq()" style="color: #fff;">
+      <ion-icon name="checkmark"></ion-icon>
+   </span>
     </ion-item>
   </ion-navbar>
 
@@ -16,34 +19,63 @@
 
 
 <ion-content padding>
-     <form [formGroup]="addrequestForm">
-       <div class="addrequestimage">
-        <ion-item >
-          <img src="assets/images/news-photo.png" class="item item-thumbnail" style="margin: 0 auto; width:100%">
-           <button ion-button color="primary" (click)="presentActionSheet()"  class="button" ><ion-icon name= "camera"></ion-icon><span> Add Request image</span></button> 
-        </ion-item>
-        <br>
-        <ion-item >
+    <ion-item style="padding-left:0;">  
+        <ion-avatar item-start (click)="openProfileImage()">
+          <img *ngIf="!photo" src="assets/images/profile.png" class="item item-thumbnail" style="margin: 0 auto;">
+           <img *ngIf="photo" [src]="laravel.getProflieImagePath(photo)" class="item item-thumbnail" style="margin: 0 auto;">  
+          
+        </ion-avatar> 
+        <h3>{{name}}</h3>
+        <h4 title="{{tehsil_name+' '+district_name+' '+state_name}}">{{tehsil_name+' '+district_name+' '+state_name}}</h4>
+        <!-- <button ion-button round small outline item-end>Upload Photo</button> -->
+      </ion-item>
+     <form [formGroup]="addrequestForm" class="addrequestform">
+        <ion-item style="padding-left:0;" class="request_type">
             <ion-label floating>Request Type</ion-label>            
             <ion-select #type formControlName="type" (change)="elementChanged(type)" >
                 <ion-option  *ngFor="let type of types"[value]="type.id">{{type.name}}</ion-option>
             </ion-select>
         </ion-item>  
+       <div class="addrequestimage">
+        <ion-item style="padding-left:0;">
+            <ion-textarea #message formControlName="message" (change)="elementChanged(message)" rows="4" placeholder="Write something" style="    margin-left: 0px;"></ion-textarea>
+           
+            </ion-item>
+            <ion-item> 
+              <p> Add Image</p><img src="assets/images/add_image.png" (click)="presentActionSheet()" class="item item-thumbnail" style=""></ion-item>
+            <!-- <ion-item>
+            <ion-grid >
+                <ion-row>
+                  <ion-col ion-item>
+                      <button ion-button item-end color="primary" clear (click)="presentActionSheet()"  class="button" ><ion-icon name= "camera"></ion-icon></button> 
+                  </ion-col>
+                  <ion-col ion-item>
+                      <button ion-button item-end color="primary" clear type="submit" (click)="addreq()"><ion-icon name="checkmark"></ion-icon></button>
+                  </ion-col>                 
+                </ion-row>
+              </ion-grid>
+            </ion-item> -->
+            </div>
+          <!-- <img src="assets/images/news-photo.png" class="item item-thumbnail" style="margin: 0 auto; width:100%"> -->
+           <!-- <button ion-button color="primary" (click)="presentActionSheet()"  class="button" ><ion-icon name= "camera"></ion-icon><span> Add Request image</span></button> 
+        </ion-item> -->
+        <!-- <br> -->
+       
         <!-- <ion-item class="error-message" *ngIf="!addrequestForm.controls.type.valid  && (typeChanged || submitAttempt)">
             <p>Please Select A Type.</p>
         </ion-item>   -->
-        <ion-list style="position:relative;">               
-          <ion-item [class.invalid]="!addrequestForm.controls.message.valid && (messageChanged || submitAttempt)">
+        <!-- <ion-list style="position:relative;">                -->
+          <!-- <ion-item [class.invalid]="!addrequestForm.controls.message.valid && (messageChanged || submitAttempt)">
             <ion-label floating> Request Detail</ion-label>
             <ion-textarea #message formControlName="message" (change)="elementChanged(message)" rows="1"></ion-textarea>
           </ion-item>  
           <ion-item class="error-message" *ngIf="!addrequestForm.controls.message.valid  && (messageChanged || submitAttempt)">
               <p>Please enter message.</p>
-            </ion-item>
-        </ion-list>     
+            </ion-item> -->
+        <!-- </ion-list>     
         <div class="padding">  
           <button ion-button color="primary" type="submit" (click)="addreq()" >submit</button>
           </div>        
-      </div>
+      </div> -->
      </form>
 </ion-content>

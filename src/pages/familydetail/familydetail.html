@@ -7,10 +7,13 @@
 <ion-header>
   <ion-navbar>
       <ion-item>
-            <span item-start navPop >
+            <!-- <span item-start navPop >
                     <ion-icon name="arrow-round-back"></ion-icon>
-                </span>  
+                </span>   -->
         <ion-title>Family Detail</ion-title>
+        <span item-end icon-only (click)="save()">
+            <ion-icon name="checkmark"></ion-icon>
+         </span>
     </ion-item>
   </ion-navbar>
 </ion-header>
@@ -31,10 +34,13 @@
                 <ion-label floating>Phone Number</ion-label>
                  <ion-input #familymobile type="text" formControlName="familymobile" (change)="elementChanged(familymobile)"></ion-input>
             </ion-item>
-            <ion-item [class.invalid]="!familydetailForm.controls.familydetail.valid && (familydetailChanged || submitAttempt)">               
+            <!-- <ion-item [class.invalid]="!familydetailForm.controls.familydetail.valid && (familydetailChanged || submitAttempt)">               
                 <ion-label floating>Family Detail</ion-label>
                  <ion-input #familydetail type="text" formControlName="familydetail" (change)="elementChanged(familydetail)"></ion-input>
-            </ion-item> 
+            </ion-item>  -->
+            <ion-item [class.invalid]="!familydetailForm.controls.user_id.valid && (user_idChanged || submitAttempt)" class="hidden-field">                
+                    <ion-input #user_id type="hidden" formControlName="user_id" (change)="elementChanged(user_id)"></ion-input>
+                </ion-item>   
         </ion-list>
         <div padding>
             <button ion-button color="primary" block (click)="save()">Submit</button>

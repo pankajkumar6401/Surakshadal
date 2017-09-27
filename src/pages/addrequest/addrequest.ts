@@ -25,6 +25,12 @@ export class AddrequestPage {
    types:any;
    submitAttempt: boolean = false;
    loading:any;
+   name:any;
+   photo:any;
+   user_detail:any;
+   tehsil_name:any;
+   district_name:any;
+   state_name:any;
 
   constructor(
     public navCtrl: NavController, 
@@ -62,7 +68,33 @@ export class AddrequestPage {
       // console.log(res.json());
       this.loading.dismiss();
       this.types= res.json();
+    });
+    this.http.get(this.laravel.getProfileDetailApi(),{
+      headers: headers
     })
+    .subscribe(res => {
+       this.loading.dismiss();
+       this.user_detail = res.json();
+       localStorage['name']=this.user_detail['user_detail'].first_name;
+       localStorage['photo']=this.user_detail['user_detail'].photo;
+       localStorage['tehsil_name']=this.user_detail['user_detail'].tehsil_name;
+       localStorage['district_name']=this.user_detail['user_detail'].district_name;
+       localStorage['state_name']=this.user_detail['user_detail'].state_name;
+        this.photo=localStorage['photo'];
+        this.name=localStorage['name'];
+        this.tehsil_name=localStorage['tehsil_name'];
+        this.district_name=localStorage['district_name'];
+        this.state_name=localStorage['state_name'];
+    //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
+    },
+    error => {
+      this.loading.dismiss();
+      // let errorMsg = 'Something went wrong. Please contact your app developer';
+      // this.toast.create({
+      //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+      //   duration:3000
+      // }).present();
+    });
     console.log('ionViewDidLoad AddrequestPage');
   }
   elementChanged(input){

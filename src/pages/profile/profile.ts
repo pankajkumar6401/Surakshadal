@@ -71,20 +71,24 @@ export class ProfilePage {
       window.location.reload(true)
     }
       openProfileImage() {
-        let profileimage = this.modalCtrl.create('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});
-        profileimage.present();
+        //let profileimage = this.modalCtrl.create('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});
+        //profileimage.present();
+        this.navCtrl.push('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});
       }
       openPersonal() {
-        let personalModal = this.modalCtrl.create('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail'],idproof_types:this.user_detail.id_types});
-        personalModal.present();
+        // let personalModal = this.modalCtrl.create('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail'],idproof_types:this.user_detail.id_types});
+        // personalModal.present();
+        this.navCtrl.push('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail'],idproof_types:this.user_detail.id_types});
       }
       
       openAddress() {
-        let addressModal = this.modalCtrl.create('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.district,tehsils:this.user_detail.tehsil});
-        addressModal.present();
+        // let addressModal = this.modalCtrl.create('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.district,tehsils:this.user_detail.tehsil});
+        // addressModal.present();
+        this.navCtrl.push('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.district,tehsils:this.user_detail.tehsil});
       }
       openFamily() {
-        let familyModal = this.modalCtrl.create('FamilydetailPage',{userFamilyData:this.user_detail['user_detail'],relations:this.user_detail.relations});
-        familyModal.present();
+        // let familyModal = this.modalCtrl.create('FamilydetailPage',{userFamilyData:this.user_detail['user_detail'],relations:this.user_detail.relations});
+        // familyModal.present();
+        this.navCtrl.push('FamilydetailPage',{userFamilyData:this.user_detail['familydata'][0],relations:this.user_detail.relations});
       }
 }

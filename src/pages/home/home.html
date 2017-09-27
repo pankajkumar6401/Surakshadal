@@ -16,7 +16,16 @@
   </ion-navbar>
 </ion-header>
 
+
 <ion-content class="request_list">
+    <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+        pullingIcon="arrow-dropdown"
+        pullingText="Pull to refresh"
+        refreshingSpinner="circles"
+        refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher> -->
 
   <ion-card  *ngFor="let request of requests">
       
@@ -31,17 +40,23 @@
            {{request.request_time }}
         </ion-note>
       </ion-item>   
-     
+      <!-- autoplay="5000" loop="true" speed="3000" -->
     
       <ion-card-content>
         <p >{{request.request_message}}</p>
-      </ion-card-content>
-      <!-- <ion-slides pager centeredSlides>
+         <!-- <ion-slides >
           <ion-slide *ngFor="let img of request.request_image">
             <img [src]="laravel.getRequestImagePath(img)" />
           </ion-slide>
         </ion-slides> -->
-        <div  class="swiper-container" >
+        <ion-slides pager autoplay (ionWillChange)="onSlideChangeStart($event)" >
+          <ion-slide *ngFor="let img of request.request_image">
+              <img [src]="laravel.getRequestImagePath(img)">
+          </ion-slide>
+        </ion-slides>
+      </ion-card-content>
+     
+        <!-- <div  class="swiper-container" >
             <div class="swiper-wrapper">
               <div class="swiper-slide">
                   <div *ngFor="let img of request.request_image">
@@ -49,17 +64,17 @@
                   </div>
               </div>
             </div>
-          </div>
+          </div> -->
       <ion-grid>
         <ion-row>
           <ion-col>
-            <button ion-button icon-left clear small (click)="addLike()">
+            <button ion-button icon-left clear small (click)="addLike(this.request.request_id)">
               <ion-icon name="thumbs-up"></ion-icon><br>
               <div >{{request.like_count}}</div>
             </button>
           </ion-col>
           <ion-col>
-            <button ion-button icon-left clear small>
+            <button ion-button icon-left clear small  (click)="addDisLike(this.request.request_id)">
               <ion-icon name="thumbs-down"></ion-icon><br>
               <div>{{request.unlike_count}}</div>
             </button>
@@ -67,7 +82,7 @@
           <ion-col>
             <button ion-button icon-left clear small>
               <ion-icon name="text"></ion-icon><br>
-              <div (click)="addComments(request['1'],request.comments)">{{request.comments.length}} Comments</div>
+              <div (click)="addComments(request['request_id'],request.comments)">{{request.comments.length}} Comments</div>
             </button>
           </ion-col>        
         </ion-row>

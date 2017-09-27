@@ -72,8 +72,8 @@ export class LaravelProvider {
   getLikeApi(id){
     return this.getUrl() +'api/addlike/' +id;
   }
-  getUnlikeApi(){
-    return this.getUrl() +'api/dislike/{id}';
+  getDisLikeApi(id){
+    return this.getUrl() +'api/dislike/' +id;
   }
 
   setToken(val){

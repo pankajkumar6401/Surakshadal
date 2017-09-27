@@ -72,7 +72,7 @@ export class CommentsPage {
           this.navCtrl.setRoot('HomePage');
         }else{
           this.toast.create({
-            message: 'Something went wrong. Please contact your app developer' ,
+            message: 'Updated comment' ,
             duration:3000
           }).present();
         }

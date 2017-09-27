@@ -23,17 +23,17 @@ import { Camera } from '@ionic-native/camera';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { Calendar } from '@ionic-native/calendar';
-import { SwiperModule } from 'ngx-swiper-wrapper';
-import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+// import { SwiperModule } from 'ngx-swiper-wrapper';
+// import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http,'assets/i18n','.json');
 }
-const SWIPER_CONFIG: SwiperConfigInterface = {
-  direction: 'horizontal',
-  slidesPerView: 'auto',
-  keyboardControl: true
-};
+// const SWIPER_CONFIG: SwiperConfigInterface = {
+//   direction: 'horizontal',
+//   slidesPerView: 'auto',
+//   keyboardControl: true
+// };
 
 @NgModule({
   declarations: [
@@ -44,7 +44,7 @@ const SWIPER_CONFIG: SwiperConfigInterface = {
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    SwiperModule.forRoot(SWIPER_CONFIG),
+    // SwiperModule.forRoot(SWIPER_CONFIG),
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),

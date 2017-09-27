@@ -47,14 +47,15 @@ export class FamilydetailPage {
       this.familydetailForm = this.formBuilder.group({
         member:['', Validators.required]   ,
         familymobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
-        familydetail: ['', Validators.required],
-        relation:['']
+        relation:[''],
+        user_id:['']    
       });
   }
   dismiss(data) {
     this.viewCtrl.dismiss(data);
   }
   ionViewDidLoad() {
+    this.familydetailForm.controls.user_id.setValue(this.user_detail.id);
     console.log('ionViewDidLoad FamilydetailPage');
   }
   save(){
@@ -63,7 +64,8 @@ export class FamilydetailPage {
       let profileData = {
         'name': this.familydetailForm.controls.member.value,
         'contact_no': this.familydetailForm.controls.familymobile.value,
-        'relation_type': this.familydetailForm.controls.relation.value
+        'relation': this.familydetailForm.controls.relation.value,
+        'user_id': this.familydetailForm.controls.user_id.value
       }
   
       let headers = new Headers();
@@ -76,12 +78,12 @@ export class FamilydetailPage {
       this.loading.present();
       this.http.post(this.laravel.getUpdateFamilyDetail(),profileData,{
         headers: headers
-      }).map(res => res.json())
+      }).map(res => res.json()[0])
       .subscribe(res => {
         
         this.loading.dismiss();
         if(res.success){
-          this.navCtrl.setRoot('FamilydetailPage');
+          this.navCtrl.pop();
         }else{
           this.toast.create({
             message: 'family Detail added' ,

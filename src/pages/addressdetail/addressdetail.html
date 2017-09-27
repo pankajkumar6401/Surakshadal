@@ -7,10 +7,13 @@
 <ion-header>
   <ion-navbar>
       <ion-item>
-            <span item-start navPop >
+            <!-- <span item-start navPop >
                     <ion-icon name="arrow-round-back"></ion-icon>
-                </span>  
+                </span>   -->
         <ion-title >Address Detail</ion-title>
+        <span item-end icon-only (click)="save()">
+            <ion-icon name="checkmark"></ion-icon>
+         </span>
       </ion-item>
   </ion-navbar>
 </ion-header>

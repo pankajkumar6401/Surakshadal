@@ -42,9 +42,9 @@
       <ion-item [class.invalid]="!addcommentForm.controls.message.valid && (messageChanged || submitAttempt)">
         <ion-input #message type="text" formControlName="message"  placeholder="write a comment"></ion-input>
       </ion-item>
-      <ion-item class="error-message" *ngIf="!addcommentForm.controls.message.valid  && (messageChanged || submitAttempt)">
+      <!-- <ion-item class="error-message" *ngIf="!addcommentForm.controls.message.valid  && (messageChanged || submitAttempt)">
           <p>Please comment.</p>
-      </ion-item>
+      </ion-item> -->
       <button ion-button  item-end type="submit" (click)="addcomm()"><ion-icon name="send" ></ion-icon></button>            
     </ion-item>
   </form>

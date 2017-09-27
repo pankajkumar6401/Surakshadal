@@ -27,4 +27,13 @@ page-addrequest {
     // .addrequestimage .item.item-textarea{
     //     padding-left: 0;
     // }
+    .addrequestform .request_type{
+        border-bottom: 1px solid #ccc;
+    }
+    .addrequestform .item.item-block .item-inner{
+        border-bottom: 0 !important;
+    }
+    .addrequestform textarea.text-input{
+        margin-left: 0;
+    }
 }

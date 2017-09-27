@@ -6,12 +6,15 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar >
       <ion-item>
-          <button item-start ion-button color="primary" navPop>
+          <!-- <button item-start ion-button color="primary" navPop>
              Cancel
-          </button>      
+          </button>       -->
          <ion-title>Profile Image</ion-title>
+         <span item-end icon-only (click)="save()">
+          <ion-icon name="checkmark"></ion-icon>
+       </span>
         </ion-item>
   </ion-navbar>
 

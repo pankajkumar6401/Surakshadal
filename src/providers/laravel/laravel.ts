@@ -58,7 +58,7 @@ export class LaravelProvider {
     return this.getUrl() + 'api/update/address';
   } 
   getUpdateFamilyDetail(){
-    return this.getUrl() + 'api/update/family/details';
+    return this.getUrl() + 'api/update/family/details' ;
   }  
   getStateId(id){
     return this.getUrl() + 'api/get/district/'+id;
@@ -75,7 +75,15 @@ export class LaravelProvider {
   getDisLikeApi(id){
     return this.getUrl() +'api/dislike/' +id;
   }
-
+  getUserDetail(){
+    return this.getUrl() + 'api/user';
+  }
+  getMemberApi(){   
+    return this.getUrl() +'api/member';
+  }
+  deleteMember(id){   
+    return this.getUrl() +'api/delete/' +id;
+  }
   setToken(val){
     this.token = val;
   }

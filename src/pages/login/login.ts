@@ -1,5 +1,5 @@
 import { NumberValidator } from './../../validators/number';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -75,13 +75,39 @@ export class LoginPage {
           password:credential.password,
           scope:'*'
         }).subscribe(res => {
+          
+
           // localStorage['surakshadal_userTokenInfo']=res.json().token_type+' '+res.json().access_token;
           this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
             .then(
                 data => {
                   this.laravel.setToken(res.json().token_type+' '+res.json().access_token);
-                  this.loading.dismiss();
-                  this.navCtrl.setRoot('TabRootPage');
+                  let headers = new Headers();
+                  headers.append('Authorization', res.json().token_type+' '+res.json().access_token);
+                  this.http.get(this.laravel.getUserDetail(),{
+                    headers:headers
+                  }).map(res => res.json())
+                  .subscribe(res => {
+                    this.storage.set('surakshadal_uerDetails',res).then(res => {
+                      this.loading.dismiss();
+                      this.navCtrl.setRoot('TabRootPage');
+                    },
+                    error =>{
+                      this.loading.dismiss();
+                      this.toast.create({
+                        message: 'Something went wrong. Please contact your app developer',
+                        duration: 3000
+                      }).present();
+                    }); //End of storage promise
+                  },
+                  error => {
+                    this.loading.dismiss();
+                    this.toast.create({
+                      message: 'Something went wrong. Please contact your app developer',
+                      duration: 3000
+                    }).present();
+                  }
+                );
                 },
                 error => {
                   this.loading.dismiss();

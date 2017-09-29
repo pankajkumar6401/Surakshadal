@@ -69,7 +69,7 @@ export class CommentsPage {
         /// now we have to dismiss loading if we got any response from back-end 
         this.loading.dismiss(); 
         if(res.success){
-          this.navCtrl.setRoot('HomePage');
+          this.navCtrl.setRoot('TabRootPage');
         }else{
           this.toast.create({
             message: 'Updated comment' ,

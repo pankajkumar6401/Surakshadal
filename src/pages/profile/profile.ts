@@ -89,6 +89,6 @@ export class ProfilePage {
       openFamily() {
         // let familyModal = this.modalCtrl.create('FamilydetailPage',{userFamilyData:this.user_detail['user_detail'],relations:this.user_detail.relations});
         // familyModal.present();
-        this.navCtrl.push('FamilydetailPage',{userFamilyData:this.user_detail['familydata'][0],relations:this.user_detail.relations});
+        this.navCtrl.push('FamilydetailPage',{userFamilyData:this.user_detail['familydata'],relations:this.user_detail.relations, user_id:this.user_detail['user_detail']['id']});
       }
 }

@@ -22,14 +22,13 @@ import { Subscription } from 'rxjs/Subscription';
   templateUrl: 'familydetail.html',
 })
 export class FamilydetailPage {
-  familydetailForm:any;
   user_detail:any;
-  member: boolean = false;
-  familymobile: boolean = false;
-  familydetail: boolean = false;
   submitAttempt: boolean = false;
   loading:any;
-  relations=[];
+  user_id:any;
+  photo:any;
+  name:any;
+  members:any;
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -41,65 +40,93 @@ export class FamilydetailPage {
     public http: Http,
     private storage: Storage) {
 
-      this.user_detail= navParams.get('userFamilyData');
-      this.relations= navParams.get('relations');
-      console.log(JSON.stringify(this.user_detail));
-      this.familydetailForm = this.formBuilder.group({
-        member:['', Validators.required]   ,
-        familymobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
-        relation:[''],
-        user_id:['']    
-      });
+      // this.user_detail= navParams.get('userFamilyData');
+      // this.relations= navParams.get('relations');
+      // this.user_id=navParams.get('user_id')
+      // console.log('mm'+JSON.stringify(this.user_detail));
+      // console.log(JSON.stringify(this.user_id));
   }
   dismiss(data) {
     this.viewCtrl.dismiss(data);
   }
   ionViewDidLoad() {
-    this.familydetailForm.controls.user_id.setValue(this.user_detail.id);
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+    let headers = new Headers();
+    let token:string = this.laravel.getToken();
+    console.log(token);
+    headers.append('Authorization', token);
+    this.http.get(this.laravel.getMemberApi(),{
+      headers: headers
+    })
+    .subscribe(res => {
+      // this.loading.dismiss();
+      this.members = res.json()['details'];      
+        },
+        error => {
+          this.loading.dismiss();
+          this.toast.create({
+            message: 'Member added',
+            duration: 3000
+          }).present();
+      });
+
+    this.http.get(this.laravel.getProfileDetailApi(),{
+      headers: headers
+    })
+    .subscribe(res => {
+       this.loading.dismiss();
+       this.user_detail = res.json();
+       localStorage['name']=this.user_detail['user_detail'].first_name;
+       localStorage['photo']=this.user_detail['user_detail'].photo;
+     this.photo=localStorage['photo'];
+     this.name=localStorage['name'];
+    //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
+    },
+    error => {
+      this.loading.dismiss();
+      // let errorMsg = 'Something went wrong. Please contact your app developer';
+      // this.toast.create({
+      //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+      //   duration:3000
+      // }).present();
+    });
     console.log('ionViewDidLoad FamilydetailPage');
   }
-  save(){
-    this.submitAttempt = true;
-    if (this.familydetailForm.valid){
-      let profileData = {
-        'name': this.familydetailForm.controls.member.value,
-        'contact_no': this.familydetailForm.controls.familymobile.value,
-        'relation': this.familydetailForm.controls.relation.value,
-        'user_id': this.familydetailForm.controls.user_id.value
-      }
-  
-      let headers = new Headers();
-      let token:string = this.laravel.getToken();
-      console.log(token);
-      headers.append('Authorization', token);
-      this.loading = this.loadingCtrl.create({
-        content: 'Please wait...'
-      });
-      this.loading.present();
-      this.http.post(this.laravel.getUpdateFamilyDetail(),profileData,{
-        headers: headers
-      }).map(res => res.json()[0])
-      .subscribe(res => {
-        
-        this.loading.dismiss();
-        if(res.success){
-          this.navCtrl.pop();
-        }else{
-          this.toast.create({
-            message: 'family Detail added' ,
-            duration:3000
-          }).present();
-        }
+addFamilyDetail(){
+  let data = {
+    relations:this.user_detail.relations,
+    user_id:this.user_detail['user_detail']['id'],
+    relation_id:this.user_detail['relations']['id'],
+    parentPage:this
+  }
+  this.navCtrl.push('AddfamilydetailPage',data);
+}
+deleteMember(id){
+  this.loading = this.loadingCtrl.create({
+    content: 'Please wait...'
+  });
+  this.loading.present();
+  let headers = new Headers();
+  let token:string = this.laravel.getToken();
+  console.log(token);
+  headers.append('Authorization', token);
+  this.http.get(this.laravel.deleteMember(id),{
+    headers: headers
+  })
+  .subscribe(res => {
+    // this.loading.dismiss();
+    this.members = res.json()['details'];      
       },
       error => {
         this.loading.dismiss();
-        let errorMsg = 'Something went wrong. Please contact your app developer';
         this.toast.create({
-          message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-          duration:3000
+          message: 'Member added',
+          duration: 3000
         }).present();
-      });
-    }
+    });
 }
 elementChanged(input){
   let field = input.ngControl.name;

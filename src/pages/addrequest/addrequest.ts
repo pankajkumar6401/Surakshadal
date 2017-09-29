@@ -60,15 +60,21 @@ export class AddrequestPage {
       content: 'Please wait...'
     });
     this.loading.present();
-
+    /*Ajax Request to get Request Types*/
     this.http.get(this.laravel.getRequestType(),{
       headers: headers
     })
     .subscribe(res => {
-      // console.log(res.json());
-      this.loading.dismiss();
       this.types= res.json();
     });
+
+    // this.storage.get('surakshadal_uerDetails').then(data => {
+    //   this.loading.dismiss();
+    //   this.user_detail = data;
+    // },error=>{
+    //   this.loading.dismiss();
+    // })
+
     this.http.get(this.laravel.getProfileDetailApi(),{
       headers: headers
     })

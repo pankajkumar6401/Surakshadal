@@ -5,7 +5,7 @@ import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController,AlertController } from 'ionic-angular';
 import { Subscription } from 'rxjs/Subscription';
 
 
@@ -38,7 +38,8 @@ export class FamilydetailPage {
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
     public http: Http,
-    private storage: Storage) {
+    private storage: Storage,
+    public alertCtrl: AlertController) {
 
       // this.user_detail= navParams.get('userFamilyData');
       // this.relations= navParams.get('relations');
@@ -68,7 +69,7 @@ export class FamilydetailPage {
         error => {
           this.loading.dismiss();
           this.toast.create({
-            message: 'Member added',
+            message: 'Member fdgd added',
             duration: 3000
           }).present();
       });
@@ -79,11 +80,6 @@ export class FamilydetailPage {
     .subscribe(res => {
        this.loading.dismiss();
        this.user_detail = res.json();
-       localStorage['name']=this.user_detail['user_detail'].first_name;
-       localStorage['photo']=this.user_detail['user_detail'].photo;
-     this.photo=localStorage['photo'];
-     this.name=localStorage['name'];
-    //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
     },
     error => {
       this.loading.dismiss();
@@ -105,28 +101,46 @@ addFamilyDetail(){
   this.navCtrl.push('AddfamilydetailPage',data);
 }
 deleteMember(id){
-  this.loading = this.loadingCtrl.create({
-    content: 'Please wait...'
-  });
-  this.loading.present();
-  let headers = new Headers();
-  let token:string = this.laravel.getToken();
-  console.log(token);
-  headers.append('Authorization', token);
-  this.http.get(this.laravel.deleteMember(id),{
-    headers: headers
-  })
-  .subscribe(res => {
-    // this.loading.dismiss();
-    this.members = res.json()['details'];      
+  let confirm = this.alertCtrl.create({
+    // title: 'Use this lightsaber?',
+    message: 'Are you sure to delete?',
+    buttons: [
+      {
+        text: 'NO',
+        handler: () => {
+          this.ionViewDidLoad();
+          console.log('NO clicked');
+        }
       },
-      error => {
-        this.loading.dismiss();
-        this.toast.create({
-          message: 'Member added',
-          duration: 3000
-        }).present();
-    });
+      {
+        text: 'YES',
+        handler: () => {
+          let headers = new Headers();
+            let token:string = this.laravel.getToken();
+            console.log(token);
+            headers.append('Authorization', token);
+            
+            this.http.get(this.laravel.deleteMember(id),{
+              headers: headers
+            })
+            
+        .subscribe(res => {
+          this.loading.dismiss();
+          this.ionViewDidLoad();
+            },
+            error => {
+              this.loading.dismiss();
+              this.toast.create({
+                message: 'Member deleted',
+                duration: 3000
+              }).present();
+          });
+          console.log('YES clicked');
+        }
+      }
+    ]
+  });
+  confirm.present();
 }
 elementChanged(input){
   let field = input.ngControl.name;

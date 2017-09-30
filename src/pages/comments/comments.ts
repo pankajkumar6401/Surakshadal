@@ -24,6 +24,7 @@ export class CommentsPage {
   request_id:any;
   loading:any;
   loggedUserImage:any;
+  userdetails=[];
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -43,7 +44,25 @@ export class CommentsPage {
       console.log('request_id', navParams.get('requestId')); 
   }
 
-  
+  ionViewDidLoad() {
+    let headers = new Headers();
+    let token:string = this.laravel.getToken();
+    headers.append('Authorization', token);
+
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+    this.loading.present();
+    /*Ajax Request to get Request Types*/
+
+    this.storage.get('surakshadal_userDetails').then(userdetails => {         
+      this.loading.dismiss();
+      this.userdetails = userdetails;
+       },error=>{
+      this.loading.dismiss();
+    });
+  }
+
   addcomm(){
     this.submitAttempt = true;
     console.log(this.addcommentForm);
@@ -88,8 +107,7 @@ export class CommentsPage {
     }
 
   }
-  ionViewDidLoad() {
- }
+  
 
   dismiss() {
     this.viewCtrl.dismiss();

@@ -6,6 +6,7 @@ import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Storage } from '@ionic/storage';
+// import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 /**
  * Generated class for the AddrequestPage page.
@@ -31,11 +32,13 @@ export class AddrequestPage {
    tehsil_name:any;
    district_name:any;
    state_name:any;
-
+   userdetails=[];
+   requestimg: string = 'assets/images/add-icon.png';
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
     private camera:Camera, 
+    // private transfer: FileTransfer,
     public actionSheetCtrl: ActionSheetController,
     public toast: ToastController,
     private formBuilder: FormBuilder,
@@ -43,14 +46,12 @@ export class AddrequestPage {
     public loadingCtrl: LoadingController,
     public http: Http,
     private storage: Storage) {
-
       this.addrequestForm =this.formBuilder.group({
         type: ['',Validators.required],
-        message: ['',Validators.required]
+        message: ['',Validators.required],
+        requestimg:['']
       });
-
   }
-
   ionViewDidLoad() {
     let headers = new Headers();
     let token:string = this.laravel.getToken();
@@ -68,38 +69,11 @@ export class AddrequestPage {
       this.types= res.json();
     });
 
-    // this.storage.get('surakshadal_uerDetails').then(data => {
-    //   this.loading.dismiss();
-    //   this.user_detail = data;
-    // },error=>{
-    //   this.loading.dismiss();
-    // })
-
-    this.http.get(this.laravel.getProfileDetailApi(),{
-      headers: headers
-    })
-    .subscribe(res => {
-       this.loading.dismiss();
-       this.user_detail = res.json();
-       localStorage['name']=this.user_detail['user_detail'].first_name;
-       localStorage['photo']=this.user_detail['user_detail'].photo;
-       localStorage['tehsil_name']=this.user_detail['user_detail'].tehsil_name;
-       localStorage['district_name']=this.user_detail['user_detail'].district_name;
-       localStorage['state_name']=this.user_detail['user_detail'].state_name;
-        this.photo=localStorage['photo'];
-        this.name=localStorage['name'];
-        this.tehsil_name=localStorage['tehsil_name'];
-        this.district_name=localStorage['district_name'];
-        this.state_name=localStorage['state_name'];
-    //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
-    },
-    error => {
+    this.storage.get('surakshadal_userDetails').then(userdetails => {         
       this.loading.dismiss();
-      // let errorMsg = 'Something went wrong. Please contact your app developer';
-      // this.toast.create({
-      //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-      //   duration:3000
-      // }).present();
+      this.userdetails = userdetails;
+       },error=>{
+      this.loading.dismiss();
     });
     console.log('ionViewDidLoad AddrequestPage');
   }
@@ -114,6 +88,7 @@ export class AddrequestPage {
       let data = {
         'type': this.addrequestForm.controls.type.value,
         'message': this.addrequestForm.controls.message.value,
+        requestimg: (this.requestimg == 'assets/images/no_image_available.png')? '': this.requestimg
       }
       let headers = new Headers();
       let token:string = this.laravel.getToken();
@@ -151,7 +126,7 @@ export class AddrequestPage {
     }
 
   }
-  presentActionSheet() {
+  takepictue() {
     let actionSheet = this.actionSheetCtrl.create({
       title: 'Choose Images',
       buttons: [
@@ -159,13 +134,14 @@ export class AddrequestPage {
           text: 'Choose from gallery',
           role: 'destructive',
           handler: () => {
+            // this.openGallery();
             console.log('Destructive clicked');
           }
         },
         {
           text: 'Take a photo',
           handler: () => {
-             this.onCamera()
+            //  this.onCamera()
             console.log('Archive clicked');
           }
         },
@@ -181,23 +157,71 @@ export class AddrequestPage {
  
     actionSheet.present();
   }
- onCamera(){
-     const options: CameraOptions = {
-    quality: 75,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
-  }
+  onCamera(){
+    const options: CameraOptions = {
+      quality: 75,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
 
-  this.camera.getPicture(options).then((imageData) => {
-   // imageData is either a base64 encoded string or a file URI
-   // If it's base64:
-   let base64Image = 'data:image/jpeg;base64,' + imageData;
-   this.image=base64Image;
-  }, (err) => {
-   // Handle error
-  });
-   }
-  
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.image=base64Image;
+    }, (err) => {
+      // Handle error
+    });
+  }
+  // openGallery() {
+  //   var options = {
+  //     sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+  //     destinationType: this.camera.DestinationType.FILE_URI
+  //   };
+  //   this.camera.getPicture(options).then((imageData) => {
+  //     this.uploadImage(imageData);
+  //   },(err) => {
+  //     this.toast.create({
+  //       message: 'Something went wrong. Please contact your app developer',
+  //       duration:3000
+  //     });
+  //   });
+  // }
+ 
+  //  uploadImage(fileUrl) {
+  //   this.loading = this.loadingCtrl.create({
+  //     content: 'Uploading File..'
+  //   });
+  //   this.loading.present();
+  //   let token:string = this.laravel.getToken();
+  //   const fileTransfer: FileTransferObject  = this.transfer.create();
+  //   let options1: FileUploadOptions = {
+  //     fileKey: 'image_upload_file',
+  //     fileName: 'logo.jpg',
+  //     headers:{'Authorization':token},
+  //     chunkedMode: false,
+  //   }
+  //   fileTransfer.upload(fileUrl, this.laravel.(), options1)
+  //   .then((data)=> {
+  //     this.loading.dismiss();
+  //     let response = JSON.parse(data.response);
+  //     if(response.success){
+  //       this.addrequestForm.controls.requestimg.setValue(response.filename);
+  //       // this.requestimg = this.laravel.getImageUrl(response.filename);
+  //     }else{
+  //       this.toast.create({
+  //         message: 'Sorry we are experiencing some issue while uploading logo. Please contact your app developer',
+  //         duration:3000
+  //       });  
+  //     }
+  //   },(err) => {
+  //     this.loading.dismiss();
+  //     this.toast.create({
+  //       message: 'Something went wrong. Please contact your app developer',
+  //       duration:3000
+  //     });
+  //   });
+  // }
 
 }

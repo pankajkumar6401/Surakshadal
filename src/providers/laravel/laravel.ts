@@ -76,7 +76,7 @@ export class LaravelProvider {
     return this.getUrl() +'api/dislike/' +id;
   }
   getUserDetail(){
-    return this.getUrl() + 'api/user';
+    return this.getUrl() + 'api/userdetails';
   }
   getMemberApi(){   
     return this.getUrl() +'api/member';

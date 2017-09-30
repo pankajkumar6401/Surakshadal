@@ -44,27 +44,12 @@
     
       <ion-card-content>
         <p >{{request.request_message}}</p>
-         <!-- <ion-slides >
-          <ion-slide *ngFor="let img of request.request_image">
-            <img [src]="laravel.getRequestImagePath(img)" />
-          </ion-slide>
-        </ion-slides> -->
-        <ion-slides pager autoplay (ionWillChange)="onSlideChangeStart($event)" >
+        <ion-slides pager (ionWillChange)="onSlideChangeStart($event)">
           <ion-slide *ngFor="let img of request.request_image">
               <img [src]="laravel.getRequestImagePath(img)">
           </ion-slide>
         </ion-slides>
       </ion-card-content>
-     
-        <!-- <div  class="swiper-container" >
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                  <div *ngFor="let img of request.request_image">
-                      <img [src]="laravel.getRequestImagePath(img)" />
-                  </div>
-              </div>
-            </div>
-          </div> -->
       <ion-grid>
         <ion-row>
           <ion-col>

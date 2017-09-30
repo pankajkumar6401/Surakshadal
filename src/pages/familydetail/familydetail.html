@@ -15,12 +15,12 @@
         <ion-list >
             <ion-item-sliding >
             <ion-item>
-                    Name : {{member.name}}<br>
-                    Relation with : {{member.relation}}<br>
-                    Contact : {{member.contact_no}}
+                Name : {{member.name}}<br>
+                Relation with : {{member.relation}}<br>
+                Contact : {{member.contact_no}}
             </ion-item>
             <ion-item-options side="right">
-                <button ion-button (click)="deleteMember(relation_id)">Delete</button>
+                <button ion-button color="danger" (click)="deleteMember(member.id)"><ion-icon name="trash"></ion-icon> Delete</button>
             </ion-item-options>
             </ion-item-sliding>
         </ion-list>

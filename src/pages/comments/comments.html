@@ -26,25 +26,20 @@
       <p text-wrap>{{comment.message}}</p> 
       <p item-end class="comment-time">
           {{comment.comment_time}}
-       </p>
-             
+       </p>             
     </ion-item>
   </ion-list>
   <ion-list >
     
   <form [formGroup]="addcommentForm">
     <ion-item class="my-comment">
-      <ion-avatar item-start>
-        <!-- <img *ngIf="comment.profile_image" [src]="laravel.getProflieImagePath(comment.profile_image)"> -->
-        <img *ngIf="!loggedUserImage" src="assets/images/profile.png">
-         <img *ngIf="loggedUserImage" [src]="laravel.getProflieImagePath(loggedUserImage)">
+      <ion-avatar item-start>    
+        <img *ngIf="!userdetails.photo" src="assets/images/profile.png">
+         <img *ngIf="userdetails.photo" [src]="laravel.getProflieImagePath(userdetails.photo)">
       </ion-avatar>  
       <ion-item [class.invalid]="!addcommentForm.controls.message.valid && (messageChanged || submitAttempt)">
         <ion-input #message type="text" formControlName="message"  placeholder="write a comment"></ion-input>
       </ion-item>
-      <!-- <ion-item class="error-message" *ngIf="!addcommentForm.controls.message.valid  && (messageChanged || submitAttempt)">
-          <p>Please comment.</p>
-      </ion-item> -->
       <button ion-button  item-end type="submit" (click)="addcomm()"><ion-icon name="send" ></ion-icon></button>            
     </ion-item>
   </form>

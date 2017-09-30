@@ -30,7 +30,6 @@ export class LoginPage {
   client_id = 2;
   loading:any;
   visiblePass:boolean = false;
-
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public toast: ToastController,
@@ -74,13 +73,12 @@ export class LoginPage {
           username:credential.username,
           password:credential.password,
           scope:'*'
-        }).subscribe(res => {
-          
+        }).subscribe(res => {       
 
           // localStorage['surakshadal_userTokenInfo']=res.json().token_type+' '+res.json().access_token;
           this.storage.set('surakshadal_userTokenInfo', res.json().token_type+' '+res.json().access_token)
             .then(
-                data => {
+                data => {                               
                   this.laravel.setToken(res.json().token_type+' '+res.json().access_token);
                   let headers = new Headers();
                   headers.append('Authorization', res.json().token_type+' '+res.json().access_token);
@@ -88,7 +86,8 @@ export class LoginPage {
                     headers:headers
                   }).map(res => res.json())
                   .subscribe(res => {
-                    this.storage.set('surakshadal_uerDetails',res).then(res => {
+                    console.log(res);
+                    this.storage.set('surakshadal_userDetails',res.data).then(res => {
                       this.loading.dismiss();
                       this.navCtrl.setRoot('TabRootPage');
                     },
@@ -128,12 +127,5 @@ export class LoginPage {
         });
     }
   }
-
-  // goToResetPassword(){
-  //   this.navCtrl.push('LoginPage');
-  // }
-  // goToRegister(){
-  //   this.navCtrl.push('RegisterPage')
-  // }
 
 }

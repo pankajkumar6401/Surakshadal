@@ -39,6 +39,15 @@
     border-bottom-color: #4d4183;
     box-shadow: inset 0 -1px 0 0 #4d4183;
 }
+.alert-md .alert-wrapper{
+    border-radius: 15px;
+}
+.alert-md .alert-message{
+    overflow: hidden;
+    text-align: center;
+    color: #000;
+    padding-bottom: 0px;
+}
 
 .error-message{
     .item-inner {

@@ -23,6 +23,7 @@ export class ProfilePage {
   user_detail:any;
   name:any;
   photo:any;
+  userdetails=[];
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public toast: ToastController,
@@ -47,48 +48,47 @@ export class ProfilePage {
         headers: headers
       })
       .subscribe(res => {
-         this.loading.dismiss();
-         this.user_detail = res.json();
-         localStorage['name']=this.user_detail['user_detail'].first_name;
-         localStorage['photo']=this.user_detail['user_detail'].photo;
-       this.photo=localStorage['photo'];
-       this.name=localStorage['name'];
-      //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
-      },
-      error => {
+        // this.loading.dismiss();
+        this.user_detail = res.json();
+      //   localStorage['name']=this.user_detail['user_detail'].first_name;
+      //   localStorage['photo']=this.user_detail['user_detail'].photo;
+      // this.photo=localStorage['photo'];
+      // this.name=localStorage['name'];
+     //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
+     },
+     error => {
+       this.loading.dismiss();
+       // let errorMsg = 'Something went wrong. Please contact your app developer';
+       // this.toast.create({
+       //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+       //   duration:3000
+       // }).present();
+     });
+      this.storage.get('surakshadal_userDetails').then(userdetails => {         
         this.loading.dismiss();
-        // let errorMsg = 'Something went wrong. Please contact your app developer';
-        // this.toast.create({
-        //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-        //   duration:3000
-        // }).present();
+        this.userdetails = userdetails;
+         },error=>{
+        this.loading.dismiss();
       });
     }
     goToLoginPage(){
       localStorage.clear();
-      this.storage.remove('surakshadal_userTokenInfo')
+      this.storage.remove('surakshadal_userTokenInfo');
+      this.storage.remove('surakshadal_userDetails');
       this.navCtrl.setRoot('LoginPage')
       window.location.reload(true)
     }
       openProfileImage() {
-        //let profileimage = this.modalCtrl.create('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});
-        //profileimage.present();
         this.navCtrl.push('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});
       }
       openPersonal() {
-        // let personalModal = this.modalCtrl.create('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail'],idproof_types:this.user_detail.id_types});
-        // personalModal.present();
         this.navCtrl.push('PersonaldetailPage',{userDetailsData:this.user_detail['user_detail'],idproof_types:this.user_detail.id_types});
       }
       
       openAddress() {
-        // let addressModal = this.modalCtrl.create('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.district,tehsils:this.user_detail.tehsil});
-        // addressModal.present();
         this.navCtrl.push('AddressdetailPage',{userAddressData:this.user_detail['user_detail'],states:this.user_detail.states,districts:this.user_detail.district,tehsils:this.user_detail.tehsil});
       }
       openFamily() {
-        // let familyModal = this.modalCtrl.create('FamilydetailPage',{userFamilyData:this.user_detail['user_detail'],relations:this.user_detail.relations});
-        // familyModal.present();
         this.navCtrl.push('FamilydetailPage',{userFamilyData:this.user_detail['familydata'],relations:this.user_detail.relations, user_id:this.user_detail['user_detail']['id']});
       }
 }

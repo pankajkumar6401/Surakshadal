@@ -30,6 +30,7 @@ export class AddfamilydetailPage {
   loading:any;
   relations=[];
   user_id:any;
+  userdetails=[];
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,

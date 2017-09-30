@@ -5,7 +5,6 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
   <ion-navbar>
       <ion-item style="background-color:#4d4183;">
     <ion-title text-center>Add Request</ion-title>
@@ -14,35 +13,32 @@
    </span>
     </ion-item>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
-    <ion-item style="padding-left:0;">  
-        <ion-avatar item-start (click)="openProfileImage()">
-          <img *ngIf="!photo" src="assets/images/profile.png" class="item item-thumbnail" style="margin: 0 auto;">
-           <img *ngIf="photo" [src]="laravel.getProflieImagePath(photo)" class="item item-thumbnail" style="margin: 0 auto;">  
-          
-        </ion-avatar> 
-        <h3>{{name}}</h3>
-        <h4 title="{{tehsil_name+' '+district_name+' '+state_name}}">{{tehsil_name+' '+district_name+' '+state_name}}</h4>
-        <!-- <button ion-button round small outline item-end>Upload Photo</button> -->
-      </ion-item>
-     <form [formGroup]="addrequestForm" class="addrequestform">
-        <ion-item style="padding-left:0;" class="request_type">
-            <ion-label floating>Request Type</ion-label>            
-            <ion-select #type formControlName="type" (change)="elementChanged(type)" >
-                <ion-option  *ngFor="let type of types"[value]="type.id">{{type.name}}</ion-option>
-            </ion-select>
-        </ion-item>  
-       <div class="addrequestimage">
-        <ion-item style="padding-left:0;">
-            <ion-textarea #message formControlName="message" (change)="elementChanged(message)" rows="4" placeholder="Write something" style="    margin-left: 0px;"></ion-textarea>
-           
-            </ion-item>
-            <ion-item> 
-              <p> Add Images </p><img src="assets/images/add-icon.png" (click)="presentActionSheet()" class="item item-thumbnail" style="width:100%"></ion-item>           
-            </div>
-     </form>
+  <ion-item style="padding-left:0;">  
+    <ion-avatar item-start (click)="openProfileImage()">
+      <img *ngIf="!userdetails.photo" src="assets/images/profile.png" class="item item-thumbnail" style="margin: 0 auto;">
+        <img *ngIf="userdetails.photo" [src]="laravel.getProflieImagePath(userdetails.photo)" class="item item-thumbnail" style="margin: 0 auto;">
+    </ion-avatar> 
+    <h3>{{userdetails.first_name}}</h3>
+    <h4 title="">{{userdetails.tehsil_name+' '+userdetails.district_name+' '+userdetails.state_name}}</h4>
+  </ion-item>
+  <form [formGroup]="addrequestForm" class="addrequestform">
+    <ion-item style="padding-left:0;" class="request_type">
+        <ion-label floating>Request Type</ion-label>            
+        <ion-select #type formControlName="type" (change)="elementChanged(type)" >
+            <ion-option  *ngFor="let type of types"[value]="type.id">{{type.name}}</ion-option>
+        </ion-select>
+    </ion-item>  
+    <div class="addrequestimage">
+    <ion-item style="padding-left:0;">
+        <ion-textarea #message formControlName="message" (change)="elementChanged(message)" rows="4" placeholder="Write something" style="margin-left: 0px;"></ion-textarea>           
+    </ion-item>
+    <ion-item> 
+        <p> Add Images </p>
+        <img *ngIf="!photo" src="assets/images/add-icon.png" (click)="takepictue()" class="item item-thumbnail" style="width:100%">
+        <img *ngIf="photo" src="requestimg" (click)="takepictue()" class="item item-thumbnail" style="width:100%">
+    </ion-item>           
+    </div>
+  </form>
 </ion-content>

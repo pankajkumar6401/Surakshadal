@@ -16,15 +16,14 @@ import { Globalization } from '@ionic-native/globalization';
 import { TranslateModule } from 'ng2-translate/ng2-translate';
 import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/translate.service';
 
-import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
 import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { Calendar } from '@ionic-native/calendar';
-// import { SwiperModule } from 'ngx-swiper-wrapper';
-// import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
+import { FileTransfer } from '@ionic-native/file-transfer';
+import { File } from '@ionic-native/file';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http,'assets/i18n','.json');
@@ -59,6 +58,7 @@ export function createTranslateLoader(http: Http) {
   providers: [
     StatusBar,
     SplashScreen,
+    FileTransfer,
     File,
     Transfer,
     Camera,

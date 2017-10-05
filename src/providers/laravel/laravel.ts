@@ -84,6 +84,9 @@ export class LaravelProvider {
   deleteMember(id){   
     return this.getUrl() +'api/delete/' +id;
   }
+  getRequestImageApi(){
+    return this.getUrl() +'api/requestimage/';
+  }
   setToken(val){
     this.token = val;
   }

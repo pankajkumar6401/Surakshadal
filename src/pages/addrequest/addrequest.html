@@ -18,7 +18,7 @@
   <ion-item style="padding-left:0;">  
     <ion-avatar item-start (click)="openProfileImage()">
       <img *ngIf="!userdetails.photo" src="assets/images/profile.png" class="item item-thumbnail" style="margin: 0 auto;">
-        <img *ngIf="userdetails.photo" [src]="laravel.getProflieImagePath(userdetails.photo)" class="item item-thumbnail" style="margin: 0 auto;">
+      <img *ngIf="userdetails.photo" [src]="laravel.getProflieImagePath(userdetails.photo)" class="item item-thumbnail" style="margin: 0 auto;">
     </ion-avatar> 
     <h3>{{userdetails.first_name}}</h3>
     <h4 title="">{{userdetails.tehsil_name+' '+userdetails.district_name+' '+userdetails.state_name}}</h4>
@@ -36,8 +36,7 @@
     </ion-item>
     <ion-item> 
         <p> Add Images </p>
-        <img *ngIf="!photo" src="assets/images/add-icon.png" (click)="takepictue()" class="item item-thumbnail" style="width:100%">
-        <img *ngIf="photo" src="requestimg" (click)="takepictue()" class="item item-thumbnail" style="width:100%">
+        <img [src]="requestimg" (click)="takepictue()" class="item item-thumbnail" style="width:100%"> 
     </ion-item>           
     </div>
   </form>

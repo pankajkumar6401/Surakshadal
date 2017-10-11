@@ -2,8 +2,7 @@ import { Http,Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController,ModalController, ViewController } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController,ModalController } from 'ionic-angular';
 
 /**
  * Generated class for the ProfilePage page.
@@ -23,7 +22,10 @@ export class ProfilePage {
   user_detail:any;
   name:any;
   photo:any;
-  userdetails=[];
+  userdetails  = {
+    first_name:'',
+    photo:''
+  };
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public toast: ToastController,
@@ -40,36 +42,34 @@ export class ProfilePage {
       content: 'Please Wait'
     });
     this.loading.present();
-      let headers = new Headers();
-      let token:string = this.laravel.getToken();
-      console.log(token);
-      headers.append('Authorization', token);
-      this.http.get(this.laravel.getProfileDetailApi(),{
-        headers: headers
-      })
-      .subscribe(res => {
-        // this.loading.dismiss();
-        this.user_detail = res.json();
-      //   localStorage['name']=this.user_detail['user_detail'].first_name;
-      //   localStorage['photo']=this.user_detail['user_detail'].photo;
-      // this.photo=localStorage['photo'];
-      // this.name=localStorage['name'];
-     //  +' '+this.user_detail['user_detail'].middle_name+' '+this.user_detail['user_detail'].last_name
-     },
-     error => {
-       this.loading.dismiss();
-       // let errorMsg = 'Something went wrong. Please contact your app developer';
-       // this.toast.create({
-       //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-       //   duration:3000
-       // }).present();
-     });
-      this.storage.get('surakshadal_userDetails').then(userdetails => {         
-        this.loading.dismiss();
+    this.storage.get('surakshadal_userDetails').then(userdetails => {
+      if(userdetails){
         this.userdetails = userdetails;
-         },error=>{
+        let headers = new Headers();
+        let token:string = this.laravel.getToken();
+        headers.append('Authorization', token);
+        this.http.get(this.laravel.getProfileDetailApi(),{
+          headers: headers
+        }).subscribe(res => {
+          this.loading.dismiss();
+          this.user_detail = res.json();
+        },
+        error => {
+          this.loading.dismiss();
+          let errorMsg = 'Something went wrong. Please contact your app developer';
+          this.toast.create({
+            message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+            duration:3000
+          }).present();
+        });
+      }else{
         this.loading.dismiss();
-      });
+      }
+    },error=>{
+      this.loading.dismiss();
+    });
+     
+      
     }
     goToLoginPage(){
       localStorage.clear();

@@ -1,13 +1,9 @@
-import { EmailValidator } from './../../validators/email';
-import { NameValidator } from './../../validators/name';
-import { NumberValidator } from './../../validators/number';
+import { PincodeValidator } from './../../validators/pincode';
 import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Storage } from '@ionic/storage';
+import { FormBuilder,Validators } from '@angular/forms';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
 /**
  * Generated class for the AddressdetailPage page.
  *
@@ -36,8 +32,7 @@ export class AddressdetailPage {
     public toast: ToastController,   
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
-    public http: Http,
-    private storage: Storage ) 
+    public http: Http ) 
     {
         this.user_detail= navParams.get('userAddressData');
         this.states = navParams.get('states');
@@ -45,7 +40,7 @@ export class AddressdetailPage {
         this.tehsils = navParams.get('tehsils');  
         console.log(JSON.stringify(this.user_detail));
         this.addressdetailForm = this.formBuilder.group({        
-        pincode: [''],       
+        pincode: ['', Validators.compose([ PincodeValidator.isValid])],       
         address_1: [''],
         address_2: [''],
         state: [''],       

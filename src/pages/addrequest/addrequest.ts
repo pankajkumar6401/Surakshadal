@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { ActionSheetController, } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -68,7 +68,6 @@ export class AddrequestPage {
     .subscribe(res => {
       this.types= res.json();
     });
-
     this.storage.get('surakshadal_userDetails').then(userdetails => {         
       this.loading.dismiss();
       this.userdetails = userdetails;
@@ -80,6 +79,108 @@ export class AddrequestPage {
   elementChanged(input){
     let field = input.ngControl.name;
     this[field + "Changed"] = true;
+  }
+
+  takepictue() {
+    let actionSheet = this.actionSheetCtrl.create({
+      title: 'Choose Images',
+      buttons: [
+        {
+          text: 'Choose from gallery',
+          role: 'destructive',
+          handler: () => {
+            this.openGallery();
+            console.log('Destructive clicked');
+          }
+        },
+        {
+          text: 'Take a photo',
+          handler: () => {
+             this.onCamera()
+            console.log('Archive clicked');
+          }
+        },
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }
+      ]
+    });
+ 
+    actionSheet.present();
+  }
+  onCamera(){
+    var options = {
+      quality: 100,
+      sourceType: this.camera.PictureSourceType.CAMERA,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      saveToPhotoAlbum:true
+    };
+    this.camera.getPicture(options).then((imageData)=>{
+      this.uploadImage(imageData);
+    },(err) => {
+      this.toast.create({
+        message: 'Something went wrong. Please contact your app developer',
+        duration:3000
+      });
+    });
+  
+  }
+  openGallery() {
+    var options = {
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI
+    };
+    this.camera.getPicture(options).then((imageData) => {
+      this.uploadImage(imageData);
+    },(err) => {
+      this.toast.create({
+        message: 'Something went wrong. Please contact your app developer',
+        duration:3000
+      });
+    });
+  }
+ 
+   uploadImage(fileUrl) {
+    this.loading = this.loadingCtrl.create({
+      content: 'Uploading File..'
+    });
+    this.loading.present();
+    let token:string = this.laravel.getToken();
+    const fileTransfer: FileTransferObject  = this.transfer.create();
+    let options1: FileUploadOptions = {
+      fileKey: 'photo',
+      fileName: 'request_img.jpg',
+      headers:{'Authorization':token},
+      params: {type: 'request'},
+      chunkedMode: false,
+    }
+    fileTransfer.upload(fileUrl, this.laravel.getRequestImageApi(), options1)
+    .then((data)=> {
+      alert('Hellooppp');
+      this.loading.dismiss();
+      let response = JSON.parse(data.response);
+      if(response.success){
+        this.addrequestForm.controls.requestimg.setValue(response.filename);
+        this.requestimg = this.laravel.getRequestImagePath(response.filename);
+      }else{
+        this.toast.create({
+          message: 'Sorry we are experiencing some issue while uploading logo. Please contact your app developer',
+          duration:3000
+        });  
+      }
+    },(err) => {
+      alert('error is coming');
+      console.log(err);
+      this.loading.dismiss();
+      this.toast.create({
+        message: 'Something went wrong. Please contact your app developer',
+        duration:3000
+      });
+    });
   }
   addreq(){
     this.submitAttempt = true;
@@ -126,103 +227,4 @@ export class AddrequestPage {
     }
 
   }
-  takepictue() {
-    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Choose Images',
-      buttons: [
-        {
-          text: 'Choose from gallery',
-          role: 'destructive',
-          handler: () => {
-            this.openGallery();
-            console.log('Destructive clicked');
-          }
-        },
-        {
-          text: 'Take a photo',
-          handler: () => {
-             this.onCamera()
-            console.log('Archive clicked');
-          }
-        },
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: () => {
-            console.log('Cancel clicked');
-          }
-        }
-      ]
-    });
- 
-    actionSheet.present();
-  }
-  onCamera(){
-    const options: CameraOptions = {
-      quality: 75,
-      destinationType: this.camera.DestinationType.DATA_URL,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.image=base64Image;
-    }, (err) => {
-      // Handle error
-    });
-  }
-  openGallery() {
-    var options = {
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI
-    };
-    this.camera.getPicture(options).then((imageData) => {
-      this.uploadImage(imageData);
-    },(err) => {
-      this.toast.create({
-        message: 'Something went wrong. Please contact your app developer',
-        duration:3000
-      });
-    });
-  }
- 
-   uploadImage(fileUrl) {
-    this.loading = this.loadingCtrl.create({
-      content: 'Uploading File..'
-    });
-    this.loading.present();
-    let token:string = this.laravel.getToken();
-    const fileTransfer: FileTransferObject  = this.transfer.create();
-    let options1: FileUploadOptions = {
-      fileKey: 'photo',
-      fileName: 'request_img.jpg',
-      headers:{'Authorization':token},
-      params: {type: 'request'},
-      chunkedMode: false,
-    }
-    fileTransfer.upload(fileUrl, this.laravel.getRequestImageApi(), options1)
-    .then((data)=> {
-      this.loading.dismiss();
-      let response = JSON.parse(data.response);
-      if(response.success){
-        this.addrequestForm.controls.requestimg.setValue(response.filename);
-        this.requestimg = this.laravel.getRequestImagePath(response.filename);
-      }else{
-        this.toast.create({
-          message: 'Sorry we are experiencing some issue while uploading logo. Please contact your app developer',
-          duration:3000
-        });  
-      }
-    },(err) => {
-      this.loading.dismiss();
-      this.toast.create({
-        message: 'Something went wrong. Please contact your app developer',
-        duration:3000
-      });
-    });
-  }
-
 }

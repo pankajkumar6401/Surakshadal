@@ -20,8 +20,7 @@
   <ion-item>  
     <ion-avatar item-start (click)="openProfileImage()">
       <img *ngIf="!userdetails.photo" src="assets/images/profile.png" class="item item-thumbnail" style="margin: 0 auto;">
-       <img *ngIf="userdetails.photo" [src]="laravel.getProflieImagePath(userdetails.photo)" class="item item-thumbnail" style="margin: 0 auto;">  
-      
+      <img *ngIf="userdetails.photo" [src]="laravel.getProflieImagePath(userdetails.photo)" class="item item-thumbnail" style="margin: 0 auto;">  
     </ion-avatar> 
     <h1>{{userdetails.first_name}}</h1>
     <!-- <button ion-button round small outline item-end>Upload Photo</button> -->

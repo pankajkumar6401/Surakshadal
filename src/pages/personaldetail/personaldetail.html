@@ -65,7 +65,7 @@
               <ion-input #aadhar type="text" formControlName="aadhar" (change)="elementChanged(aadhar)"></ion-input>
           </ion-item> 
           <ion-item class="error-message" *ngIf="!profiledetailForm.controls.aadhar.valid  && (aadharChanged || submitAttempt)">
-              <p>Please enter your Aadhar</p>
+              <p>Please enter your valid Aadhar Number</p>
             </ion-item>    
           <ion-item [class.invalid]="!profiledetailForm.controls.id_type.valid && (id_typeChanged || submitAttempt)">
                 <ion-label floating>ID Proofs Type</ion-label>
@@ -74,11 +74,11 @@
                 </ion-select>
             </ion-item> 
             <ion-item [class.invalid]="!profiledetailForm.controls.idnumber.valid && (idnumberChanged || submitAttempt)">
-                <ion-label floating>ID Type Number</ion-label>
+                <ion-label floating>ID Detail</ion-label>
                 <ion-input #idnumber type="text" formControlName="idnumber" (change)="elementChanged(idnumber)"></ion-input>
             </ion-item> 
             <ion-item class="error-message" *ngIf="!profiledetailForm.controls.idnumber.valid  && (idnumberChanged || submitAttempt)">
-                <p>Please enter your Aadhar</p>
+                <p>Please enter your Id Detail</p>
             </ion-item>
             <ion-item [class.invalid]="!profiledetailForm.controls.user_id.valid && (user_idChanged || submitAttempt)" class="hidden-field">                
                 <ion-input #user_id type="hidden" formControlName="user_id" (change)="elementChanged(user_id)"></ion-input>

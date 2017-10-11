@@ -1,12 +1,7 @@
-import { NameValidator } from './../../validators/name';
-import { NumberValidator } from './../../validators/number';
 import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController,AlertController } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
 
 
 /**
@@ -29,26 +24,18 @@ export class FamilydetailPage {
   photo:any;
   name:any;
   members:any;
+  member:any;
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl: ViewController, 
-    public toast: ToastController,
-    private formBuilder: FormBuilder, 
+    public toast: ToastController,   
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
     public http: Http,
-    private storage: Storage,
     public alertCtrl: AlertController) {
 
-      // this.user_detail= navParams.get('userFamilyData');
-      // this.relations= navParams.get('relations');
-      // this.user_id=navParams.get('user_id')
-      // console.log('mm'+JSON.stringify(this.user_detail));
-      // console.log(JSON.stringify(this.user_id));
-  }
-  dismiss(data) {
-    this.viewCtrl.dismiss(data);
+    
   }
   ionViewDidLoad() {
     this.loading = this.loadingCtrl.create({
@@ -69,7 +56,7 @@ export class FamilydetailPage {
         error => {
           this.loading.dismiss();
           this.toast.create({
-            message: 'Member fdgd added',
+            message: 'Member not added',
             duration: 3000
           }).present();
       });
@@ -83,11 +70,11 @@ export class FamilydetailPage {
     },
     error => {
       this.loading.dismiss();
-      // let errorMsg = 'Something went wrong. Please contact your app developer';
-      // this.toast.create({
-      //   message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-      //   duration:3000
-      // }).present();
+      let errorMsg = 'Something went wrong. Please contact your app developer';
+      this.toast.create({
+        message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+        duration:3000
+      }).present();
     });
     console.log('ionViewDidLoad FamilydetailPage');
   }
@@ -100,9 +87,19 @@ addFamilyDetail(){
   }
   this.navCtrl.push('AddfamilydetailPage',data);
 }
+editMember(member){
+  let data = {
+    relations:this.user_detail.relations,
+    user_id:this.user_detail['user_detail']['id'],
+    relation_id:this.user_detail['relations']['id'],
+    parentPage:this,
+    member: member
+  }
+  this.navCtrl.push('AddfamilydetailPage',data);
+   
+  }
 deleteMember(id){
   let confirm = this.alertCtrl.create({
-    // title: 'Use this lightsaber?',
     message: 'Are you sure to delete?',
     buttons: [
       {
@@ -142,9 +139,14 @@ deleteMember(id){
   });
   confirm.present();
 }
+
 elementChanged(input){
   let field = input.ngControl.name;
   this[field + "Changed"] = true;
 }
-  
+   // this.user_detail= navParams.get('userFamilyData');
+      // this.relations= navParams.get('relations');
+      // this.user_id=navParams.get('user_id')
+      // console.log('mm'+JSON.stringify(this.user_detail));
+      // console.log(JSON.stringify(this.user_id));
 }

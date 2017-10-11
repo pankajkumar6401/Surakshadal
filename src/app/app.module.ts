@@ -9,7 +9,6 @@ import { MyApp } from './app.component';
 import { Network } from '@ionic-native/network';
 import { HttpModule, Http  } from '@angular/http';
 import { LaravelProvider } from '../providers/laravel/laravel';
-import { LoginPage} from '../pages/login/login';
 
 
 import { Globalization } from '@ionic-native/globalization';
@@ -19,11 +18,11 @@ import { TranslateLoader, TranslateStaticLoader } from 'ng2-translate/src/transl
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { Camera } from '@ionic-native/camera';
-import { MediaCapture, MediaFile, CaptureError, CaptureImageOptions } from '@ionic-native/media-capture';
 import { FileChooser } from '@ionic-native/file-chooser';
 import { Calendar } from '@ionic-native/calendar';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http,'assets/i18n','.json');
@@ -69,6 +68,7 @@ export function createTranslateLoader(http: Http) {
     Network,
     LaravelProvider,
     Globalization,
+    AdMobFree
   ]
 })
 export class AppModule {}

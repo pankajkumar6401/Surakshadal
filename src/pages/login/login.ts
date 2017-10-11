@@ -3,10 +3,8 @@ import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Network } from '@ionic-native/network';
 import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the LoginPage page.
@@ -33,7 +31,6 @@ export class LoginPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public toast: ToastController,
-    private network: Network,
     private formBuilder: FormBuilder,
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
@@ -94,7 +91,7 @@ export class LoginPage {
                     error =>{
                       this.loading.dismiss();
                       this.toast.create({
-                        message: 'Something went wrong. Please contact your app developer',
+                        message: '1 Something went wrong. Please contact your app developer',
                         duration: 3000
                       }).present();
                     }); //End of storage promise
@@ -102,7 +99,7 @@ export class LoginPage {
                   error => {
                     this.loading.dismiss();
                     this.toast.create({
-                      message: 'Something went wrong. Please contact your app developer',
+                      message: '2 Something went wrong. Please contact your app developer',
                       duration: 3000
                     }).present();
                   }
@@ -111,7 +108,7 @@ export class LoginPage {
                 error => {
                   this.loading.dismiss();
                   this.toast.create({
-                    message: 'Something went wrong. Please contact your app developer',
+                    message: '3 Something went wrong. Please contact your app developer',
                     duration: 3000
                   }).present();
                 }

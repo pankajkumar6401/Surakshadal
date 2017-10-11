@@ -1,17 +1,8 @@
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController , ViewController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController} from 'ionic-angular';
 import { Http, Headers} from '@angular/http';
-import { Storage } from '@ionic/storage';
-import {App,Slides } from 'ionic-angular';
-// import { SwiperModule } from 'ngx-swiper-wrapper';
-// import { SwiperConfigInterface } from 'ngx-swiper-wrapper';
-// const SWIPER: SwiperConfigInterface = {
-//   direction: 'horizontal',
-//   slidesPerView: 2,
-//   keyboardControl: true
-// };
-
+import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 
 @IonicPage()
 @Component({
@@ -32,12 +23,23 @@ export class HomePage {
        public laravel:LaravelProvider,
        public loadingCtrl: LoadingController,
        public toast: ToastController,
-       public modalCtrl: ModalController,
-       private storage: Storage,
-       private app:App,
-       private viewCtrl:ViewController,
+       public modalCtrl: ModalController ,
+       public admob: AdMobFree     
       ) {        
          }
+
+        //  showBanner() {                
+        //   let bannerConfig: AdMobFreeBannerConfig = {
+        //       isTesting: true, // Remove in production
+        //       autoShow: true,
+        //       id: ca-app-pub-1742521438563963/6189760913
+        //   };          
+        //   this.admob.banner.config(bannerConfig);          
+        //   this.admob.banner.prepare().then(() => {
+        //       success
+        //   }).catch(e => console.log(e));
+        
+        //    }
          addComments(request_id,comments) {          
           let modal = this.modalCtrl.create('CommentsPage', {requestId:request_id,comments:comments});
           modal.present();
@@ -140,7 +142,6 @@ export class HomePage {
               
               }
             
-          
         // goToLoginPage(){
         //   // this.storage.remove('surakshadal_userTokenInfo')
         //   this.app.getRootNav().setRoot('LoginPage');

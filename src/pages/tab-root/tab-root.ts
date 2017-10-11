@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the TabRootPage page.
@@ -19,7 +18,7 @@ export class TabRootPage {
   tab2 = 'AddrequestPage';
   tab3 = 'ProfilePage'; 
   tab4 ='';
-  constructor(public navCtrl: NavController, public navParams: NavParams,private storage: Storage) {
+  constructor(public navCtrl: NavController, public navParams: NavParams) {
     
   }
 

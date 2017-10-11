@@ -1,13 +1,13 @@
 import { EmailValidator } from './../../validators/email';
 import { NameValidator } from './../../validators/name';
 import { NumberValidator } from './../../validators/number';
+import { PhoneValidator } from './../../validators/phone';
+import { AadharValidator } from './../../validators/aadhar';
 import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Storage } from '@ionic/storage';
-import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 
 
 
@@ -37,14 +37,12 @@ export class PersonaldetailPage {
 
   constructor(
     public navCtrl: NavController, 
-    public navParams: NavParams,
-    public viewCtrl: ViewController, 
+    public navParams: NavParams, 
     public toast: ToastController,
     private formBuilder: FormBuilder, 
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
-    public http: Http,
-    private storage: Storage) 
+    public http: Http) 
     {
       this.user_detail= navParams.get('userDetailsData');
       this.idproof_types= navParams.get('idproof_types');
@@ -55,8 +53,8 @@ export class PersonaldetailPage {
       motherName: ['', Validators.compose([ NameValidator.isValid])],
       email: ['', Validators.compose([ EmailValidator.isValid])],
       mobile_no: ['', Validators.compose([ NumberValidator.isValid])],
-      phone: ['', Validators.compose([ NumberValidator.isValid])],
-      aadhar:['', Validators.compose([NumberValidator.isValid])],
+      phone: ['', Validators.compose([ PhoneValidator.isValid])],
+      aadhar:['', Validators.compose([AadharValidator.isValid])],
       id_type: [''],          
       dob: [''],
       idnumber:[''],

@@ -11,7 +11,7 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
-    <ion-card *ngFor="let member of members">
+    <ion-card *ngFor="let member of members" >
         <ion-list >
             <ion-item-sliding >
             <ion-item>
@@ -20,6 +20,7 @@
                 Contact : {{member.contact_no}}
             </ion-item>
             <ion-item-options side="right">
+                <button ion-button color="primary" (click)="editMember(member)"><ion-icon name="create"></ion-icon> Edit</button>
                 <button ion-button color="danger" (click)="deleteMember(member.id)"><ion-icon name="trash"></ion-icon> Delete</button>
             </ion-item-options>
             </ion-item-sliding>

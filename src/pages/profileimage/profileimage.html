@@ -8,22 +8,16 @@
 
   <ion-navbar >
       <ion-item>
-          <!-- <button item-start ion-button color="primary" navPop>
-             Cancel
-          </button>       -->
          <ion-title>Profile Image</ion-title>
-         <span item-end icon-only (click)="save()">
+         <span item-end icon-only (click)="save()" style="color: #fff;">
           <ion-icon name="checkmark"></ion-icon>
        </span>
         </ion-item>
   </ion-navbar>
-
 </ion-header>
-
-
 <ion-content padding>
   <div class="editprofilepicture">
-          <img *ngIf="user_detail.photo" [src]="laravel.getProflieImagePath(user_detail.photo)">            
-      <button ion-button (click)="presentActionSheet()" color="light" clear class="button"><ion-icon name= "camera"></ion-icon><span> Edit</span></button>   
+          <img [src]="laravel.getProflieImagePath(user_detail.photo)">            
+      <button ion-button (click)="takepicture()" color="light" clear class="button"><ion-icon name= "camera"></ion-icon><span> Edit</span></button>   
   </div>
 </ion-content>

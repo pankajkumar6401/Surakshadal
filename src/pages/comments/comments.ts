@@ -1,6 +1,6 @@
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController,ModalController, LoadingController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController } from 'ionic-angular';
 import { Http,Headers  } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import { FormBuilder, Validators } from '@angular/forms';

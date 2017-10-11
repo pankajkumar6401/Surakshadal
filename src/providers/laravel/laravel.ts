@@ -57,9 +57,12 @@ export class LaravelProvider {
   getUpdateAddressDetail(){
     return this.getUrl() + 'api/update/address';
   } 
-  getUpdateFamilyDetail(){
+  getAddFamilyDetail(){
     return this.getUrl() + 'api/update/family/details' ;
   }  
+  getUpdateFamilyDetailApi(){
+    return this.getUrl() + 'api/update/family';
+  }
   getStateId(id){
     return this.getUrl() + 'api/get/district/'+id;
   }
@@ -86,6 +89,9 @@ export class LaravelProvider {
   }
   getRequestImageApi(){
     return this.getUrl() +'api/requestimage/';
+  }
+  getProfileImageApi(){
+    return this.getUrl() +'api/photo/';
   }
   setToken(val){
     this.token = val;

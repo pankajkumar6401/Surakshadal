@@ -26,14 +26,14 @@
                 <ion-input #address_1 type="text" formControlName="address_1" (change)="elementChanged(address_1)"></ion-input>
             </ion-item>
             <ion-item class="error-message" *ngIf="!addressdetailForm.controls.address_1.valid  && (address_1Changed || submitAttempt)">
-                    <p>Please enter your name</p>
+                    <p>Please enter valid address</p>
                   </ion-item> 
             <ion-item [class.invalid]="!addressdetailForm.controls.address_2.valid && (address_2Changed || submitAttempt)">
                 <ion-label floating>Address Line-2</ion-label>
                 <ion-input #address_2 type="text" formControlName="address_2" (change)="elementChanged(address_2)"></ion-input>
             </ion-item>
             <ion-item class="error-message" *ngIf="!addressdetailForm.controls.address_2.valid  && (address_2Changed || submitAttempt)">
-                    <p>Please enter your name</p>
+                    <p>Please enter valid address</p>
                   </ion-item> 
             <ion-item>
                 <ion-label floating>State</ion-label>               
@@ -58,7 +58,7 @@
                 <ion-input #pincode type="text" formControlName="pincode" (change)="elementChanged(pincode)"></ion-input>
             </ion-item>   
             <ion-item class="error-message" *ngIf="!addressdetailForm.controls.pincode.valid  && (pincodeChanged || submitAttempt)">
-                    <p>Please enter your name</p>
+                    <p>Please enter valid pincode</p>
             </ion-item> 
             <ion-item [class.invalid]="!addressdetailForm.controls.user_id.valid && (user_idChanged || submitAttempt)" class="hidden-field">                
                 <ion-input #user_id type="hidden" formControlName="user_id" (change)="elementChanged(user_id)"></ion-input>

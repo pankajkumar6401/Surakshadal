@@ -1,12 +1,9 @@
-import { NameValidator } from './../../validators/name';
 import { NumberValidator } from './../../validators/number';
 import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Storage } from '@ionic/storage';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController, ViewController } from 'ionic-angular';
-import { Subscription } from 'rxjs/Subscription';
 
 /**
  * Generated class for the AddfamilydetailPage page.
@@ -22,7 +19,6 @@ import { Subscription } from 'rxjs/Subscription';
 })
 export class AddfamilydetailPage {
   familydetailForm:any;
-  user_detail:any;
   member: boolean = false;
   familymobile: boolean = false;
   familydetail: boolean = false;
@@ -30,7 +26,15 @@ export class AddfamilydetailPage {
   loading:any;
   relations=[];
   user_id:any;
+  name=[];
   userdetails=[];
+  memberDetail: any = {
+    id:'',
+    name: '',
+    relation: '',
+    relation_id: '',
+    contact_no: ''
+  };
   constructor( 
     public navCtrl: NavController, 
     public navParams: NavParams,
@@ -39,27 +43,28 @@ export class AddfamilydetailPage {
     private formBuilder: FormBuilder, 
     public laravel: LaravelProvider,
     public loadingCtrl: LoadingController,
-    public http: Http,
-    private storage: Storage) {
-
-      this.user_detail= navParams.get('userFamilyData');
-
+    public http: Http) {
       this.relations= navParams.get('relations');
       this.user_id=navParams.get('user_id')
-      console.log('mm'+JSON.stringify(this.user_detail));
       console.log(JSON.stringify(this.user_id));
       this.familydetailForm = this.formBuilder.group({
         member:['', Validators.required],
         familymobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
         relation:[''],
-        user_id:['']    
       });
+      if(this.navParams.get('member')){
+        this.memberDetail = this.navParams.get('member')
+        this.setFormData();
+      }
   }
-  dismiss(data) {
-    this.viewCtrl.dismiss(data);
+
+  setFormData(){
+    this.familydetailForm.controls.member.setValue(this.memberDetail.name);
+    this.familydetailForm.controls.relation.setValue(this.memberDetail.relation_id);
+    this.familydetailForm.controls.familymobile.setValue(this.memberDetail.contact_no);
   }
+
   ionViewDidLoad() {
-    this.familydetailForm.controls.user_id.setValue(this.user_id);
     console.log('ionViewDidLoad FamilydetailPage');
   }
   save(){
@@ -69,7 +74,7 @@ export class AddfamilydetailPage {
         'name': this.familydetailForm.controls.member.value,
         'contact_no': this.familydetailForm.controls.familymobile.value,
         'relation': this.familydetailForm.controls.relation.value,
-        'user_id': this.familydetailForm.controls.user_id.value
+        'user_id': this.user_id
       }
   
       let headers = new Headers();
@@ -80,7 +85,15 @@ export class AddfamilydetailPage {
         content: 'Please wait...'
       });
       this.loading.present();
-      this.http.post(this.laravel.getUpdateFamilyDetail(),profileData,{
+      let url:any;
+      
+      if(this.navParams.get('member')){
+        url = this.laravel.getUpdateFamilyDetailApi() + '/' + this.memberDetail.id;
+
+      }else{
+        url = this.laravel.getAddFamilyDetail();
+      }
+      this.http.post(url,profileData,{
         headers: headers
       }).map(res => res.json())
       .subscribe(res => {
@@ -91,10 +104,9 @@ export class AddfamilydetailPage {
             this.navParams.get('parentPage').ionViewDidLoad()
           });
         }else{
-          this.toast.create({
-            message: 'family Detail added' ,
-            duration:3000
-          }).present();
+          this.navCtrl.pop().then(()=>{
+            this.navParams.get('parentPage').ionViewDidLoad()
+          });
         }
       },
       error => {

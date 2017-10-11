@@ -31,9 +31,6 @@
                 <ion-label floating>Phone Number</ion-label>
                  <ion-input #familymobile type="text" formControlName="familymobile" (change)="elementChanged(familymobile)"></ion-input>          
             </ion-item>
-              <ion-item [class.invalid]="!familydetailForm.controls.user_id.valid && (user_idChanged || submitAttempt)" class="hidden-field">                
-                    <ion-input #user_id type="hidden" formControlName="user_id" (change)="elementChanged(user_id)"></ion-input>
-            </ion-item>  
         </ion-list>
        
         <div padding>

@@ -50,7 +50,7 @@ export class AddfamilydetailPage {
       this.familydetailForm = this.formBuilder.group({
         member:['', Validators.required],
         familymobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
-        relation:[''],
+        relation:['',Validators.required],
       });
       if(this.navParams.get('member')){
         this.memberDetail = this.navParams.get('member')

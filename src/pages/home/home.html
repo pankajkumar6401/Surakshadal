@@ -16,18 +16,18 @@
   </ion-navbar>
 </ion-header>
 
-<!-- <button ion-button (click)="showBanner()">Show Banner</button> -->
+
 <ion-content class="request_list">
-    <!-- <ion-refresher (ionRefresh)="doRefresh($event)">
-        <ion-refresher-content
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
         pullingIcon="arrow-dropdown"
         pullingText="Pull to refresh"
         refreshingSpinner="circles"
         refreshingText="Refreshing...">
-        </ion-refresher-content>
-      </ion-refresher> -->
-
+    </ion-refresher-content>
+  </ion-refresher>
   <ion-card  *ngFor="let request of requests">
+     
       
       <ion-item>
         <ion-avatar item-start>

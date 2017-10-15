@@ -27,11 +27,6 @@ import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
 export function createTranslateLoader(http: Http) {
   return new TranslateStaticLoader(http,'assets/i18n','.json');
 }
-// const SWIPER_CONFIG: SwiperConfigInterface = {
-//   direction: 'horizontal',
-//   slidesPerView: 'auto',
-//   keyboardControl: true
-// };
 
 @NgModule({
   declarations: [
@@ -42,7 +37,6 @@ export function createTranslateLoader(http: Http) {
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    // SwiperModule.forRoot(SWIPER_CONFIG),
     TranslateModule.forRoot({
       provide: TranslateLoader,
       useFactory: (createTranslateLoader),

@@ -211,14 +211,14 @@ export class AddrequestPage {
           this.navCtrl.setRoot('HomePage');
         }else{
           this.toast.create({
-            message: 'Something went wrong. Please contact your app developer' ,
+            message: 'Please enter atleast 20 characters' ,
             duration:3000
           }).present();
         }
       },
       error => {
         this.loading.dismiss();
-        let errorMsg = 'Something went wrong. Please contact your app developer';
+        let errorMsg = 'Please enter atleast 20 characters';
         this.toast.create({
           message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
           duration:3000

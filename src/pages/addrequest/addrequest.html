@@ -15,6 +15,14 @@
   </ion-navbar>
 </ion-header>
 <ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+        <ion-refresher-content
+            pullingIcon="arrow-dropdown"
+            pullingText="Pull to refresh"
+            refreshingSpinner="circles"
+            refreshingText="Refreshing...">
+        </ion-refresher-content>
+      </ion-refresher>
   <ion-item style="padding-left:0;">  
     <ion-avatar item-start (click)="openProfileImage()">
       <img *ngIf="!userdetails.photo" src="assets/images/profile.png" class="item item-thumbnail" style="margin: 0 auto;">
@@ -24,16 +32,22 @@
     <h4 title="">{{userdetails.tehsil_name+' '+userdetails.district_name+' '+userdetails.state_name}}</h4>
   </ion-item>
   <form [formGroup]="addrequestForm" class="addrequestform">
-    <ion-item style="padding-left:0;" class="request_type">
+    <ion-item style="padding-left:0;" class="request_type" [class.invalid]="!addrequestForm.controls.type.valid && (typeChanged || submitAttempt)">
         <ion-label floating>Request Type</ion-label>            
         <ion-select #type formControlName="type" (change)="elementChanged(type)" >
             <ion-option  *ngFor="let type of types"[value]="type.id">{{type.name}}</ion-option>
         </ion-select>
     </ion-item>  
+    <ion-item class="error-message" *ngIf="!addrequestForm.controls.type.valid  && (typeChanged || submitAttempt)">
+      <p>Please choose request type</p>
+    </ion-item> 
     <div class="addrequestimage">
-    <ion-item style="padding-left:0;">
+    <ion-item style="padding-left:0;" [class.invalid]="!addrequestForm.controls.message.valid && (messageChanged || submitAttempt)">
         <ion-textarea #message formControlName="message" (change)="elementChanged(message)" rows="4" placeholder="Write something" style="margin-left: 0px;"></ion-textarea>           
     </ion-item>
+    <ion-item class="error-message" *ngIf="!addrequestForm.controls.message.valid  && (messageChanged || submitAttempt)">
+      <p>Please enter message</p>
+    </ion-item> 
     <ion-item> 
         <p> Add Images </p>
         <img [src]="requestimg" (click)="takepictue()" class="item item-thumbnail" style="width:100%"> 

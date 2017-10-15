@@ -5,11 +5,14 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>Addfamilydetail</ion-title>
-  </ion-navbar>
-
+    <ion-navbar>
+        <ion-item  style="background-color:#4d4183;">      
+         <ion-title text-center>Addfamilydetail</ion-title>
+         <span item-end icon-only (click)="save()" style="color: #fff;">
+            <ion-icon name="checkmark"></ion-icon>
+         </span>
+        </ion-item>
+    </ion-navbar>
 </ion-header>
 
 
@@ -21,15 +24,24 @@
              <ion-label floating>Family Member Name</ion-label>
               <ion-input #member type="text" formControlName="member" (change)="elementChanged(member)"></ion-input>
             </ion-item>
+            <ion-item class="error-message" *ngIf="!familydetailForm.controls.member.valid  && (memberChanged || submitAttempt)">
+                <p>Please enter member name</p>
+            </ion-item>
             <ion-item >
                <ion-label floating>Relation Type</ion-label>                
                 <ion-select #relation formControlName="relation" (change)="elementChanged(relation)">
                     <ion-option *ngFor="let relation of relations" [value]="relation.id">{{relation.name}}</ion-option>                  
                 </ion-select>
             </ion-item>
+            <ion-item class="error-message" *ngIf="!familydetailForm.controls.relation.valid  && (relationChanged || submitAttempt)">
+                <p>Please choose relation type.</p>
+            </ion-item>
             <ion-item [class.invalid]="!familydetailForm.controls.familymobile.valid && (familymobileChanged || submitAttempt)">
                 <ion-label floating>Phone Number</ion-label>
                  <ion-input #familymobile type="text" formControlName="familymobile" (change)="elementChanged(familymobile)"></ion-input>          
+            </ion-item>
+            <ion-item class="error-message" *ngIf="!familydetailForm.controls.familymobile.valid  && (familymobileChanged || submitAttempt)">
+                <p>Please enter member number</p>
             </ion-item>
         </ion-list>
        

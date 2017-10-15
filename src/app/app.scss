@@ -42,13 +42,20 @@
 .alert-md .alert-wrapper{
     border-radius: 15px;
 }
+.toolbar-ios ion-title{
+    margin-left: -20px;
+    padding: 0;
+    margin-top: -10px;
+}
 .alert-md .alert-message{
     overflow: hidden;
     text-align: center;
     color: #000;
     padding-bottom: 0px;
 }
-
+ion-header .item-ios.item-block .item-inner{
+    border-bottom: 0;
+}
 .error-message{
     .item-inner {
         border-bottom: 0 !important;
@@ -60,6 +67,12 @@
     
   
 } 
-.back-button-icon-md{
+.back-button-icon{
     color: #fff;
+}
+ion-header span{
+    cursor: pointer;
+}
+.list-ios > .item-block:first-child{
+    border-top: 0;
 }

@@ -7,6 +7,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 
 
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -18,7 +19,8 @@ export class MyApp {
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     private storage: Storage,
     private laravel: LaravelProvider,
-    public loadingCtrl: LoadingController
+    public loadingCtrl: LoadingController,
+    
   ) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
@@ -46,7 +48,9 @@ export class MyApp {
       });
       statusBar.styleDefault();
       splashScreen.hide();
+     
     });
   }
+  
 }
 

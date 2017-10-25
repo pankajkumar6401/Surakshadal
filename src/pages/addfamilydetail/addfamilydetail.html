@@ -7,7 +7,7 @@
 <ion-header>
     <ion-navbar>
         <ion-item  style="background-color:#4d4183;">      
-         <ion-title text-center>Addfamilydetail</ion-title>
+         <ion-title text-center>Add family detail</ion-title>
          <span item-end icon-only (click)="save()" style="color: #fff;">
             <ion-icon name="checkmark"></ion-icon>
          </span>
@@ -36,13 +36,13 @@
             <ion-item class="error-message" *ngIf="!familydetailForm.controls.relation.valid  && (relationChanged || submitAttempt)">
                 <p>Please choose relation type.</p>
             </ion-item>
-            <ion-item [class.invalid]="!familydetailForm.controls.familymobile.valid && (familymobileChanged || submitAttempt)">
+            <ion-item >
                 <ion-label floating>Phone Number</ion-label>
                  <ion-input #familymobile type="text" formControlName="familymobile" (change)="elementChanged(familymobile)"></ion-input>          
             </ion-item>
-            <ion-item class="error-message" *ngIf="!familydetailForm.controls.familymobile.valid  && (familymobileChanged || submitAttempt)">
-                <p>Please enter member number</p>
-            </ion-item>
+            <!-- <ion-item class="error-message" *ngIf="!familydetailForm.controls.familymobile.valid  && (familymobileChanged || submitAttempt)">
+                <p>Please enter mobile number</p>
+            </ion-item> -->
         </ion-list>
        
         <div padding>

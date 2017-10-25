@@ -32,24 +32,33 @@
             <ion-item class="error-message" *ngIf="!addressdetailForm.controls.address_2.valid  && (address_2Changed || submitAttempt)">
                     <p>Please enter valid address</p>
                   </ion-item> 
-            <ion-item>
+            <ion-item [class.invalid]="!addressdetailForm.controls.state.valid && (stateChanged || submitAttempt)">
                 <ion-label floating>State</ion-label>               
                 <ion-select #state formControlName="state" (ionChange)="getDist()">
                     <ion-option *ngFor="let state of states" [value]="state.id">{{state.name}}</ion-option>                   
                 </ion-select>
             </ion-item>
-            <ion-item>
+            <ion-item class="error-message" *ngIf="!addressdetailForm.controls.state.valid  && (stateChanged || submitAttempt)">
+                    <p>Please enter state</p>
+                  </ion-item> 
+            <ion-item [class.invalid]="!addressdetailForm.controls.district.valid && (districtChanged || submitAttempt)">
                 <ion-label floating>District</ion-label>
                 <ion-select #district formControlName="district" (ionChange)="getTehsil()">
                     <ion-option *ngFor="let district of districts" [value]="district.id">{{district.name}}</ion-option>
                   </ion-select>
             </ion-item> 
-            <ion-item>
+            <ion-item class="error-message" *ngIf="!addressdetailForm.controls.district.valid  && (districtChanged || submitAttempt)">
+                    <p>Please enter district</p>
+                  </ion-item> 
+            <ion-item [class.invalid]="!addressdetailForm.controls.tehsil.valid && (tehsilChanged || submitAttempt)">
                 <ion-label floating>Tehsil</ion-label>
                 <ion-select  #tehsil formControlName="tehsil">
                     <ion-option *ngFor="let tehsil of tehsils" [value]="tehsil.id">{{tehsil.name}}</ion-option>
                   </ion-select>
             </ion-item> 
+            <ion-item class="error-message" *ngIf="!addressdetailForm.controls.tehsil.valid  && (districtChanged || submitAttempt)">
+                    <p>Please enter tehsil</p>
+                  </ion-item> 
             <ion-item [class.invalid]="!addressdetailForm.controls.pincode.valid && (pincodeChanged || submitAttempt)">
                 <ion-label floating>pincode</ion-label>
                 <ion-input #pincode type="text" formControlName="pincode" (change)="elementChanged(pincode)"></ion-input>

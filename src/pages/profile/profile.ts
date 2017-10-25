@@ -56,11 +56,6 @@ export class ProfilePage {
         },
         error => {
           this.loading.dismiss();
-          let errorMsg = 'Something went wrong. Please contact your app developer';
-          this.toast.create({
-            message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-            duration:3000
-          }).present();
         });
       }else{
         this.loading.dismiss();

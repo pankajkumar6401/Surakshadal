@@ -41,11 +41,11 @@ export class AddressdetailPage {
         console.log(JSON.stringify(this.user_detail));
         this.addressdetailForm = this.formBuilder.group({        
         pincode: ['', Validators.compose([ PincodeValidator.isValid])],       
-        address_1: [''],
+        address_1: ['',Validators.required],
         address_2: [''],
-        state: [''],       
-        district: [''] ,      
-        tehsil: [''],
+        state: ['',Validators.required],       
+        district: ['',Validators.required] ,      
+        tehsil: ['',Validators.required],
         user_id:['']     
       });  
   }
@@ -91,8 +91,9 @@ export class AddressdetailPage {
         /// now we have to dismiss loading if we got any response from back-end 
         this.loading.dismiss(); 
         if(res.success){
-          this.navCtrl.setRoot('AddressdetailPage');
+          this.navCtrl.setRoot('ProfilePage');
         }else{
+          this.navCtrl.setRoot('ProfilePage');
           this.toast.create({
             message: 'Address has been Updated' ,
             duration:3000

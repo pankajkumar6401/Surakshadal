@@ -206,9 +206,8 @@ export class AddrequestPage {
         //success
         // this.navCtrl.setRoot('HomePage');
         this.loading.dismiss();
-        if(res.success){
-        
-          this.navCtrl.setRoot('HomePage');
+        if(res.success){        
+          this.navCtrl.push('HomePage');
         }else{
           this.toast.create({
             message: 'Please enter atleast 20 characters' ,

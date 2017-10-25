@@ -53,11 +53,11 @@ export class PersonaldetailPage {
       motherName: ['', Validators.compose([ NameValidator.isValid])],
       email: ['', Validators.compose([ EmailValidator.isValid])],
       mobile_no: ['', Validators.compose([ NumberValidator.isValid])],
-      phone: ['', Validators.compose([ PhoneValidator.isValid])],
+      phone: [''],
       aadhar:['', Validators.compose([AadharValidator.isValid])],
-      id_type: [''],          
-      dob: [''],
-      idnumber:[''],
+      id_type: ['',Validators.required],          
+      dob: ['',Validators.required],
+      idnumber:['',Validators.required],
       user_id:['']         
 
     });  
@@ -111,8 +111,9 @@ export class PersonaldetailPage {
           /// now we have to dismiss loading if we got any response from back-end 
           this.loading.dismiss(); 
           if(res.success){
-            this.navCtrl.setRoot('PersonaldetailPage');
+            this.navCtrl.setRoot('ProfilePage');
           }else{
+            this.navCtrl.setRoot('ProfilePage');
             this.toast.create({
               message: 'Profile has been Updated' ,
               duration:3000

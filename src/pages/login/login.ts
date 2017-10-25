@@ -124,5 +124,8 @@ export class LoginPage {
         });
     }
   }
+  goToRegister(){
+    this.navCtrl.push('RegisterPage')
+  }
 
 }

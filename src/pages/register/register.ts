@@ -90,7 +90,7 @@ export class RegisterPage {
               data => {
                 this.laravel.setToken(res.token_type+' '+res.access_token);
                 this.loading.dismiss();
-                this.navCtrl.setRoot('HomePage');
+                this.navCtrl.setRoot('TabRootPage');
               },
               error => {
                 this.loading.dismiss();

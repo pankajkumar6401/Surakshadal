@@ -47,9 +47,12 @@
           </ion-item>
           <ion-item [class.invalid]="!profiledetailForm.controls.mobile_no.valid && (mobile_noChanged || submitAttempt)">
               <ion-label floating>Mobile Number</ion-label>
-              <ion-input #mobile_no type="text" formControlName="mobile_no" (change)="elementChanged(mobile_no)" ></ion-input>
-              </ion-item>
-          <ion-item [class.invalid]="!profiledetailForm.controls.phone.valid && (phoneChanged || submitAttempt)">
+              <ion-input #mobile_no type="text" readonly formControlName="mobile_no" (change)="elementChanged(mobile_no)" ></ion-input>
+          </ion-item>
+          <ion-item class="error-message" *ngIf="!profiledetailForm.controls.mobile_no.valid  && (mobile_noChanged || submitAttempt)">
+                <p>Please enter your valid mobile number.</p>
+            </ion-item>
+          <ion-item>
               <ion-label floating>Phone Number</ion-label>
               <ion-input #phone type="text" formControlName="phone" (change)="elementChanged(phone)"></ion-input>
           </ion-item>
@@ -57,6 +60,9 @@
               <ion-label floating>Date Of Birth</ion-label>
                 <ion-datetime #dob formControlName="dob"  displayFormat="MMM DD YYYY" pickerFormat="MMM DD YYYY" ></ion-datetime>               
           </ion-item>
+          <ion-item class="error-message" *ngIf="!profiledetailForm.controls.dob.valid  && (dobChanged || submitAttempt)">
+                <p>Please enter Date of Birth.</p>
+            </ion-item>
           <ion-item [class.invalid]="!profiledetailForm.controls.aadhar.valid && (aadharChanged || submitAttempt)">
               <ion-label floating>Adhaar Number</ion-label>
               <ion-input #aadhar type="text" formControlName="aadhar" (change)="elementChanged(aadhar)"></ion-input>

@@ -49,7 +49,7 @@ export class AddfamilydetailPage {
       console.log(JSON.stringify(this.user_id));
       this.familydetailForm = this.formBuilder.group({
         member:['', Validators.required],
-        familymobile: ['', Validators.compose([Validators.required, NumberValidator.isValid])],
+        familymobile: [''],
         relation:['',Validators.required],
       });
       if(this.navParams.get('member')){

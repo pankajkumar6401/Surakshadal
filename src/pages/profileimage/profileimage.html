@@ -17,7 +17,11 @@
 </ion-header>
 <ion-content padding>
   <div class="editprofilepicture">
-          <img [src]="laravel.getProflieImagePath(user_detail.photo)">            
+
+      <img *ngIf="user_detail.photo" [src]="laravel.getProflieImagePath(user_detail.photo)">
+      <img *ngIf="!user_detail.photo" src="assets/images/profile.png">
+
+          <!-- <img [src]="laravel.getProflieImagePath(user_detail.photo)">             -->
       <button ion-button (click)="takepicture()" color="light" clear class="button"><ion-icon name= "camera"></ion-icon><span> Edit</span></button>   
   </div>
 </ion-content>

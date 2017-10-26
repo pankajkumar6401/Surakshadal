@@ -35,7 +35,7 @@
       </ion-item>
       <ion-item [class.invalid]="!registerForm.controls.mobile.valid && (mobileChanged || submitAttempt)">
           <ion-label floating>Mobile Number</ion-label>
-        <ion-input #mobile type="text" formControlName="mobile" (change)="elementChanged(mobile)" autocapitalize="off"></ion-input>
+        <ion-input #mobile type="number" formControlName="mobile" (change)="elementChanged(mobile)" autocapitalize="off"></ion-input>
       </ion-item>
       <ion-item class="error-message" *ngIf="!registerForm.controls.mobile.valid  && (mobileChanged || submitAttempt)">
         <p>Please enter a valid Mobile number.</p>

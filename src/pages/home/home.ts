@@ -26,7 +26,8 @@ export class HomePage {
        public modalCtrl: ModalController ,
        private admobFree : AdMobFree
     
-      ) {   this.getData();
+      ) {   
+        this.getData();
       
          }
         
@@ -35,128 +36,92 @@ export class HomePage {
           modal.present();
 
         }
-        // async showAdmobBannerAds(){
-        //   const bannerConfig: AdMobFreeBannerConfig = {
-        //       isTesting: true,
-        //       autoShow: true,
-        //       id: 'ca-app-pub-1742521438563963/5251497032'
-        //   };
-        //   this.admobFree.banner.config(bannerConfig);
-      
-        //   this.admobFree.banner.prepare()
-        //   .then(() => {
-        //       // banner Ad is ready
-        //       // if we set autoShow to false, then we will need to call the show method here
-        //   })
-        //   .catch(e => console.log(e));    
-        //   } 
-        ionViewDidLoad() {   
+        ionViewDidLoad() {       
 
           console.log('ionViewDidLoad HomePage');
             }
 
-            getData(refresher=null) {
+          getData(refresher=null) {
+            if(!this.loading){
               this.loading = this.loadingCtrl.create({
                 content: 'Please wait...'
               });
               this.loading.present();
-              let headers = new Headers();
-              let token:string = this.laravel.getToken();
-              console.log(token);
-              headers.append('Authorization', token);
-              this.http.get(this.laravel.getRequestApi(),{
-                headers: headers
-              })
-              .subscribe(res => {               
-                this.requests = res.json();
-                this.sychedData = true;
-                this.loading.dismiss();
-                if(refresher != null){
-                  refresher.complete();
-                }
-                      },
-                      error => {
-                        this.loading.dismiss();
-                        if(refresher != null){
-                          refresher.complete();
-                        }
-                        this.sychedData = true;
-                        this.toast.create({
-                          message: 'Something went wrong. Please contact your app developer',
-                          duration: 3000
-                        }).present();
-                    });
-
+            }
+            let headers = new Headers();
+            let token:string = this.laravel.getToken();
+            console.log(token);
+            headers.append('Authorization', token);
+            this.http.get(this.laravel.getRequestApi(),{
+              headers: headers
+            })
+            .subscribe(res => {
+              this.requests = res.json();
+              this.sychedData = true;
+              this.loading.dismiss();
+              if(refresher != null){
+                refresher.complete();
+              }
+            },
+                error => {
+                  this.loading.dismiss();
+                  if(refresher != null){
+                    refresher.complete();
+                  }
+                  this.sychedData = true;
+                  this.toast.create({
+                    message: 'Something went wrong. Please contact your app developer',
+                    duration: 1000
+                  }).present();
+              });
             }
 
-            addLike(id){
-            
+            addLike(id){            
               let headers = new Headers();
               let token:string = this.laravel.getToken();
-              console.log(token);
               headers.append('Authorization', token);
               this.loading = this.loadingCtrl.create({
                 content: 'Please wait...'
               });
               this.loading.present();
               this.http.get(this.laravel.getLikeApi(id),{
-                  headers: headers
-                    }).map(res => res.json())
-                    .subscribe(res => {
-                      this.loading.dismiss(); 
-                      // if(res.success){
-                      //   this.navCtrl.setRoot('HomePage');
-                      // }else{
-                        this.ionViewDidLoad();
-                        // this.toast.create({
-                        //   message: 'Address has been Updated' ,
-                        //   duration:3000
-                        // }).present();
-                      
-                   },
-                    error => {
-                      this.loading.dismiss();
-                      let errorMsg = 'Something went wrong.';
-                      this.toast.create({
-                        message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-                        duration:3000
-                      }).present();
-                    });
+                headers: headers
+                  }).map(res => res.json())
+                  .subscribe(res => {
+                    this.getData();
+                  },
+                  error => {
+                    this.loading.dismiss();
+                    let errorMsg = 'Something went wrong.';
+                    this.toast.create({
+                      message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+                      duration:0
+                    }).present();
+                  });
             
-            }
-            addDisLike(id){
-              
-                let headers = new Headers();
-                let token:string = this.laravel.getToken();
-                console.log(token);
-                headers.append('Authorization', token);
-                this.loading = this.loadingCtrl.create({
-                  content: 'Please wait...'
-                });
-                this.loading.present();
-                this.http.get(this.laravel.getDisLikeApi(id),{
-                    headers: headers
-                      }).map(res => res.json())
-                      .subscribe(res => {
-                        this.loading.dismiss(); 
-                        this.ionViewDidLoad();
-                        // if(res.success){
-                        //   this.navCtrl.setRoot('HomePage');
-                        // }else{
-                          // this.toast.create({
-                          //   message: 'Address has been Updated' ,
-                          //   duration:3000
-                          // }).present();
-                        
-                     },
-                      error => {
-                        this.loading.dismiss();
-                        let errorMsg = 'Something went wrong.';
-                        this.toast.create({
-                          message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-                          duration:3000
-                        }).present();
-                      });
+              }
+            addDisLike(id){              
+              let headers = new Headers();
+              let token:string = this.laravel.getToken();
+              headers.append('Authorization', token);
+              this.loading = this.loadingCtrl.create({
+                content: 'Please wait...'
+              });
+              this.loading.present();
+              this.http.get(this.laravel.getDisLikeApi(id),{
+                headers: headers
+                  }).map(res => res.json())
+                  .subscribe(res => {
+                    this.getData();                        
+                  },
+                  error => {
+                    this.loading.dismiss();
+                    let errorMsg = 'Something went wrong.';
+                    this.toast.create({
+                      message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+                      duration:0
+                    }).present();
+                  });
               
               }
               doRefresh(refresher) {

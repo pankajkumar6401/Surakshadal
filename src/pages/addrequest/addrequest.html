@@ -43,10 +43,10 @@
     </ion-item> 
     <div class="addrequestimage">
     <ion-item style="padding-left:0;" [class.invalid]="!addrequestForm.controls.message.valid && (messageChanged || submitAttempt)">
-        <ion-textarea #message formControlName="message" (change)="elementChanged(message)" rows="4" placeholder="Write something" style="margin-left: 0px;"></ion-textarea>           
+        <ion-textarea #message formControlName="message" (change)="elementChanged(message)" rows="4" placeholder="Write something atleast 20 words" style="margin-left: 0px;"></ion-textarea>           
     </ion-item>
     <ion-item class="error-message" *ngIf="!addrequestForm.controls.message.valid  && (messageChanged || submitAttempt)">
-      <p>Please enter message</p>
+      <p>Please enter atleast 20 words</p>
     </ion-item> 
     <ion-item> 
         <p> Add Images </p>

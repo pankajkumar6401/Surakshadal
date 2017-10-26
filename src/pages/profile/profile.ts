@@ -67,11 +67,14 @@ export class ProfilePage {
       
     }
     goToLoginPage(){
-      localStorage.clear();
-      this.storage.remove('surakshadal_userTokenInfo');
-      this.storage.remove('surakshadal_userDetails');
-      this.navCtrl.setRoot('LoginPage')
-      window.location.reload(true)
+      
+      this.storage.remove('surakshadal_userTokenInfo').then(()=>{
+        this.storage.remove('surakshadal_userDetails').then(() => {
+          
+          this.navCtrl.parent.parent.setRoot('LoginPage');
+        });
+      });
+      // window.location.reload(true)
     }
       openProfileImage() {
         this.navCtrl.push('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});

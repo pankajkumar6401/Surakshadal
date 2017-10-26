@@ -1,7 +1,7 @@
 import { NameValidator } from './../../validators/name';
 import { NumberValidator } from './../../validators/number';
 import { PasswordValidator } from './../../validators/password';
-import { Http } from '@angular/http';
+import { Http, Headers } from '@angular/http';
 import { LaravelProvider } from './../../providers/laravel/laravel';
 import { Component } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
@@ -82,35 +82,72 @@ export class RegisterPage {
       });
       this.loading.present();
       this.http.post(this.laravel.getRegistrationApi(),data)
-      .map(res => res.json())
-    
+      .map(res => res.json())     
       .subscribe(res => {
-        this.storage.set('surakshadal_userTokenInfo', res.token_type+' '+res.access_token)
+        if(res.success){
+          this.storage.set('surakshadal_userTokenInfo', res.token.token_type+' '+res.token.access_token)
           .then(
               data => {
-                this.laravel.setToken(res.token_type+' '+res.access_token);
-                this.loading.dismiss();
-                this.navCtrl.setRoot('TabRootPage');
-              },
-              error => {
-                this.loading.dismiss();
-                this.toast.create({
-                  message: 'Something went wrong. Please contact your app developer',
-                  duration: 3000
-                }).present();
-              }
-        );
+                this.laravel.setToken(res.token.token_type+' '+res.token.access_token);
+                let headers = new Headers();
+                headers.append('Authorization', res.token.token_type+' '+res.token.access_token);
+                this.http.get(this.laravel.getUserDetail(),{
+                  headers:headers
+                }).map(res => res.json())               
+                  .subscribe(res => {
+                    console.log(res);
+                    this.storage.set('surakshadal_userDetails',res.data).then(res => {
+                      this.loading.dismiss().then(()=>{
+                        this.navCtrl.setRoot('TabRootPage');
+                      });
+                    },
+                    error =>{
+                      this.loading.dismiss().then(()=> {
+                        this.toast.create({
+                          message: '1 Something went wrong. Please contact your app developer',
+                          duration: 3000
+                        }).present();
+                      });
+                    }); //End of storage promise
+                  },
+                  error => {
+                    this.loading.dismiss().then(()=>{
+                      this.toast.create({
+                        message: '2 Something went wrong. Please contact your app developer',
+                        duration: 3000
+                      }).present();
+                    });
+                  }
+                );
+                },
+                error => {
+                  this.loading.dismiss().then(()=>{
+                    this.toast.create({
+                      message: '3 Something went wrong. Please contact your app developer',
+                      duration: 3000
+                    }).present();
+                  });
+                }
+          );
+        }else{
+          this.loading.dismiss().then(()=>{
+            this.toast.create({
+              message: 'Sorry we are not able to register any user right now. Please try again after some time',
+              duration: 3000
+            }).present();
+          });
+        }
       },
       error => {
-        this.loading.dismiss();
-        let errorMsg = 'Something went wrong. Please contact your app developer';
-        this.toast.create({
-          message: (error.json().hasOwnProperty('message')) ? error.json().message:errorMsg ,
-          duration:3000
-        }).present();
+        this.loading.dismiss().then(()=>{
+          let errorMsg = 'Something went wrong. Please contact your app developer';
+          this.toast.create({
+            message: (error.json().hasOwnProperty('message')) ? error.json().message:errorMsg ,
+            duration:3000
+          }).present();
+        });
       });
     }
-    
   }
   goToNewsPage(){
     this.navCtrl.push('NewsPage');    

@@ -27,9 +27,9 @@ export class HomePage {
        private admobFree : AdMobFree
     
       ) {  
-        for (let request = 0; request < 10; request++) {
-          this.requests.push( this.requests.length );
-          }
+        // for (let request = 0; request < 10; request++) {
+        //   this.requests.push( this.requests.length );
+        //   }
         this.getData();  
          }
          addComments(request_id,comments) {          
@@ -151,18 +151,18 @@ export class HomePage {
               doRefresh(refresher) {
                 this.getData(refresher)
               }
-              doInfinite(infiniteScroll) {
-                console.log('Begin async operation');
+              // doInfinite(infiniteScroll) {
+              //   console.log('Begin async operation');
                 
-                setTimeout(() => {
-                for (let request = 0; request < 10; request++) {
-                this.requests.push( this.requests.length );
-                }
+              //   setTimeout(() => {
+              //   for (let request = 0; request < 10; request++) {
+              //   this.requests.push( this.requests.length );
+              //   }
                 
-                console.log('Async operation has ended');
-                infiniteScroll.complete();
-                }, 500);
-                }
+              //   console.log('Async operation has ended');
+              //   infiniteScroll.complete();
+              //   }, 500);
+              //   }
               
             
             

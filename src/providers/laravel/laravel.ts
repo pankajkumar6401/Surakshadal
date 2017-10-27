@@ -73,7 +73,7 @@ export class LaravelProvider {
     return this.getUrl() +'api/get/request/type';
   }
   getLikeApi(id){
-    return this.getUrl() +'api/addlike/' +id;
+    return this.getUrl() +'api/addlike/' +id ;
   }
   getDisLikeApi(id){
     return this.getUrl() +'api/dislike/' +id;

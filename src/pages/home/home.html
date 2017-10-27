@@ -15,9 +15,11 @@
       </ion-item>
   </ion-navbar>
 </ion-header>
-
-
+<ion-infinite-scroll (ionInfinite)="doInfinite($event)">
+    <ion-infinite-scroll-content></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 <ion-content class="request_list">
+   
   <ion-refresher (ionRefresh)="doRefresh($event)">
     <ion-refresher-content
         pullingIcon="arrow-dropdown"
@@ -26,8 +28,8 @@
         refreshingText="Refreshing...">
     </ion-refresher-content>
   </ion-refresher>
-  <ion-card  *ngFor="let request of requests">
-     
+  
+  <ion-card  *ngFor="let request of requests; let i = index">    
       
       <ion-item>
         <ion-avatar item-start>
@@ -53,13 +55,13 @@
       <ion-grid>
         <ion-row>
           <ion-col>
-            <button ion-button icon-left clear small (click)="addLike(this.request.request_id)">
+            <button ion-button icon-left clear small (click)="addLike(request.request_id,i)">
               <ion-icon name="thumbs-up"></ion-icon><br>
-              <div >{{request.like_count}}</div>
+              <div >{{request.like_count}}  </div>
             </button>
           </ion-col>
           <ion-col>
-            <button ion-button icon-left clear small  (click)="addDisLike(this.request.request_id)">
+            <button ion-button icon-left clear small  (click)="addDisLike(request.request_id,i)">
               <ion-icon name="thumbs-down"></ion-icon><br>
               <div>{{request.unlike_count}}</div>
             </button>
@@ -73,4 +75,5 @@
         </ion-row>
       </ion-grid>
     </ion-card>
+   
 </ion-content>

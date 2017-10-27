@@ -122,7 +122,7 @@ export class PersonaldetailPage {
         },
         error => {
           this.loading.dismiss();
-          let errorMsg = 'Something went wrong.';
+          let errorMsg = 'Something went wrong';
           this.toast.create({
             message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
             duration:3000

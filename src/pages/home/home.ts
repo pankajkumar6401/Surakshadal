@@ -9,7 +9,7 @@ import { AdMobFree, AdMobFreeBannerConfig } from '@ionic-native/admob-free';
   templateUrl: 'home.html'
 })
 export class HomePage {
-    requests:any;
+    requests= [];
     loading:any;
     sychedData:boolean = false;
    
@@ -26,15 +26,15 @@ export class HomePage {
        public modalCtrl: ModalController ,
        private admobFree : AdMobFree
     
-      ) {   
-        this.getData();
-      
+      ) {  
+        for (let request = 0; request < 10; request++) {
+          this.requests.push( this.requests.length );
+          }
+        this.getData();  
          }
-        
          addComments(request_id,comments) {          
           let modal = this.modalCtrl.create('CommentsPage', {requestId:request_id,comments:comments});
           modal.present();
-
         }
         ionViewDidLoad() {       
 
@@ -71,36 +71,48 @@ export class HomePage {
                   this.sychedData = true;
                   this.toast.create({
                     message: 'Something went wrong. Please contact your app developer',
-                    duration: 1000
+                    duration: 3000
                   }).present();
               });
             }
 
-            addLike(id){            
+            addLike(id, index){            
               let headers = new Headers();
               let token:string = this.laravel.getToken();
               headers.append('Authorization', token);
               this.loading = this.loadingCtrl.create({
-                content: 'Please wait...'
+              content: 'Please wait...'
               });
               this.loading.present();
               this.http.get(this.laravel.getLikeApi(id),{
-                headers: headers
-                  }).map(res => res.json())
-                  .subscribe(res => {
-                    this.getData();
-                  },
-                  error => {
-                    this.loading.dismiss();
-                    let errorMsg = 'Something went wrong.';
-                    this.toast.create({
-                      message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-                      duration:0
-                    }).present();
-                  });
+              headers: headers
+                }).map(res => res.json())
+                .subscribe(res => {
+                //this.getData();
+                if(res.success){
+                  if(res.lcount){
+                    this.requests[index].like_count = res.lcount;
+                      this.requests[index].unlike_count = res.dcount;
+                  }
+                }else{
+                  this.toast.create({
+                    message: 'Oops! Something went wrong. Please try again' ,
+                    duration:0
+                  }).present();
+                }
+                this.loading.dismiss();
+                },
+                error => {
+                this.loading.dismiss();
+                let errorMsg = 'Something went wrong.';
+                this.toast.create({
+                  message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+                  duration:0
+                }).present();
+                });
             
               }
-            addDisLike(id){              
+            addDisLike(id, index){              
               let headers = new Headers();
               let token:string = this.laravel.getToken();
               headers.append('Authorization', token);
@@ -112,14 +124,26 @@ export class HomePage {
                 headers: headers
                   }).map(res => res.json())
                   .subscribe(res => {
-                    this.getData();                        
-                  },
+                    // this.getData();                        
+                    if(res.success){
+                      if(res.dcount){
+                        this.requests[index].like_count = res.lcount;
+                        this.requests[index].unlike_count = res.dcount;
+                      }
+                    }else{
+                      this.toast.create({
+                        message: 'Oops! Something went wrong. Please try again' ,
+                        duration:0
+                      }).present();
+                    }
+                    this.loading.dismiss();
+                    },
                   error => {
                     this.loading.dismiss();
                     let errorMsg = 'Something went wrong.';
                     this.toast.create({
                       message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
-                      duration:0
+                      duration:3000
                     }).present();
                   });
               
@@ -127,6 +151,19 @@ export class HomePage {
               doRefresh(refresher) {
                 this.getData(refresher)
               }
+              doInfinite(infiniteScroll) {
+                console.log('Begin async operation');
+                
+                setTimeout(() => {
+                for (let request = 0; request < 10; request++) {
+                this.requests.push( this.requests.length );
+                }
+                
+                console.log('Async operation has ended');
+                infiniteScroll.complete();
+                }, 500);
+                }
+              
             
             
         // goToLoginPage(){

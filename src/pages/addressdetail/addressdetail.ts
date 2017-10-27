@@ -132,6 +132,7 @@ elementChanged(input){
       .subscribe(res => {
         this.loading.dismiss();
         this.districts=res;
+        this.tehsils=[];
       },
       error => {
         this.loading.dismiss();

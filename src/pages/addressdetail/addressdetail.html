@@ -52,7 +52,7 @@
                   </ion-item> 
             <ion-item [class.invalid]="!addressdetailForm.controls.tehsil.valid && (tehsilChanged || submitAttempt)">
                 <ion-label floating>Tehsil</ion-label>
-                <ion-select  #tehsil formControlName="tehsil">
+                <ion-select  #tehsil formControlName="tehsil" >
                     <ion-option *ngFor="let tehsil of tehsils" [value]="tehsil.id">{{tehsil.name}}</ion-option>
                   </ion-select>
             </ion-item> 

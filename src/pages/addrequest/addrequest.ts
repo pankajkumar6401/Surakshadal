@@ -33,6 +33,7 @@ export class AddrequestPage {
    district_name:any;
    state_name:any;
    userdetails=[];
+   payload:any;
    requestimg: string = 'assets/images/add-icon.png';
   constructor(
     public navCtrl: NavController, 
@@ -206,8 +207,12 @@ export class AddrequestPage {
         //success
         // this.navCtrl.setRoot('HomePage');
         this.loading.dismiss();
-        if(res.success){        
-          this.navCtrl.setRoot('HomePage');
+        if(res.success){  
+          this.navCtrl.parent.select(0);  
+          location.reload();     
+          
+          
+         
           // window.location.reload(true)
         }else{
         

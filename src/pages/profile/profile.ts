@@ -76,6 +76,9 @@ export class ProfilePage {
       });
       // window.location.reload(true)
     }
+   changePass(){
+     this.navCtrl.push('ChangepasswordPage')
+    }
       openProfileImage() {
         this.navCtrl.push('ProfileimagePage', {profileimageData:this.user_detail['user_detail'], photo:this.user_detail.photo});
       }

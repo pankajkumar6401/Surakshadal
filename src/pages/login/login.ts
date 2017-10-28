@@ -127,5 +127,8 @@ export class LoginPage {
   goToRegister(){
     this.navCtrl.push('RegisterPage')
   }
+  // goToForgot(){
+  //   this.navCtrl.push('ChangepasswordPage')
+  // }
 
 }

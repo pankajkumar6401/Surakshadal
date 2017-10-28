@@ -31,20 +31,11 @@
           <ion-item class="error-message" *ngIf="!profiledetailForm.controls.fatherName.valid && (fatherNameChanged || submitAttempt)">
             <p>Please enter your Father's name.</p>
           </ion-item>
-          <ion-item [class.invalid]="!profiledetailForm.controls.motherName.valid && (motherNameChanged || submitAttempt)">
+          <ion-item >
             <ion-label floating>Mother's name</ion-label>
             <ion-input #motherName type="text" formControlName="motherName" (change)="elementChanged(motherName)" autocomplete="off"></ion-input>
           </ion-item>
-          <ion-item class="error-message" *ngIf="!profiledetailForm.controls.motherName.valid && (motherNameChanged || submitAttempt)">
-            <p>Please enter your Mother's name.</p>
-          </ion-item>
-          <!-- <ion-item [class.invalid]="!profiledetailForm.controls.motherName.valid && (motherNameChanged || submitAttempt)">
-            <ion-label floating>Mother's name</ion-label>
-              <ion-input #motherName type="text" formControlName="motherName" (change)="elementChanged(motherName)" autocomplete="off"></ion-input>
-          </ion-item>
-          <ion-item class="error-message" *ngIf="!profiledetailForm.controls.motherName.valid && (motherNameChanged || submitAttempt)">
-             <p>Please enter your Mother's name.</p>
-          </ion-item> -->
+          
           <ion-item [class.invalid]="!profiledetailForm.controls.email.valid && (emailChanged || submitAttempt)">
             <ion-label floating>Email Address</ion-label>
               <ion-input #email type="text" formControlName="email" (change)="elementChanged(email)" autocapitalize="off"></ion-input>
@@ -84,7 +75,7 @@
                 </ion-select>
             </ion-item> 
             <ion-item class="error-message" *ngIf="!profiledetailForm.controls.id_type.valid  && (id_typeChanged || submitAttempt)">
-                <p>Please enter your Id Detail</p>
+                <p>Please enter your Id Type</p>
             </ion-item>
             <ion-item [class.invalid]="!profiledetailForm.controls.idnumber.valid && (idnumberChanged || submitAttempt)">
                 <ion-label floating>ID Detail</ion-label>

@@ -93,10 +93,13 @@ export class LaravelProvider {
   getProfileImageApi(){
     return this.getUrl() +'api/photo/';
   }
+  getchangePassApi(){
+    return this.getUrl() +'api/change/password';
+  }
   setToken(val){
     this.token = val;
   }
-
+  
   getToken(){
     return this.token;
   }

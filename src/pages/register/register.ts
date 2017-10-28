@@ -142,7 +142,8 @@ export class RegisterPage {
         this.loading.dismiss().then(()=>{
           let errorMsg = 'Something went wrong. Please contact your app developer';
           this.toast.create({
-            message: (error.json().hasOwnProperty('message')) ? error.json().message:errorMsg ,
+            message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+            // message: (error.json().hasOwnProperty('errors[]')) ? error.json().errors:'Mobile number has already been taken' ,
             duration:3000
           }).present();
         });

@@ -50,7 +50,7 @@ export class PersonaldetailPage {
       this.profiledetailForm = this.formBuilder.group({
       name:['', Validators.compose([ NameValidator.isValid])],
       fatherName: ['', Validators.compose([ NameValidator.isValid])],
-      motherName: ['', Validators.compose([ NameValidator.isValid])],
+      motherName: [''],
       email: ['', Validators.compose([ EmailValidator.isValid])],
       mobile_no: ['', Validators.compose([ NumberValidator.isValid])],
       phone: [''],
@@ -112,8 +112,6 @@ export class PersonaldetailPage {
           this.loading.dismiss(); 
           if(res.success){
             this.navCtrl.setRoot('ProfilePage');
-          }else{
-            this.navCtrl.setRoot('ProfilePage');
             this.toast.create({
               message: 'Profile has been Updated' ,
               duration:3000
@@ -124,7 +122,8 @@ export class PersonaldetailPage {
           this.loading.dismiss();
           let errorMsg = 'Something went wrong';
           this.toast.create({
-            message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+            // message: (error.hasOwnProperty('message')) ? error.message:errorMsg ,
+            message: (error.json().hasOwnProperty('errors[]')) ? error.json().errors:'Email Id has already been taken.' ,
             duration:3000
           }).present();
         });
